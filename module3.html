@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Python Mastery · Module 3 — References, Mutability &amp; Memory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Source+Sans+3:wght@400;600;700;800&display=swap">
+<style>/**
+ * reveal.js 5.2.0
+ * https://revealjs.com
+ * MIT licensed
+ *
+ * Copyright (C) 2011-2024 Hakim El Hattab, https://hakim.se
+ */
+
+.reveal .r-stretch,.reveal .stretch{max-width:none;max-height:none}.reveal pre.r-stretch code,.reveal pre.stretch code{height:100%;max-height:100%;box-sizing:border-box}.reveal .r-fit-text{display:inline-block;white-space:nowrap}.reveal .r-stack{display:grid;grid-template-rows:100%}.reveal .r-stack>*{grid-area:1/1;margin:auto}.reveal .r-hstack,.reveal .r-vstack{display:flex}.reveal .r-hstack img,.reveal .r-hstack video,.reveal .r-vstack img,.reveal .r-vstack video{min-width:0;min-height:0;object-fit:contain}.reveal .r-vstack{flex-direction:column;align-items:center;justify-content:center}.reveal .r-hstack{flex-direction:row;align-items:center;justify-content:center}.reveal .items-stretch{align-items:stretch}.reveal .items-start{align-items:flex-start}.reveal .items-center{align-items:center}.reveal .items-end{align-items:flex-end}.reveal .justify-between{justify-content:space-between}.reveal .justify-around{justify-content:space-around}.reveal .justify-start{justify-content:flex-start}.reveal .justify-center{justify-content:center}.reveal .justify-end{justify-content:flex-end}html.reveal-full-page{width:100%;height:100%;height:100vh;height:calc(var(--vh,1vh) * 100);height:100dvh;overflow:hidden}.reveal-viewport{height:100%;overflow:hidden;position:relative;line-height:1;margin:0;background-color:#fff;color:#000;--r-controls-spacing:12px;--r-overlay-header-height:40px;--r-overlay-margin:0px;--r-overlay-padding:6px;--r-overlay-gap:5px}@media screen and (max-width:1024px),(max-height:768px){.reveal-viewport{--r-overlay-header-height:26px}}.reveal-viewport:fullscreen{top:0!important;left:0!important;width:100%!important;height:100%!important;transform:none!important}.reveal .fragment{transition:all .2s ease}.reveal .fragment:not(.custom){opacity:0;visibility:hidden;will-change:opacity}.reveal .fragment.visible{opacity:1;visibility:inherit}.reveal .fragment.disabled{transition:none}.reveal .fragment.grow{opacity:1;visibility:inherit}.reveal .fragment.grow.visible{transform:scale(1.3)}.reveal .fragment.shrink{opacity:1;visibility:inherit}.reveal .fragment.shrink.visible{transform:scale(.7)}.reveal .fragment.zoom-in{transform:scale(.1)}.reveal .fragment.zoom-in.visible{transform:none}.reveal .fragment.fade-out{opacity:1;visibility:inherit}.reveal .fragment.fade-out.visible{opacity:0;visibility:hidden}.reveal .fragment.semi-fade-out{opacity:1;visibility:inherit}.reveal .fragment.semi-fade-out.visible{opacity:.5;visibility:inherit}.reveal .fragment.strike{opacity:1;visibility:inherit}.reveal .fragment.strike.visible{text-decoration:line-through}.reveal .fragment.fade-up{transform:translate(0,40px)}.reveal .fragment.fade-up.visible{transform:translate(0,0)}.reveal .fragment.fade-down{transform:translate(0,-40px)}.reveal .fragment.fade-down.visible{transform:translate(0,0)}.reveal .fragment.fade-right{transform:translate(-40px,0)}.reveal .fragment.fade-right.visible{transform:translate(0,0)}.reveal .fragment.fade-left{transform:translate(40px,0)}.reveal .fragment.fade-left.visible{transform:translate(0,0)}.reveal .fragment.current-visible,.reveal .fragment.fade-in-then-out{opacity:0;visibility:hidden}.reveal .fragment.current-visible.current-fragment,.reveal .fragment.fade-in-then-out.current-fragment{opacity:1;visibility:inherit}.reveal .fragment.fade-in-then-semi-out{opacity:0;visibility:hidden}.reveal .fragment.fade-in-then-semi-out.visible{opacity:.5;visibility:inherit}.reveal .fragment.fade-in-then-semi-out.current-fragment{opacity:1;visibility:inherit}.reveal .fragment.highlight-blue,.reveal .fragment.highlight-current-blue,.reveal .fragment.highlight-current-green,.reveal .fragment.highlight-current-red,.reveal .fragment.highlight-green,.reveal .fragment.highlight-red{opacity:1;visibility:inherit}.reveal .fragment.highlight-red.visible{color:#ff2c2d}.reveal .fragment.highlight-green.visible{color:#17ff2e}.reveal .fragment.highlight-blue.visible{color:#1b91ff}.reveal .fragment.highlight-current-red.current-fragment{color:#ff2c2d}.reveal .fragment.highlight-current-green.current-fragment{color:#17ff2e}.reveal .fragment.highlight-current-blue.current-fragment{color:#1b91ff}.reveal:after{content:"";font-style:italic}.reveal iframe{z-index:1}.reveal a{position:relative}@keyframes bounce-right{0%,10%,25%,40%,50%{transform:translateX(0)}20%{transform:translateX(10px)}30%{transform:translateX(-5px)}}@keyframes bounce-left{0%,10%,25%,40%,50%{transform:translateX(0)}20%{transform:translateX(-10px)}30%{transform:translateX(5px)}}@keyframes bounce-down{0%,10%,25%,40%,50%{transform:translateY(0)}20%{transform:translateY(10px)}30%{transform:translateY(-5px)}}.reveal .controls{display:none;position:absolute;top:auto;bottom:var(--r-controls-spacing);right:var(--r-controls-spacing);left:auto;z-index:11;color:#000;pointer-events:none;font-size:10px}.reveal .controls button{position:absolute;padding:0;background-color:transparent;border:0;outline:0;cursor:pointer;color:currentColor;transform:scale(.9999);transition:color .2s ease,opacity .2s ease,transform .2s ease;z-index:2;pointer-events:auto;font-size:inherit;visibility:hidden;opacity:0;-webkit-appearance:none;-webkit-tap-highlight-color:transparent}.reveal .controls .controls-arrow:after,.reveal .controls .controls-arrow:before{content:"";position:absolute;top:0;left:0;width:2.6em;height:.5em;border-radius:.25em;background-color:currentColor;transition:all .15s ease,background-color .8s ease;transform-origin:.2em 50%;will-change:transform}.reveal .controls .controls-arrow{position:relative;width:3.6em;height:3.6em}.reveal .controls .controls-arrow:before{transform:translateX(.5em) translateY(1.55em) rotate(45deg)}.reveal .controls .controls-arrow:after{transform:translateX(.5em) translateY(1.55em) rotate(-45deg)}.reveal .controls .controls-arrow:hover:before{transform:translateX(.5em) translateY(1.55em) rotate(40deg)}.reveal .controls .controls-arrow:hover:after{transform:translateX(.5em) translateY(1.55em) rotate(-40deg)}.reveal .controls .controls-arrow:active:before{transform:translateX(.5em) translateY(1.55em) rotate(36deg)}.reveal .controls .controls-arrow:active:after{transform:translateX(.5em) translateY(1.55em) rotate(-36deg)}.reveal .controls .navigate-left{right:6.4em;bottom:3.2em;transform:translateX(-10px)}.reveal .controls .navigate-left.highlight{animation:bounce-left 2s 50 both ease-out}.reveal .controls .navigate-right{right:0;bottom:3.2em;transform:translateX(10px)}.reveal .controls .navigate-right .controls-arrow{transform:rotate(180deg)}.reveal .controls .navigate-right.highlight{animation:bounce-right 2s 50 both ease-out}.reveal .controls .navigate-up{right:3.2em;bottom:6.4em;transform:translateY(-10px)}.reveal .controls .navigate-up .controls-arrow{transform:rotate(90deg)}.reveal .controls .navigate-down{right:3.2em;bottom:-1.4em;padding-bottom:1.4em;transform:translateY(10px)}.reveal .controls .navigate-down .controls-arrow{transform:rotate(-90deg)}.reveal .controls .navigate-down.highlight{animation:bounce-down 2s 50 both ease-out}.reveal .controls[data-controls-back-arrows=faded] .navigate-up.enabled{opacity:.3}.reveal .controls[data-controls-back-arrows=faded] .navigate-up.enabled:hover{opacity:1}.reveal .controls[data-controls-back-arrows=hidden] .navigate-up.enabled{opacity:0;visibility:hidden}.reveal .controls .enabled{visibility:visible;opacity:.9;cursor:pointer;transform:none}.reveal .controls .enabled.fragmented{opacity:.5}.reveal .controls .enabled.fragmented:hover,.reveal .controls .enabled:hover{opacity:1}.reveal:not(.rtl) .controls[data-controls-back-arrows=faded] .navigate-left.enabled{opacity:.3}.reveal:not(.rtl) .controls[data-controls-back-arrows=faded] .navigate-left.enabled:hover{opacity:1}.reveal:not(.rtl) .controls[data-controls-back-arrows=hidden] .navigate-left.enabled{opacity:0;visibility:hidden}.reveal.rtl .controls[data-controls-back-arrows=faded] .navigate-right.enabled{opacity:.3}.reveal.rtl .controls[data-controls-back-arrows=faded] .navigate-right.enabled:hover{opacity:1}.reveal.rtl .controls[data-controls-back-arrows=hidden] .navigate-right.enabled{opacity:0;visibility:hidden}.reveal[data-navigation-mode=linear].has-horizontal-slides .navigate-down,.reveal[data-navigation-mode=linear].has-horizontal-slides .navigate-up{display:none}.reveal:not(.has-vertical-slides) .controls .navigate-left,.reveal[data-navigation-mode=linear].has-horizontal-slides .navigate-left{bottom:1.4em;right:5.5em}.reveal:not(.has-vertical-slides) .controls .navigate-right,.reveal[data-navigation-mode=linear].has-horizontal-slides .navigate-right{bottom:1.4em;right:.5em}.reveal:not(.has-horizontal-slides) .controls .navigate-up{right:1.4em;bottom:5em}.reveal:not(.has-horizontal-slides) .controls .navigate-down{right:1.4em;bottom:.5em}.reveal.has-dark-background .controls{color:#fff}.reveal.has-light-background .controls{color:#000}.reveal.no-hover .controls .controls-arrow:active:before,.reveal.no-hover .controls .controls-arrow:hover:before{transform:translateX(.5em) translateY(1.55em) rotate(45deg)}.reveal.no-hover .controls .controls-arrow:active:after,.reveal.no-hover .controls .controls-arrow:hover:after{transform:translateX(.5em) translateY(1.55em) rotate(-45deg)}@media screen and (min-width:500px){.reveal-viewport{--r-controls-spacing:0.8em}.reveal .controls[data-controls-layout=edges]{top:0;right:0;bottom:0;left:0}.reveal .controls[data-controls-layout=edges] .navigate-down,.reveal .controls[data-controls-layout=edges] .navigate-left,.reveal .controls[data-controls-layout=edges] .navigate-right,.reveal .controls[data-controls-layout=edges] .navigate-up{bottom:auto;right:auto}.reveal .controls[data-controls-layout=edges] .navigate-left{top:50%;left:var(--r-controls-spacing);margin-top:-1.8em}.reveal .controls[data-controls-layout=edges] .navigate-right{top:50%;right:var(--r-controls-spacing);margin-top:-1.8em}.reveal .controls[data-controls-layout=edges] .navigate-up{top:var(--r-controls-spacing);left:50%;margin-left:-1.8em}.reveal .controls[data-controls-layout=edges] .navigate-down{bottom:calc(var(--r-controls-spacing) - 1.4em + .3em);left:50%;margin-left:-1.8em}}.reveal .progress{position:absolute;display:none;height:3px;width:100%;bottom:0;left:0;z-index:10;background-color:rgba(0,0,0,.2);color:#fff}.reveal .progress:after{content:"";display:block;position:absolute;height:10px;width:100%;top:-10px}.reveal .progress span{display:block;height:100%;width:100%;background-color:currentColor;transition:transform .8s cubic-bezier(.26,.86,.44,.985);transform-origin:0 0;transform:scaleX(0)}.reveal .slide-number{position:absolute;display:block;right:8px;bottom:8px;z-index:31;font-family:Helvetica,sans-serif;font-size:12px;line-height:1;color:#fff;background-color:rgba(0,0,0,.4);padding:5px}.reveal .slide-number a{color:currentColor}.reveal .slide-number-delimiter{margin:0 3px}.reveal{position:relative;width:100%;height:100%;overflow:hidden;touch-action:pinch-zoom}.reveal.embedded{touch-action:pan-y}.reveal.embedded.is-vertical-slide{touch-action:none}.reveal .slides{position:absolute;width:100%;height:100%;top:0;right:0;bottom:0;left:0;margin:auto;pointer-events:none;overflow:visible;z-index:1;text-align:center;perspective:600px;perspective-origin:50% 40%}.reveal .slides>section{perspective:600px}.reveal .slides>section,.reveal .slides>section>section{display:none;position:absolute;width:100%;pointer-events:auto;z-index:10;transform-style:flat;transition:transform-origin .8s cubic-bezier(.26,.86,.44,.985),transform .8s cubic-bezier(.26,.86,.44,.985),visibility .8s cubic-bezier(.26,.86,.44,.985),opacity .8s cubic-bezier(.26,.86,.44,.985)}.reveal[data-transition-speed=fast] .slides section{transition-duration:.4s}.reveal[data-transition-speed=slow] .slides section{transition-duration:1.2s}.reveal .slides section[data-transition-speed=fast]{transition-duration:.4s}.reveal .slides section[data-transition-speed=slow]{transition-duration:1.2s}.reveal .slides>section.stack{padding-top:0;padding-bottom:0;pointer-events:none;height:100%}.reveal .slides>section.present,.reveal .slides>section>section.present{display:block;z-index:11;opacity:1}.reveal .slides>section:empty,.reveal .slides>section>section:empty,.reveal .slides>section>section[data-background-interactive],.reveal .slides>section[data-background-interactive]{pointer-events:none}.reveal.center,.reveal.center .slides,.reveal.center .slides section{min-height:0!important}.reveal .slides>section:not(.present),.reveal .slides>section>section:not(.present){pointer-events:none}.reveal.overview .slides>section,.reveal.overview .slides>section>section{pointer-events:auto}.reveal .slides>section.future,.reveal .slides>section.future>section,.reveal .slides>section.past,.reveal .slides>section.past>section,.reveal .slides>section>section.future,.reveal .slides>section>section.past{opacity:0}.reveal .slides>section[data-transition=slide].past,.reveal .slides>section[data-transition~=slide-out].past,.reveal.slide .slides>section:not([data-transition]).past{transform:translate(-150%,0)}.reveal .slides>section[data-transition=slide].future,.reveal .slides>section[data-transition~=slide-in].future,.reveal.slide .slides>section:not([data-transition]).future{transform:translate(150%,0)}.reveal .slides>section>section[data-transition=slide].past,.reveal .slides>section>section[data-transition~=slide-out].past,.reveal.slide .slides>section>section:not([data-transition]).past{transform:translate(0,-150%)}.reveal .slides>section>section[data-transition=slide].future,.reveal .slides>section>section[data-transition~=slide-in].future,.reveal.slide .slides>section>section:not([data-transition]).future{transform:translate(0,150%)}.reveal .slides>section[data-transition=linear].past,.reveal .slides>section[data-transition~=linear-out].past,.reveal.linear .slides>section:not([data-transition]).past{transform:translate(-150%,0)}.reveal .slides>section[data-transition=linear].future,.reveal .slides>section[data-transition~=linear-in].future,.reveal.linear .slides>section:not([data-transition]).future{transform:translate(150%,0)}.reveal .slides>section>section[data-transition=linear].past,.reveal .slides>section>section[data-transition~=linear-out].past,.reveal.linear .slides>section>section:not([data-transition]).past{transform:translate(0,-150%)}.reveal .slides>section>section[data-transition=linear].future,.reveal .slides>section>section[data-transition~=linear-in].future,.reveal.linear .slides>section>section:not([data-transition]).future{transform:translate(0,150%)}.reveal .slides section[data-transition=default].stack,.reveal.default .slides section.stack{transform-style:preserve-3d}.reveal .slides>section[data-transition=default].past,.reveal .slides>section[data-transition~=default-out].past,.reveal.default .slides>section:not([data-transition]).past{transform:translate3d(-100%,0,0) rotateY(-90deg) translate3d(-100%,0,0)}.reveal .slides>section[data-transition=default].future,.reveal .slides>section[data-transition~=default-in].future,.reveal.default .slides>section:not([data-transition]).future{transform:translate3d(100%,0,0) rotateY(90deg) translate3d(100%,0,0)}.reveal .slides>section>section[data-transition=default].past,.reveal .slides>section>section[data-transition~=default-out].past,.reveal.default .slides>section>section:not([data-transition]).past{transform:translate3d(0,-300px,0) rotateX(70deg) translate3d(0,-300px,0)}.reveal .slides>section>section[data-transition=default].future,.reveal .slides>section>section[data-transition~=default-in].future,.reveal.default .slides>section>section:not([data-transition]).future{transform:translate3d(0,300px,0) rotateX(-70deg) translate3d(0,300px,0)}.reveal .slides section[data-transition=convex].stack,.reveal.convex .slides section.stack{transform-style:preserve-3d}.reveal .slides>section[data-transition=convex].past,.reveal .slides>section[data-transition~=convex-out].past,.reveal.convex .slides>section:not([data-transition]).past{transform:translate3d(-100%,0,0) rotateY(-90deg) translate3d(-100%,0,0)}.reveal .slides>section[data-transition=convex].future,.reveal .slides>section[data-transition~=convex-in].future,.reveal.convex .slides>section:not([data-transition]).future{transform:translate3d(100%,0,0) rotateY(90deg) translate3d(100%,0,0)}.reveal .slides>section>section[data-transition=convex].past,.reveal .slides>section>section[data-transition~=convex-out].past,.reveal.convex .slides>section>section:not([data-transition]).past{transform:translate3d(0,-300px,0) rotateX(70deg) translate3d(0,-300px,0)}.reveal .slides>section>section[data-transition=convex].future,.reveal .slides>section>section[data-transition~=convex-in].future,.reveal.convex .slides>section>section:not([data-transition]).future{transform:translate3d(0,300px,0) rotateX(-70deg) translate3d(0,300px,0)}.reveal .slides section[data-transition=concave].stack,.reveal.concave .slides section.stack{transform-style:preserve-3d}.reveal .slides>section[data-transition=concave].past,.reveal .slides>section[data-transition~=concave-out].past,.reveal.concave .slides>section:not([data-transition]).past{transform:translate3d(-100%,0,0) rotateY(90deg) translate3d(-100%,0,0)}.reveal .slides>section[data-transition=concave].future,.reveal .slides>section[data-transition~=concave-in].future,.reveal.concave .slides>section:not([data-transition]).future{transform:translate3d(100%,0,0) rotateY(-90deg) translate3d(100%,0,0)}.reveal .slides>section>section[data-transition=concave].past,.reveal .slides>section>section[data-transition~=concave-out].past,.reveal.concave .slides>section>section:not([data-transition]).past{transform:translate3d(0,-80%,0) rotateX(-70deg) translate3d(0,-80%,0)}.reveal .slides>section>section[data-transition=concave].future,.reveal .slides>section>section[data-transition~=concave-in].future,.reveal.concave .slides>section>section:not([data-transition]).future{transform:translate3d(0,80%,0) rotateX(70deg) translate3d(0,80%,0)}.reveal .slides section[data-transition=zoom],.reveal.zoom .slides section:not([data-transition]){transition-timing-function:ease}.reveal .slides>section[data-transition=zoom].past,.reveal .slides>section[data-transition~=zoom-out].past,.reveal.zoom .slides>section:not([data-transition]).past{visibility:hidden;transform:scale(16)}.reveal .slides>section[data-transition=zoom].future,.reveal .slides>section[data-transition~=zoom-in].future,.reveal.zoom .slides>section:not([data-transition]).future{visibility:hidden;transform:scale(.2)}.reveal .slides>section>section[data-transition=zoom].past,.reveal .slides>section>section[data-transition~=zoom-out].past,.reveal.zoom .slides>section>section:not([data-transition]).past{transform:scale(16)}.reveal .slides>section>section[data-transition=zoom].future,.reveal .slides>section>section[data-transition~=zoom-in].future,.reveal.zoom .slides>section>section:not([data-transition]).future{transform:scale(.2)}.reveal.cube .slides{perspective:1300px}.reveal.cube .slides section{padding:30px;min-height:700px;backface-visibility:hidden;box-sizing:border-box;transform-style:preserve-3d}.reveal.center.cube .slides section{min-height:0}.reveal.cube .slides section:not(.stack):before{content:"";position:absolute;display:block;width:100%;height:100%;left:0;top:0;background:rgba(0,0,0,.1);border-radius:4px;transform:translateZ(-20px)}.reveal.cube .slides section:not(.stack):after{content:"";position:absolute;display:block;width:90%;height:30px;left:5%;bottom:0;background:0 0;z-index:1;border-radius:4px;box-shadow:0 95px 25px rgba(0,0,0,.2);transform:translateZ(-90px) rotateX(65deg)}.reveal.cube .slides>section.stack{padding:0;background:0 0}.reveal.cube .slides>section.past{transform-origin:100% 0;transform:translate3d(-100%,0,0) rotateY(-90deg)}.reveal.cube .slides>section.future{transform-origin:0 0;transform:translate3d(100%,0,0) rotateY(90deg)}.reveal.cube .slides>section>section.past{transform-origin:0 100%;transform:translate3d(0,-100%,0) rotateX(90deg)}.reveal.cube .slides>section>section.future{transform-origin:0 0;transform:translate3d(0,100%,0) rotateX(-90deg)}.reveal.page .slides{perspective-origin:0 50%;perspective:3000px}.reveal.page .slides section{padding:30px;min-height:700px;box-sizing:border-box;transform-style:preserve-3d}.reveal.page .slides section.past{z-index:12}.reveal.page .slides section:not(.stack):before{content:"";position:absolute;display:block;width:100%;height:100%;left:0;top:0;background:rgba(0,0,0,.1);transform:translateZ(-20px)}.reveal.page .slides section:not(.stack):after{content:"";position:absolute;display:block;width:90%;height:30px;left:5%;bottom:0;background:0 0;z-index:1;border-radius:4px;box-shadow:0 95px 25px rgba(0,0,0,.2);transform:translateZ(-90px) rotateX(65deg)}.reveal.page .slides>section.stack{padding:0;background:0 0}.reveal.page .slides>section.past{transform-origin:0 0;transform:translate3d(-40%,0,0) rotateY(-80deg)}.reveal.page .slides>section.future{transform-origin:100% 0;transform:translate3d(0,0,0)}.reveal.page .slides>section>section.past{transform-origin:0 0;transform:translate3d(0,-40%,0) rotateX(80deg)}.reveal.page .slides>section>section.future{transform-origin:0 100%;transform:translate3d(0,0,0)}.reveal .slides section[data-transition=fade],.reveal.fade .slides section:not([data-transition]),.reveal.fade .slides>section>section:not([data-transition]){transform:none;transition:opacity .5s}.reveal.fade.overview .slides section,.reveal.fade.overview .slides>section>section{transition:none}.reveal .slides section[data-transition=none],.reveal.none .slides section:not([data-transition]){transform:none;transition:none}.reveal .pause-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:#000;visibility:hidden;opacity:0;z-index:100;transition:all 1s ease}.reveal .pause-overlay .resume-button{position:absolute;bottom:20px;right:20px;color:#ccc;border-radius:2px;padding:6px 14px;border:2px solid #ccc;font-size:16px;background:0 0;cursor:pointer}.reveal .pause-overlay .resume-button:hover{color:#fff;border-color:#fff}.reveal.paused .pause-overlay{visibility:visible;opacity:1}.reveal .no-transition,.reveal .no-transition *,.reveal .slides.disable-slide-transitions section{transition:none!important}.reveal .slides.disable-slide-transitions section{transform:none!important}.reveal .backgrounds{position:absolute;width:100%;height:100%;top:0;left:0;perspective:600px}.reveal .slide-background{display:none;position:absolute;width:100%;height:100%;opacity:0;visibility:hidden;overflow:hidden;background-color:rgba(0,0,0,0);transition:all .8s cubic-bezier(.26,.86,.44,.985)}.reveal .slide-background-content{position:absolute;width:100%;height:100%;background-position:50% 50%;background-repeat:no-repeat;background-size:cover}.reveal .slide-background.stack{display:block}.reveal .slide-background.present{opacity:1;visibility:visible;z-index:2}.print-pdf .reveal .slide-background{opacity:1!important;visibility:visible!important}.reveal .slide-background video{position:absolute;width:100%;height:100%;max-width:none;max-height:none;top:0;left:0;object-fit:cover}.reveal .slide-background[data-background-size=contain] video{object-fit:contain}.reveal>.backgrounds .slide-background[data-background-transition=none],.reveal[data-background-transition=none]>.backgrounds .slide-background:not([data-background-transition]){transition:none}.reveal>.backgrounds .slide-background[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background:not([data-background-transition]){opacity:1}.reveal>.backgrounds .slide-background.past[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background.past:not([data-background-transition]){transform:translate(-100%,0)}.reveal>.backgrounds .slide-background.future[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background.future:not([data-background-transition]){transform:translate(100%,0)}.reveal>.backgrounds .slide-background>.slide-background.past[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background>.slide-background.past:not([data-background-transition]){transform:translate(0,-100%)}.reveal>.backgrounds .slide-background>.slide-background.future[data-background-transition=slide],.reveal[data-background-transition=slide]>.backgrounds .slide-background>.slide-background.future:not([data-background-transition]){transform:translate(0,100%)}.reveal>.backgrounds .slide-background.past[data-background-transition=convex],.reveal[data-background-transition=convex]>.backgrounds .slide-background.past:not([data-background-transition]){opacity:0;transform:translate3d(-100%,0,0) rotateY(-90deg) translate3d(-100%,0,0)}.reveal>.backgrounds .slide-background.future[data-background-transition=convex],.reveal[data-background-transition=convex]>.backgrounds .slide-background.future:not([data-background-transition]){opacity:0;transform:translate3d(100%,0,0) rotateY(90deg) translate3d(100%,0,0)}.reveal>.backgrounds .slide-background>.slide-background.past[data-background-transition=convex],.reveal[data-background-transition=convex]>.backgrounds .slide-background>.slide-background.past:not([data-background-transition]){opacity:0;transform:translate3d(0,-100%,0) rotateX(90deg) translate3d(0,-100%,0)}.reveal>.backgrounds .slide-background>.slide-background.future[data-background-transition=convex],.reveal[data-background-transition=convex]>.backgrounds .slide-background>.slide-background.future:not([data-background-transition]){opacity:0;transform:translate3d(0,100%,0) rotateX(-90deg) translate3d(0,100%,0)}.reveal>.backgrounds .slide-background.past[data-background-transition=concave],.reveal[data-background-transition=concave]>.backgrounds .slide-background.past:not([data-background-transition]){opacity:0;transform:translate3d(-100%,0,0) rotateY(90deg) translate3d(-100%,0,0)}.reveal>.backgrounds .slide-background.future[data-background-transition=concave],.reveal[data-background-transition=concave]>.backgrounds .slide-background.future:not([data-background-transition]){opacity:0;transform:translate3d(100%,0,0) rotateY(-90deg) translate3d(100%,0,0)}.reveal>.backgrounds .slide-background>.slide-background.past[data-background-transition=concave],.reveal[data-background-transition=concave]>.backgrounds .slide-background>.slide-background.past:not([data-background-transition]){opacity:0;transform:translate3d(0,-100%,0) rotateX(-90deg) translate3d(0,-100%,0)}.reveal>.backgrounds .slide-background>.slide-background.future[data-background-transition=concave],.reveal[data-background-transition=concave]>.backgrounds .slide-background>.slide-background.future:not([data-background-transition]){opacity:0;transform:translate3d(0,100%,0) rotateX(90deg) translate3d(0,100%,0)}.reveal>.backgrounds .slide-background[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background:not([data-background-transition]){transition-timing-function:ease}.reveal>.backgrounds .slide-background.past[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background.past:not([data-background-transition]){opacity:0;visibility:hidden;transform:scale(16)}.reveal>.backgrounds .slide-background.future[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background.future:not([data-background-transition]){opacity:0;visibility:hidden;transform:scale(.2)}.reveal>.backgrounds .slide-background>.slide-background.past[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background>.slide-background.past:not([data-background-transition]){opacity:0;visibility:hidden;transform:scale(16)}.reveal>.backgrounds .slide-background>.slide-background.future[data-background-transition=zoom],.reveal[data-background-transition=zoom]>.backgrounds .slide-background>.slide-background.future:not([data-background-transition]){opacity:0;visibility:hidden;transform:scale(.2)}.reveal[data-transition-speed=fast]>.backgrounds .slide-background{transition-duration:.4s}.reveal[data-transition-speed=slow]>.backgrounds .slide-background{transition-duration:1.2s}.reveal [data-auto-animate-target^=unmatched]{will-change:opacity}.reveal section[data-auto-animate]:not(.stack):not([data-auto-animate=running]) [data-auto-animate-target^=unmatched]{opacity:0}.reveal.overview{perspective-origin:50% 50%;perspective:700px}.reveal.overview .slides section{height:100%;top:0!important;opacity:1!important;overflow:hidden;visibility:visible!important;cursor:pointer;box-sizing:border-box}.reveal.overview .slides section.present,.reveal.overview .slides section:hover{outline:10px solid rgba(150,150,150,.4);outline-offset:10px}.reveal.overview .slides section .fragment{opacity:1;transition:none}.reveal.overview .slides section:after,.reveal.overview .slides section:before{display:none!important}.reveal.overview .slides>section.stack{padding:0;top:0!important;background:0 0;outline:0;overflow:visible}.reveal.overview .backgrounds{perspective:inherit}.reveal.overview .backgrounds .slide-background{opacity:1;visibility:visible;outline:10px solid rgba(150,150,150,.1);outline-offset:10px}.reveal.overview .backgrounds .slide-background.stack{overflow:visible}.reveal.overview .slides section,.reveal.overview-deactivating .slides section{transition:none}.reveal.overview .backgrounds .slide-background,.reveal.overview-deactivating .backgrounds .slide-background{transition:none}.reveal.rtl .slides,.reveal.rtl .slides h1,.reveal.rtl .slides h2,.reveal.rtl .slides h3,.reveal.rtl .slides h4,.reveal.rtl .slides h5,.reveal.rtl .slides h6{direction:rtl;font-family:sans-serif}.reveal.rtl code,.reveal.rtl pre{direction:ltr}.reveal.rtl ol,.reveal.rtl ul{text-align:right}.reveal.rtl .progress span{transform-origin:100% 0}.reveal.has-parallax-background .backgrounds{transition:all .8s ease}.reveal.has-parallax-background[data-transition-speed=fast] .backgrounds{transition-duration:.4s}.reveal.has-parallax-background[data-transition-speed=slow] .backgrounds{transition-duration:1.2s}@keyframes fade-in{from{opacity:0}to{opacity:1}}@keyframes scale-up{from{transform:scale(.95)}to{transform:scale(1)}}.reveal [data-preview-image],.reveal [data-preview-link]:not(a):not([data-preview-link=false]),.reveal [data-preview-video]{cursor:zoom-in}.r-overlay{position:absolute;top:var(--r-overlay-margin);right:var(--r-overlay-margin);bottom:var(--r-overlay-margin);left:var(--r-overlay-margin);border-radius:min(var(--r-overlay-margin),6px);z-index:99;background:rgba(0,0,0,.95);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:all .3s ease;color:#fff;animation:fade-in .3s ease;font-family:ui-sans-serif,system-ui,-apple-system,Helvetica,sans-serif}.r-overlay-viewport{position:absolute;top:var(--r-overlay-padding);right:var(--r-overlay-padding);bottom:var(--r-overlay-padding);left:var(--r-overlay-padding);gap:var(--r-overlay-gap);display:flex;flex-direction:column}.r-overlay-header{display:flex;z-index:2;box-sizing:border-box;align-items:center;justify-content:flex-end;height:var(--r-overlay-header-height);gap:6px}.r-overlay-header .r-overlay-button{all:unset;display:flex;align-items:center;justify-content:center;min-width:var(--r-overlay-header-height);min-height:var(--r-overlay-header-height);padding:0 calc(var(--r-overlay-header-height)/ 4);opacity:1;border-radius:6px;font-size:18px;gap:8px;cursor:pointer;box-sizing:border-box}.r-overlay-header .r-overlay-button:hover{opacity:1;background-color:rgba(255,255,255,.15)}.r-overlay-header .icon{display:inline-block;width:20px;height:20px;background-position:50% 50%;background-size:100%;background-repeat:no-repeat}.r-overlay-close .icon{background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNSIgaGVpZ2h0PSIxNSIgZmlsbD0ibm9uZSI+PHBhdGggZmlsbD0iI2ZmZiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTIuODU0IDIuODU0YS41LjUgMCAwIDAtLjcwOC0uNzA4TDcuNSA2Ljc5MyAyLjg1NCAyLjE0NmEuNS41IDAgMSAwLS43MDguNzA4TDYuNzkzIDcuNWwtNC42NDcgNC42NDZhLjUuNSAwIDAgMCAuNzA4LjcwOEw3LjUgOC4yMDdsNC42NDYgNC42NDdhLjUuNSAwIDAgMCAuNzA4LS43MDhMOC4yMDcgNy41bDQuNjQ3LTQuNjQ2WiIgY2xpcC1ydWxlPSJldmVub2RkIi8+PC9zdmc+)}.r-overlay-external .icon{background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNSIgaGVpZ2h0PSIxNSIgZmlsbD0ibm9uZSI+PHBhdGggZmlsbD0iI2ZmZiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMyAyYTEgMSAwIDAgMC0xIDF2OWExIDEgMCAwIDAgMSAxaDlhMSAxIDAgMCAwIDEtMVY4LjVhLjUuNSAwIDAgMC0xIDBWMTJIM1YzaDMuNWEuNS41IDAgMCAwIDAtMUgzWm05Ljg1NC4xNDZhLjUuNSAwIDAgMSAuMTQ2LjM1MVY1LjVhLjUuNSAwIDAgMS0xIDBWMy43MDdMNi44NTQgOC44NTRhLjUuNSAwIDEgMS0uNzA4LS43MDhMMTEuMjkzIDNIOS41YS41LjUgMCAwIDEgMC0xaDNhLjQ5OS40OTkgMCAwIDEgLjM1NC4xNDZaIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiLz48L3N2Zz4=)}.r-overlay-content{position:relative;display:grid;place-items:center;border-radius:6px;overflow:hidden;flex-grow:1;background-color:rgba(20,20,20,.8);animation:scale-up .5s cubic-bezier(.26,.86,.44,.985)}.r-overlay-spinner{position:absolute;display:block;top:50%;left:50%;width:32px;height:32px;margin:-16px 0 0 -16px;z-index:10;background-image:url(data:image/gif;base64,R0lGODlhIAAgAPMAAJmZmf%2F%2F%2F6%2Bvr8nJybW1tcDAwOjo6Nvb26ioqKOjo7Ozs%2FLy8vz8%2FAAAAAAAAAAAACH%2FC05FVFNDQVBFMi4wAwEAAAAh%2FhpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh%2BQQJCgAAACwAAAAAIAAgAAAE5xDISWlhperN52JLhSSdRgwVo1ICQZRUsiwHpTJT4iowNS8vyW2icCF6k8HMMBkCEDskxTBDAZwuAkkqIfxIQyhBQBFvAQSDITM5VDW6XNE4KagNh6Bgwe60smQUB3d4Rz1ZBApnFASDd0hihh12BkE9kjAJVlycXIg7CQIFA6SlnJ87paqbSKiKoqusnbMdmDC2tXQlkUhziYtyWTxIfy6BE8WJt5YJvpJivxNaGmLHT0VnOgSYf0dZXS7APdpB309RnHOG5gDqXGLDaC457D1zZ%2FV%2FnmOM82XiHRLYKhKP1oZmADdEAAAh%2BQQJCgAAACwAAAAAIAAgAAAE6hDISWlZpOrNp1lGNRSdRpDUolIGw5RUYhhHukqFu8DsrEyqnWThGvAmhVlteBvojpTDDBUEIFwMFBRAmBkSgOrBFZogCASwBDEY%2FCZSg7GSE0gSCjQBMVG023xWBhklAnoEdhQEfyNqMIcKjhRsjEdnezB%2BA4k8gTwJhFuiW4dokXiloUepBAp5qaKpp6%2BHo7aWW54wl7obvEe0kRuoplCGepwSx2jJvqHEmGt6whJpGpfJCHmOoNHKaHx61WiSR92E4lbFoq%2BB6QDtuetcaBPnW6%2BO7wDHpIiK9SaVK5GgV543tzjgGcghAgAh%2BQQJCgAAACwAAAAAIAAgAAAE7hDISSkxpOrN5zFHNWRdhSiVoVLHspRUMoyUakyEe8PTPCATW9A14E0UvuAKMNAZKYUZCiBMuBakSQKG8G2FzUWox2AUtAQFcBKlVQoLgQReZhQlCIJesQXI5B0CBnUMOxMCenoCfTCEWBsJColTMANldx15BGs8B5wlCZ9Po6OJkwmRpnqkqnuSrayqfKmqpLajoiW5HJq7FL1Gr2mMMcKUMIiJgIemy7xZtJsTmsM4xHiKv5KMCXqfyUCJEonXPN2rAOIAmsfB3uPoAK%2B%2BG%2Bw48edZPK%2BM6hLJpQg484enXIdQFSS1u6UhksENEQAAIfkECQoAAAAsAAAAACAAIAAABOcQyEmpGKLqzWcZRVUQnZYg1aBSh2GUVEIQ2aQOE%2BG%2BcD4ntpWkZQj1JIiZIogDFFyHI0UxQwFugMSOFIPJftfVAEoZLBbcLEFhlQiqGp1Vd140AUklUN3eCA51C1EWMzMCezCBBmkxVIVHBWd3HHl9JQOIJSdSnJ0TDKChCwUJjoWMPaGqDKannasMo6WnM562R5YluZRwur0wpgqZE7NKUm%2BFNRPIhjBJxKZteWuIBMN4zRMIVIhffcgojwCF117i4nlLnY5ztRLsnOk%2BaV%2BoJY7V7m76PdkS4trKcdg0Zc0tTcKkRAAAIfkECQoAAAAsAAAAACAAIAAABO4QyEkpKqjqzScpRaVkXZWQEximw1BSCUEIlDohrft6cpKCk5xid5MNJTaAIkekKGQkWyKHkvhKsR7ARmitkAYDYRIbUQRQjWBwJRzChi9CRlBcY1UN4g0%2FVNB0AlcvcAYHRyZPdEQFYV8ccwR5HWxEJ02YmRMLnJ1xCYp0Y5idpQuhopmmC2KgojKasUQDk5BNAwwMOh2RtRq5uQuPZKGIJQIGwAwGf6I0JXMpC8C7kXWDBINFMxS4DKMAWVWAGYsAdNqW5uaRxkSKJOZKaU3tPOBZ4DuK2LATgJhkPJMgTwKCdFjyPHEnKxFCDhEAACH5BAkKAAAALAAAAAAgACAAAATzEMhJaVKp6s2nIkolIJ2WkBShpkVRWqqQrhLSEu9MZJKK9y1ZrqYK9WiClmvoUaF8gIQSNeF1Er4MNFn4SRSDARWroAIETg1iVwuHjYB1kYc1mwruwXKC9gmsJXliGxc%2BXiUCby9ydh1sOSdMkpMTBpaXBzsfhoc5l58Gm5yToAaZhaOUqjkDgCWNHAULCwOLaTmzswadEqggQwgHuQsHIoZCHQMMQgQGubVEcxOPFAcMDAYUA85eWARmfSRQCdcMe0zeP1AAygwLlJtPNAAL19DARdPzBOWSm1brJBi45soRAWQAAkrQIykShQ9wVhHCwCQCACH5BAkKAAAALAAAAAAgACAAAATrEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq%2BE71SRQeyqUToLA7VxF0JDyIQh%2FMVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiRMDjI0Fd30%2FiI2UA5GSS5UDj2l6NoqgOgN4gksEBgYFf0FDqKgHnyZ9OX8HrgYHdHpcHQULXAS2qKpENRg7eAMLC7kTBaixUYFkKAzWAAnLC7FLVxLWDBLKCwaKTULgEwbLA4hJtOkSBNqITT3xEgfLpBtzE%2FjiuL04RGEBgwWhShRgQExHBAAh%2BQQJCgAAACwAAAAAIAAgAAAE7xDISWlSqerNpyJKhWRdlSAVoVLCWk6JKlAqAavhO9UkUHsqlE6CwO1cRdCQ8iEIfzFVTzLdRAmZX3I2SfZiCqGk5dTESJeaOAlClzsJsqwiJwiqnFrb2nS9kmIcgEsjQydLiIlHehhpejaIjzh9eomSjZR%2BipslWIRLAgMDOR2DOqKogTB9pCUJBagDBXR6XB0EBkIIsaRsGGMMAxoDBgYHTKJiUYEGDAzHC9EACcUGkIgFzgwZ0QsSBcXHiQvOwgDdEwfFs0sDzt4S6BK4xYjkDOzn0unFeBzOBijIm1Dgmg5YFQwsCMjp1oJ8LyIAACH5BAkKAAAALAAAAAAgACAAAATwEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq%2BE71SRQeyqUToLA7VxF0JDyIQh%2FMVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiUd6GGl6NoiPOH16iZKNlH6KmyWFOggHhEEvAwwMA0N9GBsEC6amhnVcEwavDAazGwIDaH1ipaYLBUTCGgQDA8NdHz0FpqgTBwsLqAbWAAnIA4FWKdMLGdYGEgraigbT0OITBcg5QwPT4xLrROZL6AuQAPUS7bxLpoWidY0JtxLHKhwwMJBTHgPKdEQAACH5BAkKAAAALAAAAAAgACAAAATrEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq%2BE71SRQeyqUToLA7VxF0JDyIQh%2FMVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiUd6GAULDJCRiXo1CpGXDJOUjY%2BYip9DhToJA4RBLwMLCwVDfRgbBAaqqoZ1XBMHswsHtxtFaH1iqaoGNgAIxRpbFAgfPQSqpbgGBqUD1wBXeCYp1AYZ19JJOYgH1KwA4UBvQwXUBxPqVD9L3sbp2BNk2xvvFPJd%2BMFCN6HAAIKgNggY0KtEBAAh%2BQQJCgAAACwAAAAAIAAgAAAE6BDISWlSqerNpyJKhWRdlSAVoVLCWk6JKlAqAavhO9UkUHsqlE6CwO1cRdCQ8iEIfzFVTzLdRAmZX3I2SfYIDMaAFdTESJeaEDAIMxYFqrOUaNW4E4ObYcCXaiBVEgULe0NJaxxtYksjh2NLkZISgDgJhHthkpU4mW6blRiYmZOlh4JWkDqILwUGBnE6TYEbCgevr0N1gH4At7gHiRpFaLNrrq8HNgAJA70AWxQIH1%2BvsYMDAzZQPC9VCNkDWUhGkuE5PxJNwiUK4UfLzOlD4WvzAHaoG9nxPi5d%2BjYUqfAhhykOFwJWiAAAIfkECQoAAAAsAAAAACAAIAAABPAQyElpUqnqzaciSoVkXVUMFaFSwlpOCcMYlErAavhOMnNLNo8KsZsMZItJEIDIFSkLGQoQTNhIsFehRww2CQLKF0tYGKYSg%2BygsZIuNqJksKgbfgIGepNo2cIUB3V1B3IvNiBYNQaDSTtfhhx0CwVPI0UJe0%2Bbm4g5VgcGoqOcnjmjqDSdnhgEoamcsZuXO1aWQy8KAwOAuTYYGwi7w5h%2BKr0SJ8MFihpNbx%2B4Erq7BYBuzsdiH1jCAzoSfl0rVirNbRXlBBlLX%2BBP0XJLAPGzTkAuAOqb0WT5AH7OcdCm5B8TgRwSRKIHQtaLCwg1RAAAOwAAAAAAAAAAAA%3D%3D);visibility:hidden;opacity:0}.r-overlay-preview .r-overlay-content iframe{width:100%;height:100%;max-width:100%;max-height:100%;border:0;opacity:0;visibility:hidden;transition:all .3s ease}.r-overlay-preview[data-state=loaded] iframe{opacity:1;visibility:visible}.r-overlay-preview .r-overlay-content img,.r-overlay-preview .r-overlay-content video{position:absolute;max-width:100%;max-height:100%;width:100%;height:100%;margin:0;object-fit:scale-down}.r-overlay-preview[data-preview-fit=none] img,.r-overlay-preview[data-preview-fit=none] video{object-fit:none}.r-overlay-preview[data-preview-fit=scale-down] img,.r-overlay-preview[data-preview-fit=scale-down] video{object-fit:scale-down}.r-overlay-preview[data-preview-fit=contain] img,.r-overlay-preview[data-preview-fit=contain] video{object-fit:contain}.r-overlay-preview[data-preview-fit=cover] img,.r-overlay-preview[data-preview-fit=cover] video{object-fit:cover}.r-overlay-preview[data-state=loaded] .r-overlay-content-inner{position:absolute;z-index:-1;left:0;top:45%;width:100%;text-align:center;letter-spacing:normal}.r-overlay-preview .r-overlay-error{font-size:18px;color:orange}.r-overlay-preview .x-frame-error{opacity:0;transition:opacity .3s ease .3s}.r-overlay-preview[data-state=loaded] .x-frame-error{opacity:1}.r-overlay-preview[data-state=loading] .r-overlay-spinner{opacity:.6;visibility:visible}.r-overlay-help .r-overlay-content{overflow:auto}.r-overlay-help-content{max-width:560px;padding:20px 0;margin:auto;text-align:center;letter-spacing:normal}.r-overlay-help-content .title{font-size:20px;margin-top:0}.r-overlay-help .r-overlay-help-content table{border:1px solid #fff;border-collapse:collapse;font-size:16px;text-align:left}.r-overlay-help .r-overlay-help-content table td,.r-overlay-help .r-overlay-help-content table th{width:240px;padding:14px;border:1px solid #fff;vertical-align:middle}.r-overlay-help .r-overlay-help-content table th{padding-top:20px;padding-bottom:20px}.reveal .playback{position:absolute;left:15px;bottom:20px;z-index:30;cursor:pointer;transition:all .4s ease;-webkit-tap-highlight-color:transparent}.reveal.overview .playback{opacity:0;visibility:hidden}.reveal .hljs{min-height:100%}.reveal .hljs table{margin:initial}.reveal .hljs-ln-code,.reveal .hljs-ln-numbers{padding:0;border:0}.reveal .hljs-ln-numbers{opacity:.6;padding-right:.75em;text-align:right;vertical-align:top}.reveal .hljs.has-highlights tr:not(.highlight-line){opacity:.4}.reveal .hljs.has-highlights.fragment{transition:all .2s ease}.reveal .hljs:not(:first-child).fragment{position:absolute;top:0;left:0;width:100%;box-sizing:border-box}.reveal pre[data-auto-animate-target]{overflow:hidden}.reveal pre[data-auto-animate-target] code{height:100%}.reveal .roll{display:inline-block;line-height:1.2;overflow:hidden;vertical-align:top;perspective:400px;perspective-origin:50% 50%}.reveal .roll:hover{background:0 0;text-shadow:none}.reveal .roll span{display:block;position:relative;padding:0 2px;pointer-events:none;transition:all .4s ease;transform-origin:50% 0;transform-style:preserve-3d;backface-visibility:hidden}.reveal .roll:hover span{background:rgba(0,0,0,.5);transform:translate3d(0,0,-45px) rotateX(90deg)}.reveal .roll span:after{content:attr(data-title);display:block;position:absolute;left:0;top:0;padding:0 2px;backface-visibility:hidden;transform-origin:50% 0;transform:translate3d(0,110%,0) rotateX(-90deg)}.reveal aside.notes{display:none}.reveal .speaker-notes{display:none;position:absolute;width:33.3333333333%;height:100%;top:0;left:100%;padding:14px 18px 14px 18px;z-index:1;font-size:18px;line-height:1.4;border:1px solid rgba(0,0,0,.05);color:#222;background-color:#f5f5f5;overflow:auto;box-sizing:border-box;text-align:left;font-family:Helvetica,sans-serif;-webkit-overflow-scrolling:touch}.reveal .speaker-notes .notes-placeholder{color:#ccc;font-style:italic}.reveal .speaker-notes:focus{outline:0}.reveal .speaker-notes:before{content:"Speaker notes";display:block;margin-bottom:10px;opacity:.5}.reveal.show-notes{max-width:75%;overflow:visible}.reveal.show-notes .speaker-notes{display:block}@media screen and (min-width:1600px){.reveal .speaker-notes{font-size:20px}}@media screen and (max-width:1024px){.reveal.show-notes{border-left:0;max-width:none;max-height:70%;max-height:70vh;overflow:visible}.reveal.show-notes .speaker-notes{top:100%;left:0;width:100%;height:30vh;border:0}}@media screen and (max-width:600px){.reveal.show-notes{max-height:60%;max-height:60vh}.reveal.show-notes .speaker-notes{top:100%;height:40vh}.reveal .speaker-notes{font-size:14px}}.reveal .jump-to-slide{position:absolute;top:15px;left:15px;z-index:30;font-size:32px;-webkit-tap-highlight-color:transparent}.reveal .jump-to-slide-input{background:0 0;padding:8px;font-size:inherit;color:currentColor;border:0}.reveal .jump-to-slide-input::placeholder{color:currentColor;opacity:.5}.reveal.has-dark-background .jump-to-slide-input{color:#fff}.reveal.has-light-background .jump-to-slide-input{color:#222}.reveal .jump-to-slide-input:focus{outline:0}.zoomed .reveal *,.zoomed .reveal :after,.zoomed .reveal :before{backface-visibility:visible!important}.zoomed .reveal .controls,.zoomed .reveal .progress{opacity:0}.zoomed .reveal .roll span{background:0 0}.zoomed .reveal .roll span:after{visibility:hidden}.reveal-viewport.loading-scroll-mode{visibility:hidden}.reveal-viewport.reveal-scroll{margin:0 auto;overflow:auto;overflow-x:hidden;overflow-y:auto;z-index:1;--r-scrollbar-width:7px;--r-scrollbar-trigger-size:5px;--r-controls-spacing:8px}@media screen and (max-width:500px){.reveal-viewport.reveal-scroll{--r-scrollbar-width:3px;--r-scrollbar-trigger-size:3px}}.reveal-viewport.reveal-scroll .backgrounds,.reveal-viewport.reveal-scroll .controls,.reveal-viewport.reveal-scroll .playback,.reveal-viewport.reveal-scroll .progress,.reveal-viewport.reveal-scroll .slide-number,.reveal-viewport.reveal-scroll .speaker-notes{display:none!important}.reveal-viewport.reveal-scroll .pause-overlay,.reveal-viewport.reveal-scroll .r-overlay{position:fixed}.reveal-viewport.reveal-scroll .reveal{overflow:visible;touch-action:manipulation}.reveal-viewport.reveal-scroll .slides{position:static;pointer-events:initial;left:auto;top:auto;width:100%!important;margin:0;padding:0;overflow:visible;display:block;perspective:none;perspective-origin:50% 50%}.reveal-viewport.reveal-scroll .scroll-page{position:relative;width:100%;height:calc(var(--page-height) + var(--page-scroll-padding));z-index:1;overflow:visible}.reveal-viewport.reveal-scroll .scroll-page-sticky{position:sticky;height:var(--page-height);top:0}.reveal-viewport.reveal-scroll .scroll-page-content{position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden}.reveal-viewport.reveal-scroll .scroll-page section{visibility:visible!important;display:block!important;position:absolute!important;width:var(--slide-width)!important;height:var(--slide-height)!important;top:50%!important;left:50%!important;opacity:1!important;transform:scale(var(--slide-scale)) translate(-50%,-50%)!important;transform-style:flat!important;transform-origin:0 0!important}.reveal-viewport.reveal-scroll .slide-background{display:block!important;position:absolute;top:0;left:0;width:100%;height:100%;z-index:auto!important;visibility:visible;opacity:1;touch-action:manipulation}.reveal-viewport.reveal-scroll[data-scrollbar=auto]::-webkit-scrollbar,.reveal-viewport.reveal-scroll[data-scrollbar=true]::-webkit-scrollbar{display:none}.reveal-viewport.reveal-scroll[data-scrollbar=auto],.reveal-viewport.reveal-scroll[data-scrollbar=true]{scrollbar-width:none}.reveal-viewport.has-dark-background,.reveal.has-dark-background{--r-overlay-element-bg-color:240,240,240;--r-overlay-element-fg-color:0,0,0}.reveal-viewport.has-light-background,.reveal.has-light-background{--r-overlay-element-bg-color:0,0,0;--r-overlay-element-fg-color:240,240,240}.reveal-viewport.reveal-scroll .scrollbar{position:sticky;top:50%;z-index:20;opacity:0;transition:all .3s ease}.reveal-viewport.reveal-scroll .scrollbar.visible,.reveal-viewport.reveal-scroll .scrollbar:hover{opacity:1}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-inner{position:absolute;width:var(--r-scrollbar-width);height:calc(var(--viewport-height) - var(--r-controls-spacing) * 2);right:var(--r-controls-spacing);top:0;transform:translateY(-50%);border-radius:var(--r-scrollbar-width);z-index:10}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-playhead{position:absolute;width:var(--r-scrollbar-width);height:var(--r-scrollbar-width);top:0;left:0;border-radius:var(--r-scrollbar-width);background-color:rgba(var(--r-overlay-element-bg-color),1);z-index:11;transition:background-color .2s ease}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide{position:absolute;width:100%;background-color:rgba(var(--r-overlay-element-bg-color),.2);box-shadow:0 0 0 1px rgba(var(--r-overlay-element-fg-color),.1);border-radius:var(--r-scrollbar-width);transition:background-color .2s ease}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide:after{content:"";position:absolute;width:200%;height:100%;top:0;left:-50%;background:rgba(0,0,0,0);z-index:-1}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active,.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide:hover{background-color:rgba(var(--r-overlay-element-bg-color),.4)}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-trigger{position:absolute;width:100%;transition:background-color .2s ease}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active.has-triggers{background-color:rgba(var(--r-overlay-element-bg-color),.4);z-index:10}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active .scrollbar-trigger:after{content:"";position:absolute;width:var(--r-scrollbar-trigger-size);height:var(--r-scrollbar-trigger-size);border-radius:20px;top:50%;left:50%;transform:translate(-50%,-50%);background-color:rgba(var(--r-overlay-element-bg-color),1);transition:transform .2s ease,opacity .2s ease;opacity:.4}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active .scrollbar-trigger.active:after,.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active .scrollbar-trigger.active~.scrollbar-trigger:after{opacity:1}.reveal-viewport.reveal-scroll .scrollbar .scrollbar-slide.active .scrollbar-trigger~.scrollbar-trigger.active:after{transform:translate(calc(var(--r-scrollbar-width) * -2),0);background-color:rgba(var(--r-overlay-element-bg-color),1)}html.reveal-print *{-webkit-print-color-adjust:exact}html.reveal-print{width:100%;height:100%;overflow:visible}html.reveal-print body{margin:0 auto!important;border:0;padding:0;float:none!important;overflow:visible}html.reveal-print .nestedarrow,html.reveal-print .reveal .controls,html.reveal-print .reveal .playback,html.reveal-print .reveal .progress,html.reveal-print .reveal.overview,html.reveal-print .state-background{display:none!important}html.reveal-print .reveal pre code{overflow:hidden!important}html.reveal-print .reveal{width:auto!important;height:auto!important;overflow:hidden!important}html.reveal-print .reveal .slides{position:static;width:100%!important;height:auto!important;zoom:1!important;pointer-events:initial;left:auto;top:auto;margin:0!important;padding:0!important;overflow:visible;display:block;perspective:none;perspective-origin:50% 50%}html.reveal-print .reveal .slides .pdf-page{position:relative;overflow:hidden;z-index:1;page-break-after:always}html.reveal-print .reveal .slides .pdf-page:last-of-type{page-break-after:avoid}html.reveal-print .reveal .slides section{visibility:visible!important;display:block!important;position:absolute!important;margin:0!important;padding:0!important;box-sizing:border-box!important;min-height:1px;opacity:1!important;transform-style:flat!important;transform:none!important}html.reveal-print .reveal section.stack{position:relative!important;margin:0!important;padding:0!important;page-break-after:avoid!important;height:auto!important;min-height:auto!important}html.reveal-print .reveal img{box-shadow:none}html.reveal-print .reveal .backgrounds{display:none}html.reveal-print .reveal .slide-background{display:block!important;position:absolute;top:0;left:0;width:100%;height:100%;z-index:auto!important}html.reveal-print .reveal.show-notes{max-width:none;max-height:none}html.reveal-print .reveal .speaker-notes-pdf{display:block;width:100%;height:auto;max-height:none;top:auto;right:auto;bottom:auto;left:auto;z-index:100}html.reveal-print .reveal .speaker-notes-pdf[data-layout=separate-page]{position:relative;color:inherit;background-color:transparent;padding:20px;page-break-after:always;border:0}html.reveal-print .reveal .slide-number-pdf{display:block;position:absolute;font-size:14px;visibility:visible}html.reveal-print .aria-status{display:none}@media print{html:not(.print-pdf){overflow:visible;width:auto;height:auto}html:not(.print-pdf) body{margin:0;padding:0;overflow:visible}html:not(.print-pdf) .reveal{background:#fff;font-size:20pt}html:not(.print-pdf) .reveal .backgrounds,html:not(.print-pdf) .reveal .controls,html:not(.print-pdf) .reveal .progress,html:not(.print-pdf) .reveal .slide-number,html:not(.print-pdf) .reveal .state-background{display:none!important}html:not(.print-pdf) .reveal li,html:not(.print-pdf) .reveal p,html:not(.print-pdf) .reveal td{font-size:20pt!important;color:#000}html:not(.print-pdf) .reveal h1,html:not(.print-pdf) .reveal h2,html:not(.print-pdf) .reveal h3,html:not(.print-pdf) .reveal h4,html:not(.print-pdf) .reveal h5,html:not(.print-pdf) .reveal h6{color:#000!important;height:auto;line-height:normal;text-align:left;letter-spacing:normal}html:not(.print-pdf) .reveal h1{font-size:28pt!important}html:not(.print-pdf) .reveal h2{font-size:24pt!important}html:not(.print-pdf) .reveal h3{font-size:22pt!important}html:not(.print-pdf) .reveal h4{font-size:22pt!important;font-variant:small-caps}html:not(.print-pdf) .reveal h5{font-size:21pt!important}html:not(.print-pdf) .reveal h6{font-size:20pt!important;font-style:italic}html:not(.print-pdf) .reveal a:link,html:not(.print-pdf) .reveal a:visited{color:#000!important;font-weight:700;text-decoration:underline}html:not(.print-pdf) .reveal div,html:not(.print-pdf) .reveal ol,html:not(.print-pdf) .reveal p,html:not(.print-pdf) .reveal ul{visibility:visible;position:static;width:auto;height:auto;display:block;overflow:visible;margin:0;text-align:left!important}html:not(.print-pdf) .reveal pre,html:not(.print-pdf) .reveal table{margin-left:0;margin-right:0}html:not(.print-pdf) .reveal pre code{padding:20px}html:not(.print-pdf) .reveal blockquote{margin:20px 0}html:not(.print-pdf) .reveal .slides{position:static!important;width:auto!important;height:auto!important;left:0!important;top:0!important;margin-left:0!important;margin-top:0!important;padding:0!important;zoom:1!important;transform:none!important;overflow:visible!important;display:block!important;text-align:left!important;perspective:none;perspective-origin:50% 50%}html:not(.print-pdf) .reveal .slides section{visibility:visible!important;position:static!important;width:auto!important;height:auto!important;display:block!important;overflow:visible!important;left:0!important;top:0!important;margin-left:0!important;margin-top:0!important;padding:60px 20px!important;z-index:auto!important;opacity:1!important;page-break-after:always!important;transform-style:flat!important;transform:none!important;transition:none!important}html:not(.print-pdf) .reveal .slides section.stack{padding:0!important}html:not(.print-pdf) .reveal .slides section:last-of-type{page-break-after:avoid!important}html:not(.print-pdf) .reveal .slides section .fragment{opacity:1!important;visibility:visible!important;transform:none!important}html:not(.print-pdf) .reveal .r-fit-text{white-space:normal!important}html:not(.print-pdf) .reveal section img{display:block;margin:15px 0;background:#fff;border:1px solid #666;box-shadow:none}html:not(.print-pdf) .reveal section small{font-size:.8em}html:not(.print-pdf) .reveal .hljs{max-height:100%;white-space:pre-wrap;word-wrap:break-word;word-break:break-word;font-size:15pt}html:not(.print-pdf) .reveal .hljs .hljs-ln-numbers{white-space:nowrap}html:not(.print-pdf) .reveal .hljs td{font-size:inherit!important;color:inherit!important}}</style>
+<style>/**
+ * Black theme for reveal.js. This is the opposite of the 'white' theme.
+ *
+ * By Hakim El Hattab, http://hakim.se
+ */
+
+section.has-light-background, section.has-light-background h1, section.has-light-background h2, section.has-light-background h3, section.has-light-background h4, section.has-light-background h5, section.has-light-background h6 {
+  color: #222;
+}
+
+/*********************************************
+ * GLOBAL STYLES
+ *********************************************/
+:root {
+  --r-background-color: #191919;
+  --r-main-font: Source Sans Pro, Helvetica, sans-serif;
+  --r-main-font-size: 42px;
+  --r-main-color: #fff;
+  --r-block-margin: 20px;
+  --r-heading-margin: 0 0 20px 0;
+  --r-heading-font: Source Sans Pro, Helvetica, sans-serif;
+  --r-heading-color: #fff;
+  --r-heading-line-height: 1.2;
+  --r-heading-letter-spacing: normal;
+  --r-heading-text-transform: uppercase;
+  --r-heading-text-shadow: none;
+  --r-heading-font-weight: 600;
+  --r-heading1-text-shadow: none;
+  --r-heading1-size: 2.5em;
+  --r-heading2-size: 1.6em;
+  --r-heading3-size: 1.3em;
+  --r-heading4-size: 1em;
+  --r-code-font: monospace;
+  --r-link-color: #42affa;
+  --r-link-color-dark: rgb(19.8216494845, 155.4536082474, 248.7783505155);
+  --r-link-color-hover: rgb(94.35, 187, 250.75);
+  --r-selection-background-color: rgba(66, 175, 250, 0.75);
+  --r-selection-color: #fff;
+  --r-overlay-element-bg-color: 240, 240, 240;
+  --r-overlay-element-fg-color: 0, 0, 0;
+}
+
+.reveal-viewport {
+  background: #191919;
+  background-color: var(--r-background-color);
+}
+
+.reveal {
+  font-family: var(--r-main-font);
+  font-size: var(--r-main-font-size);
+  font-weight: normal;
+  color: var(--r-main-color);
+}
+
+.reveal ::selection {
+  color: var(--r-selection-color);
+  background: var(--r-selection-background-color);
+  text-shadow: none;
+}
+
+.reveal ::-moz-selection {
+  color: var(--r-selection-color);
+  background: var(--r-selection-background-color);
+  text-shadow: none;
+}
+
+.reveal .slides section,
+.reveal .slides section > section {
+  line-height: 1.3;
+  font-weight: inherit;
+}
+
+/*********************************************
+ * HEADERS
+ *********************************************/
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  margin: var(--r-heading-margin);
+  color: var(--r-heading-color);
+  font-family: var(--r-heading-font);
+  font-weight: var(--r-heading-font-weight);
+  line-height: var(--r-heading-line-height);
+  letter-spacing: var(--r-heading-letter-spacing);
+  text-transform: var(--r-heading-text-transform);
+  text-shadow: var(--r-heading-text-shadow);
+  word-wrap: break-word;
+}
+
+.reveal h1 {
+  font-size: var(--r-heading1-size);
+}
+
+.reveal h2 {
+  font-size: var(--r-heading2-size);
+}
+
+.reveal h3 {
+  font-size: var(--r-heading3-size);
+}
+
+.reveal h4 {
+  font-size: var(--r-heading4-size);
+}
+
+.reveal h1 {
+  text-shadow: var(--r-heading1-text-shadow);
+}
+
+/*********************************************
+ * OTHER
+ *********************************************/
+.reveal p {
+  margin: var(--r-block-margin) 0;
+  line-height: 1.3;
+}
+
+/* Remove trailing margins after titles */
+.reveal h1:last-child,
+.reveal h2:last-child,
+.reveal h3:last-child,
+.reveal h4:last-child,
+.reveal h5:last-child,
+.reveal h6:last-child {
+  margin-bottom: 0;
+}
+
+/* Ensure certain elements are never larger than the slide itself */
+.reveal img,
+.reveal video,
+.reveal iframe {
+  max-width: 95%;
+  max-height: 95%;
+}
+
+.reveal strong,
+.reveal b {
+  font-weight: bold;
+}
+
+.reveal em {
+  font-style: italic;
+}
+
+.reveal ol,
+.reveal dl,
+.reveal ul {
+  display: inline-block;
+  text-align: left;
+  margin: 0 0 0 1em;
+}
+
+.reveal ol {
+  list-style-type: decimal;
+}
+
+.reveal ul {
+  list-style-type: disc;
+}
+
+.reveal ul ul {
+  list-style-type: square;
+}
+
+.reveal ul ul ul {
+  list-style-type: circle;
+}
+
+.reveal ul ul,
+.reveal ul ol,
+.reveal ol ol,
+.reveal ol ul {
+  display: block;
+  margin-left: 40px;
+}
+
+.reveal dt {
+  font-weight: bold;
+}
+
+.reveal dd {
+  margin-left: 40px;
+}
+
+.reveal blockquote {
+  display: block;
+  position: relative;
+  width: 70%;
+  margin: var(--r-block-margin) auto;
+  padding: 5px;
+  font-style: italic;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
+}
+
+.reveal blockquote p:first-child,
+.reveal blockquote p:last-child {
+  display: inline-block;
+}
+
+.reveal q {
+  font-style: italic;
+}
+
+.reveal pre {
+  display: block;
+  position: relative;
+  width: 90%;
+  margin: var(--r-block-margin) auto;
+  text-align: left;
+  font-size: 0.55em;
+  font-family: var(--r-code-font);
+  line-height: 1.2em;
+  word-wrap: break-word;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.reveal code {
+  font-family: var(--r-code-font);
+  text-transform: none;
+  tab-size: 2;
+}
+
+.reveal pre code {
+  display: block;
+  padding: 5px;
+  overflow: auto;
+  max-height: 400px;
+  word-wrap: normal;
+}
+
+.reveal .code-wrapper {
+  white-space: normal;
+}
+
+.reveal .code-wrapper code {
+  white-space: pre;
+}
+
+.reveal table {
+  margin: auto;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.reveal table th {
+  font-weight: bold;
+}
+
+.reveal table th,
+.reveal table td {
+  text-align: left;
+  padding: 0.2em 0.5em 0.2em 0.5em;
+  border-bottom: 1px solid;
+}
+
+.reveal table th[align=center],
+.reveal table td[align=center] {
+  text-align: center;
+}
+
+.reveal table th[align=right],
+.reveal table td[align=right] {
+  text-align: right;
+}
+
+.reveal table tbody tr:last-child th,
+.reveal table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.reveal sup {
+  vertical-align: super;
+  font-size: smaller;
+}
+
+.reveal sub {
+  vertical-align: sub;
+  font-size: smaller;
+}
+
+.reveal small {
+  display: inline-block;
+  font-size: 0.6em;
+  line-height: 1.2em;
+  vertical-align: top;
+}
+
+.reveal small * {
+  vertical-align: top;
+}
+
+.reveal img {
+  margin: var(--r-block-margin) 0;
+}
+
+/*********************************************
+ * LINKS
+ *********************************************/
+.reveal a {
+  color: var(--r-link-color);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.reveal a:hover {
+  color: var(--r-link-color-hover);
+  text-shadow: none;
+  border: none;
+}
+
+.reveal .roll span:after {
+  color: #fff;
+  background: var(--r-link-color-dark);
+}
+
+/*********************************************
+ * Frame helper
+ *********************************************/
+.reveal .r-frame {
+  border: 4px solid var(--r-main-color);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+.reveal a .r-frame {
+  transition: all 0.15s linear;
+}
+
+.reveal a:hover .r-frame {
+  border-color: var(--r-link-color);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.55);
+}
+
+/*********************************************
+ * NAVIGATION CONTROLS
+ *********************************************/
+.reveal .controls {
+  color: var(--r-link-color);
+}
+
+/*********************************************
+ * PROGRESS BAR
+ *********************************************/
+.reveal .progress {
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--r-link-color);
+}
+
+/*********************************************
+ * PRINT BACKGROUND
+ *********************************************/
+@media print {
+  .backgrounds {
+    background-color: var(--r-background-color);
+  }
+}</style>
+<style>/*
+Monokai style - ported by Luigi Maselli - http://grigio.org
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #272822;
+  color: #ddd;
+}
+
+.hljs-tag,
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-strong,
+.hljs-name {
+  color: #f92672;
+}
+
+.hljs-code {
+  color: #66d9ef;
+}
+
+.hljs-class .hljs-title {
+  color: white;
+}
+
+.hljs-attribute,
+.hljs-symbol,
+.hljs-regexp,
+.hljs-link {
+  color: #bf79db;
+}
+
+.hljs-string,
+.hljs-bullet,
+.hljs-subst,
+.hljs-title,
+.hljs-section,
+.hljs-emphasis,
+.hljs-type,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-addition,
+.hljs-variable,
+.hljs-template-tag,
+.hljs-template-variable {
+  color: #a6e22e;
+}
+
+.hljs-comment,
+.hljs-quote,
+.hljs-deletion,
+.hljs-meta {
+  color: #75715e;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-doctag,
+.hljs-title,
+.hljs-section,
+.hljs-type,
+.hljs-selector-id {
+  font-weight: bold;
+}
+</style>
+<style>:root{
+  --r-main-font:'Source Sans 3',Helvetica,sans-serif;
+  --r-heading-font:'Source Sans 3',Helvetica,sans-serif;
+  --r-code-font:'JetBrains Mono',monospace;
+  --r-heading-text-transform:none;
+  --r-main-font-size:46px;
+  --r-background-color:#141414;
+}
+.reveal h1,.reveal h2,.reveal h3{text-transform:none;letter-spacing:-.01em;text-shadow:none}
+.reveal h1{font-weight:800}.reveal h2{font-weight:700}
+.reveal mark{background:#ffd54f;color:#111;padding:0 .15em;border-radius:8px}
+.red{color:#ff6b6b!important}.green,.ok{color:#4CAF50!important}.blue{color:#4fc3f7!important}
+.amber{color:#ffc107!important}.purple{color:#ce93d8!important}
+.reveal code{font-family:var(--r-code-font)}
+.reveal p code,.reveal h1 code,.reveal h2 code,.reveal td code,.reveal li code,.reveal .card code,.reveal .rule code,.reveal .dcap code{
+  background:#2a2a2a;padding:.05em .3em;border-radius:8px;color:#ffe082}
+.reveal pre{width:1400px;margin:20px auto;box-shadow:none;font-size:38px;line-height:1.45}
+.reveal pre code{max-height:700px;padding:28px 36px;border-radius:18px;background:#1e1f1c}
+.kicker{color:#9e9e9e;font-size:32px;letter-spacing:.12em;text-transform:uppercase;margin:0 0 10px}
+.byline{color:#bbb;font-size:34px;margin-top:30px}
+.hint{color:#666;font-size:24px;margin-top:50px}
+.small{font-size:36px;color:#ddd}
+/* output boxes */
+.out{position:relative;font-family:var(--r-code-font);white-space:pre;text-align:left;width:1400px;box-sizing:border-box;
+  margin:18px auto 0;padding:26px 36px 22px;background:#0d1117;border-left:10px solid #4CAF50;border-radius:12px;font-size:36px;color:#eee}
+.out.bad{border-left-color:#ff6b6b}
+.out .lbl{position:absolute;top:-16px;left:28px;font-size:20px;background:#4CAF50;color:#111;padding:2px 12px;border-radius:6px;font-family:var(--r-main-font);font-weight:700}
+.out.bad .lbl{background:#ff6b6b}
+.outrow{display:flex;gap:40px;justify-content:center}.outrow .out{width:500px;margin-left:0;margin-right:0}
+/* diagrams */
+.diagram{position:relative;margin:20px auto 0}
+.node{position:absolute;display:flex;align-items:center;justify-content:center;box-sizing:border-box}
+.tag{background:#1565c0;color:#fff;border-radius:50px;font-family:var(--r-code-font);font-size:44px;font-weight:700;box-shadow:0 6px 18px rgba(21,101,192,.45)}
+.obj{flex-direction:column;background:#232323;border:5px solid #ffc107;border-radius:20px;font-family:var(--r-code-font);line-height:1.15}
+.obj.mut{border-color:#ce93d8}
+.obj .t{font-size:24px;color:#aaa;font-family:var(--r-main-font)}
+.obj .v{font-size:48px;color:#fff;font-weight:700}
+.obj .i{font-size:22px;color:#888}
+.obj.ghost{opacity:.28;border-style:dashed}
+.obj.hl{box-shadow:0 0 0 6px rgba(255,107,107,.25),0 0 50px rgba(255,107,107,.55)}
+svg.arrows{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}
+.dcap{font-size:36px;color:#ddd;margin-top:24px}
+/* myth box */
+.myth{display:flex;flex-direction:column;align-items:center;margin-top:30px}
+.boxlbl{font-family:var(--r-code-font);font-size:48px;color:#ffc107;margin-bottom:10px}
+.box{width:300px;height:220px;border:6px solid #8d6e63;border-top:none;background:linear-gradient(#3e2723,#4e342e);display:flex;align-items:center;justify-content:center;font-size:110px;font-weight:800;color:#fff;border-radius:0 0 16px 16px}
+/* cards & layout */
+.grid2,.grid3{display:grid;gap:40px;width:1600px;margin:30px auto 0}
+.grid2{grid-template-columns:1fr 1fr}.grid3{grid-template-columns:1fr 1fr 1fr}
+.card{background:#212121;border-radius:24px;padding:36px 40px;text-align:left;font-size:40px;border:2px solid #333}
+.card h3{font-size:58px;margin:0 0 16px}
+.imm-card{border-color:#ffc107}.mut-card{border-color:#ce93d8}
+.steps{display:flex;flex-direction:column;gap:24px;width:1100px;margin:30px auto 0;text-align:left;font-size:52px}
+.steps b{display:inline-block;width:72px;height:72px;line-height:72px;text-align:center;border-radius:50%;background:#1565c0;margin-right:24px}
+.rule{font-size:72px;font-weight:700;line-height:1.35;background:#1b2a1b;border:4px solid #4CAF50;border-radius:28px;padding:60px 70px;width:1500px;margin:0 auto 30px;box-sizing:border-box}
+.rn{display:block;font-size:30px;letter-spacing:.15em;text-transform:uppercase;color:#4CAF50;margin-bottom:16px}
+.legend{display:flex;flex-wrap:wrap;gap:30px 60px;justify-content:center;font-size:34px;margin-top:40px;width:1500px;margin-left:auto;margin-right:auto}
+.sw{display:inline-block;width:46px;height:30px;vertical-align:middle;margin-right:12px;border-radius:8px}
+.tagsw{background:#1565c0;border-radius:20px}.objsw{background:#232323;border:3px solid #9e9e9e}
+.ambsw{border:5px solid #ffc107}.pursw{border:5px solid #ce93d8}
+.counter{font-size:48px;display:flex;flex-direction:column;gap:26px;margin-top:40px}
+.tbl{margin:30px auto 0;font-size:40px;border-collapse:collapse}
+.reveal .tbl th,.reveal .tbl td{padding:22px 34px;border-bottom:2px solid #333;text-align:left}
+.reveal .tbl th{color:#9e9e9e;font-size:30px;text-transform:uppercase;letter-spacing:.1em}
+.recap{font-size:50px;text-align:left;width:1500px;margin:30px auto 0!important;line-height:1.7}
+/* presenter caption bar (toggle with N) */
+#say{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);max-width:min(92vw,1100px);background:rgba(0,0,0,.82);
+  color:#f5f5f5;font:18px/1.45 'Source Sans 3',sans-serif;padding:12px 20px;border-radius:12px;border:1px solid #333;z-index:40;display:none}
+#say.on{display:block}#say b{color:#4fc3f7;margin-right:8px}
+#saybtn{position:fixed;right:14px;top:12px;z-index:41;background:#222;color:#aaa;border:1px solid #444;border-radius:8px;font:14px 'Source Sans 3',sans-serif;padding:6px 10px;cursor:pointer;opacity:.55}
+#saybtn:hover{opacity:1}
+</style>
+</head>
+<body>
+<!-- Shared arrowhead marker used by every diagram's arrows -->
+<svg width="0" height="0" style="position:absolute"><defs>
+  <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#7fdbff"/></marker>
+</defs></svg>
+<button id="saybtn" type="button" title="Show/hide presenter lines (N)">N · lines</button>
+<div id="say"></div>
+<div class="reveal"><div class="slides">
+
+<!-- ================= START CHAPTER 1: THE HOOK ================= -->
+
+<!-- TITLE slide. Promise + time box, exactly like the example deck's 'Give me 40 minutes' hook. The module label sits small so the promise dominates. -->
+<section data-transition="fade" data-say="Welcome. In the next twenty minutes we fix the single most confusing thing in Python: what a variable really is.">
+<p class="kicker">Python Mastery · Module 3</p><h1 class="r-fit-text " style="margin-bottom:10px">Give me <span class="amber">20 minutes</span>.</h1><h2 class="r-fit-text ">Python variables will <mark>never</mark> confuse you again.</h2><p class="byline">References · Mutability · Memory &nbsp;—&nbsp; Musa Bangash</p><p class="hint">Press <b>N</b> for presenter lines · <b>F</b> fullscreen · arrows to move</p>
+</section>
+
+<!-- POWER TEXT. A relatable question to pull the audience in. -->
+<section data-transition="fade" data-say="Let&#x27;s start with a tiny program. Three lines. Nothing fancy.">
+<h1 class="r-fit-text ">You wrote three innocent lines of Python...</h1>
+</section>
+
+<!-- CODE REVEAL. Line-by-line stepping (data-line-numbers) so the eye follows one line at a time; the output appears last as a fragment, in RED, because it is the 'bug'. -->
+<section data-transition="fade" data-say="We make a list a. We set b equal to a. We add 4 to b. Then we print a. And a has changed!">
+<pre><code class="language-python" data-trim data-noescape data-line-numbers="1|2|3|4">a = [1, 2, 3]
+b = a
+b.append(4)
+print(a)</code></pre><div class="out bad fragment fade-up"><span class="lbl">Output</span>[1, 2, 3, 4]</div>
+</section>
+
+<!-- POWER TEXT punchline. Zoom transition for a jolt of surprise. -->
+<section data-transition="zoom" data-say="Wait. We never touched a. We only changed b. So why did a change?">
+<h1 class="r-fit-text ">Wait. You <span class="red">never touched</span> <code>a</code>.</h1>
+</section>
+
+<!-- POWER TEXT pair (auto-animate): first line stays, second completes the thought. -->
+<section data-auto-animate data-transition="fade" data-say="Python is not broken. There is no bug here.">
+<h1 class="r-fit-text ">Python is <span class="green">not</span> broken.</h1>
+</section>
+
+<!-- Second half of the pair. The red word names the real culprit. -->
+<section data-auto-animate data-transition="fade" data-say="The problem is the picture of variables that most of us carry in our heads.">
+<h1 class="r-fit-text ">Python is <span class="green">not</span> broken.</h1><h1 class="r-fit-text ">Your <span class="red">mental model</span> is.</h1>
+</section>
+
+<!-- ROADMAP. Four ideas, revealed one by one, so students know the journey and can track progress. -->
+<section data-transition="slide" data-say="Four ideas. Names and objects. Mutable and immutable. Functions and copies. And how Python cleans up memory.">
+<h2>Today, four ideas:</h2><div class="steps"><div class="fragment fade-up"><b>1</b> Names vs. objects</div><div class="fragment fade-up"><b>2</b> Mutable vs. immutable</div><div class="fragment fade-up"><b>3</b> Functions &amp; copies</div><div class="fragment fade-up"><b>4</b> How Python frees memory</div></div>
+</section>
+
+<!-- ================= START CHAPTER 2: NAMES, NOT BOXES ================= -->
+
+<!-- POWER TEXT. Name the wrong model explicitly before replacing it. -->
+<section data-transition="slide" data-say="Most of us learned that a variable is a box that holds a value.">
+<h1 class="r-fit-text ">Most beginners picture a variable as a <span class="amber">box</span>.</h1>
+</section>
+
+<!-- WRONG-MODEL DIAGRAM. A literal box with 5 inside, drawn in CSS. Labelled 'the myth' in red. -->
+<section data-transition="fade" data-say="In that picture, x equals 5 means: put the number 5 inside a box called x.">
+<div class="myth"><div class="boxlbl">x</div><div class="box">5</div></div><p class="dcap red">The myth: <code>x = 5</code> puts 5 <i>inside</i> box x.</p>
+</section>
+
+<!-- POWER TEXT. Short, blunt, red. Zoom for impact. -->
+<section data-transition="zoom" data-say="That picture is wrong, and it is the source of the bug we just saw.">
+<h1 class="r-fit-text ">That picture is <span class="red">wrong</span>.</h1>
+</section>
+
+<!-- POWER TEXT. The replacement model in one image-word: a sticky note / name tag. -->
+<section data-transition="fade" data-say="A variable is a name tag. It does not hold the object. It points at the object.">
+<h1 class="r-fit-text ">A variable is a <span class="blue">name tag</span>.</h1><h2 class="r-fit-text fragment fade-in ">It <mark>points</mark> at an object.</h2>
+</section>
+
+<!-- LEGEND. Before animating, teach the visual vocabulary once: blue pill = name, box = object, amber/purple border = can't/can change. -->
+<section data-transition="fade" data-say="Here&#x27;s our picture language. Blue pills are names. Boxes are objects. Amber border means the object can never change. Purple means it can.">
+<div class="diagram" data-arrows="n>o" style="width:940px;height:240px"><div class="node tag" data-key="n" data-id="leg-n" style="left:0px;top:60px;width:180px;height:86px">x</div><div class="node obj imm" data-key="o" data-id="leg-o" style="left:580px;top:20px;width:360px;height:180px"><span class="t">int</span><span class="v">5</span><span class="i">id 1001</span></div></div><div class="legend"><span><i class="sw tagsw"></i> name (variable)</span><span><i class="sw objsw"></i> object (the real data)</span><span><i class="sw ambsw"></i> amber border = can't change</span><span><i class="sw pursw"></i> purple border = can change</span></div>
+</section>
+
+<!-- AUTO-ANIMATE SEQUENCE A, step 1: x = 5. Object first, then the name attaches. -->
+<section data-auto-animate data-transition="fade" data-say="x equals 5. Python first creates an integer object 5 somewhere in memory. Then it sticks the name x onto it.">
+<pre><code class="language-python" data-trim data-noescape>x = 5</code></pre><div class="diagram" data-arrows="x>o5" style="width:1010px;height:440px"><div class="node tag" data-key="x" data-id="A-x" style="left:0px;top:170px;width:180px;height:86px">x</div><div class="node obj imm" data-key="o5" data-id="A-o5" style="left:650px;top:130px;width:360px;height:180px"><span class="t">int</span><span class="v">5</span><span class="i">id 1001</span></div></div>
+</section>
+
+<!-- SEQUENCE A, step 2: y = x. A second tag slides in and points at the SAME box. No new box appears — that is the whole lesson. -->
+<section data-auto-animate data-transition="fade" data-say="Now y equals x. Python does not copy the 5. It simply puts a second name tag, y, on the same object.">
+<pre><code class="language-python" data-trim data-noescape>x = 5
+y = x</code></pre><div class="diagram" data-arrows="x>o5,y>o5" style="width:1010px;height:440px"><div class="node tag" data-key="x" data-id="A-x" style="left:0px;top:100px;width:180px;height:86px">x</div><div class="node tag" data-key="y" data-id="A-y" style="left:0px;top:260px;width:180px;height:86px">y</div><div class="node obj imm" data-key="o5" data-id="A-o5" style="left:650px;top:130px;width:360px;height:180px"><span class="t">int</span><span class="v">5</span><span class="i">id 1001</span></div></div>
+</section>
+
+<!-- POWER TEXT summary of sequence A. -->
+<section data-transition="fade" data-say="Two names. One object. Keep this picture in your head for the rest of the lecture.">
+<h1 class="r-fit-text ">Two names.</h1><h1 class="r-fit-text fragment fade-in "><span class="green">One</span> object.</h1>
+</section>
+
+<!-- PROOF SLIDE. id() gives the object's identity; same id = same object. `is` asks the identity question directly. -->
+<section data-transition="fade" data-say="We can prove it. The id function gives the object&#x27;s unique identity number. Both names show the same id. And x is y says True.">
+<pre><code class="language-python" data-trim data-noescape data-line-numbers="3|4">x = 5
+y = x
+print(id(x), id(y))
+print(x is y)</code></pre><div class="out fragment fade-up"><span class="lbl">Output</span>140734512  140734512   (your numbers will differ)
+True</div>
+</section>
+
+<!-- RULE CARD. First of the 'rules' that recur in the recap. Green = insight. -->
+<section data-transition="zoom" data-say="Rule one. The equals sign never copies anything. It only attaches a name to an object.">
+<div class="rule"><span class="rn">Rule 1</span>Assignment <mark>never copies</mark>.<br>It only attaches a name.</div>
+</section>
+
+<!-- ================= START CHAPTER 3: IDENTITY vs. VALUE ================= -->
+
+<!-- POWER TEXT. Introduce the three properties every object carries. -->
+<section data-transition="slide" data-say="Every object in Python carries three things with it.">
+<h1 class="r-fit-text ">Every object carries <span class="amber">three</span> things.</h1>
+</section>
+
+<!-- THREE CARDS revealed one at a time, each answering 'what is it / how to see it'. -->
+<section data-transition="fade" data-say="Identity: where it lives, checked with id. Type: what kind of thing it is, checked with type. And value: the actual data.">
+<div class="grid3"><div class="card fragment fade-up"><h3 class="blue">Identity</h3><p>Where it lives.<br>Never changes.</p><code>id(obj)</code></div><div class="card fragment fade-up"><h3 class="amber">Type</h3><p>What kind of thing.<br>Never changes.</p><code>type(obj)</code></div><div class="card fragment fade-up"><h3 class="green">Value</h3><p>The data inside.<br>May change (if mutable).</p><code>print(obj)</code></div></div>
+</section>
+
+<!-- COMPARISON SLIDE. == vs is, the two different questions. -->
+<section data-transition="slide" data-say="That gives us two different questions. Double equals asks: same value? The keyword is asks: same object?">
+<div class="grid2"><div class="card"><h3><code>==</code></h3><p>Do they have the <span class="green">same value</span>?</p></div><div class="card"><h3><code>is</code></h3><p>Are they the <span class="blue">same object</span>?</p></div></div>
+</section>
+
+<!-- AUTO-ANIMATE SEQUENCE B. Two separate but equal lists: two boxes with identical contents. Visual proof that equal != identical. -->
+<section data-transition="fade" data-say="Two lists that look identical. Equal values, so double equals is True. But they are two different objects, so is gives False.">
+<pre><code class="language-python" data-trim data-noescape data-line-numbers="1-2|3|4">a = [1, 2]
+b = [1, 2]
+print(a == b)
+print(a is b)</code></pre><div class="diagram" data-arrows="a>l1,b>l2" style="width:960px;height:400px"><div class="node tag" data-key="a" data-id="B-a" style="left:0px;top:40px;width:180px;height:86px">a</div><div class="node tag" data-key="b" data-id="B-b" style="left:0px;top:250px;width:180px;height:86px">b</div><div class="node obj mut" data-key="l1" data-id="B-l1" style="left:600px;top:0px;width:360px;height:180px"><span class="t">list</span><span class="v">[1, 2]</span><span class="i">id 2001</span></div><div class="node obj mut" data-key="l2" data-id="B-l2" style="left:600px;top:210px;width:360px;height:180px"><span class="t">list</span><span class="v">[1, 2]</span><span class="i">id 2002</span></div></div><div class="outrow"><div class="out fragment fade-up"><span class="lbl">a == b</span>True</div><div class="out bad fragment fade-up"><span class="lbl">a is b</span>False</div></div>
+</section>
+
+<!-- RULE CARD with a practical habit. -->
+<section data-transition="fade" data-say="Practical habit: compare values with double equals. Save is for checking None.">
+<div class="rule"><span class="rn">Habit</span>Use <code>==</code> to compare values.<br>Use <code>is</code> only for <code>None</code>.</div><pre><code class="language-python" data-trim data-noescape>if result is None:
+    print(&#x27;nothing found&#x27;)</code></pre>
+</section>
+
+<!-- ================= START CHAPTER 4: MUTABLE vs. IMMUTABLE ================= -->
+
+<!-- POWER TEXT. Set up the split. -->
+<section data-transition="slide" data-say="Now the second idea. Some objects can be changed after they are created. Some can never be changed.">
+<h1 class="r-fit-text ">Some objects <span class="ok">can change</span>.</h1><h1 class="r-fit-text fragment fade-in ">Some <span class="red">never</span> can.</h1>
+</section>
+
+<!-- TWO-COLUMN TABLE. Colour-matched to the diagram legend (amber = immutable, purple = mutable). -->
+<section data-transition="fade" data-say="Numbers, strings and tuples are immutable. Lists, dictionaries, sets and most objects you create yourself are mutable.">
+<div class="grid2"><div class="card imm-card"><h3 class="amber">Immutable</h3><p><code>int</code> <code>float</code> <code>bool</code><br><code>str</code> <code>tuple</code> <code>frozenset</code></p><p class="small">Once made, frozen forever.</p></div><div class="card mut-card"><h3 class="purple">Mutable</h3><p><code>list</code> <code>dict</code> <code>set</code><br><code>bytearray</code> your own classes</p><p class="small">Can be changed in place.</p></div></div>
+</section>
+
+<!-- AUTO-ANIMATE SEQUENCE C, step 1: x = 5. -->
+<section data-auto-animate data-transition="fade" data-say="So what happens when we &#x27;change&#x27; a number? Start with x equals 5.">
+<pre><code class="language-python" data-trim data-noescape>x = 5</code></pre><div class="diagram" data-arrows="x>o5" style="width:1310px;height:440px"><div class="node tag" data-key="x" data-id="C-x" style="left:0px;top:170px;width:180px;height:86px">x</div><div class="node obj imm" data-key="o5" data-id="C-o5" style="left:500px;top:130px;width:360px;height:180px"><span class="t">int</span><span class="v">5</span><span class="i">id 1001</span></div></div>
+</section>
+
+<!-- SEQUENCE C, step 2: x = x + 1. A NEW object 6 appears; the tag MOVES to it; 5 is left behind as a ghost. This is the key 'aha' animation. -->
+<section data-auto-animate data-transition="fade" data-say="x equals x plus 1. Python cannot change the 5. It builds a brand new object, 6, and moves the name x onto it. The old 5 is left behind.">
+<pre><code class="language-python" data-trim data-noescape>x = 5
+x = x + 1</code></pre><div class="diagram" data-arrows="x>o6" style="width:1310px;height:440px"><div class="node tag" data-key="x" data-id="C-x" style="left:0px;top:170px;width:180px;height:86px">x</div><div class="node obj imm ghost" data-key="o5" data-id="C-o5" style="left:500px;top:20px;width:360px;height:180px"><span class="t">int</span><span class="v">5</span><span class="i">id 1001</span></div><div class="node obj imm" data-key="o6" data-id="C-o6" style="left:950px;top:240px;width:360px;height:180px"><span class="t">int</span><span class="v">6</span><span class="i">id 1002</span></div></div><div class="dcap">The 5 did not change. The <span class="blue">name moved</span> to a new object.</div>
+</section>
+
+<!-- PROOF. Different ids before/after. -->
+<section data-transition="fade" data-say="The id proves it. Before and after, x points at two different objects.">
+<pre><code class="language-python" data-trim data-noescape data-line-numbers="2|4">x = 5
+print(id(x))
+x = x + 1
+print(id(x))</code></pre><div class="out fragment fade-up"><span class="lbl">Output</span>140734512
+140734544    ← a different object</div>
+</section>
+
+<!-- STRINGS behave the same. The error message is shown verbatim so students recognise it in the wild. -->
+<section data-transition="fade" data-say="Strings are immutable too. Try to change one letter and Python refuses. You must build a new string instead.">
+<pre><code class="language-python" data-trim data-noescape>s = &quot;hello&quot;
+s[0] = &quot;H&quot;</code></pre><div class="out bad fragment fade-up"><span class="lbl">Output</span>TypeError: &#x27;str&#x27; object does not support item assignment</div><p class="fragment fade-up small">Fix: build a new string → <code>s = "H" + s[1:]</code></p>
+</section>
+
+<!-- AUTO-ANIMATE SEQUENCE D, step 1: a mutable list. -->
+<section data-auto-animate data-transition="fade" data-say="Now a list, which is mutable. nums points at a list object.">
+<pre><code class="language-python" data-trim data-noescape>nums = [1, 2, 3]</code></pre><div class="diagram" data-arrows="n>l" style="width:1020px;height:440px"><div class="node tag" data-key="n" data-id="D-n" style="left:0px;top:170px;width:220px;height:86px">nums</div><div class="node obj mut" data-key="l" data-id="D-l" style="left:600px;top:130px;width:420px;height:180px"><span class="t">list</span><span class="v">[1, 2, 3]</span><span class="i">id 3001</span></div></div>
+</section>
+
+<!-- SEQUENCE D, step 2: append changes the SAME box (same id) — contrast with sequence C where a new box appeared. -->
+<section data-auto-animate data-transition="fade" data-say="Append doesn&#x27;t make a new list. It changes the same object in place. Same box. Same id.">
+<pre><code class="language-python" data-trim data-noescape>nums = [1, 2, 3]
+nums.append(4)</code></pre><div class="diagram" data-arrows="n>l" style="width:1020px;height:440px"><div class="node tag" data-key="n" data-id="D-n" style="left:0px;top:170px;width:220px;height:86px">nums</div><div class="node obj mut hl" data-key="l" data-id="D-l" style="left:600px;top:130px;width:420px;height:180px"><span class="t">list</span><span class="v">[1, 2, 3, 4]</span><span class="i">id 3001</span></div></div><div class="dcap">Same box, same id. The object itself <span class="purple">changed in place</span>.</div>
+</section>
+
+<!-- RETURN TO THE HOOK — SEQUENCE E step 1. Rebuild the opening bug with the new mental model. -->
+<section data-auto-animate data-transition="fade" data-say="Back to our mystery. b equals a put two names on one list.">
+<h2 class="r-fit-text ">Now, back to our mystery.</h2><div class="diagram" data-arrows="a>l,b>l" style="width:1020px;height:440px"><div class="node tag" data-key="a" data-id="E-a" style="left:0px;top:100px;width:180px;height:86px">a</div><div class="node tag" data-key="b" data-id="E-b" style="left:0px;top:260px;width:180px;height:86px">b</div><div class="node obj mut" data-key="l" data-id="E-l" style="left:600px;top:130px;width:420px;height:180px"><span class="t">list</span><span class="v">[1, 2, 3]</span></div></div>
+</section>
+
+<!-- SEQUENCE E step 2. b.append(4) lights up the shared box; both tags still point at it. -->
+<section data-auto-animate data-transition="fade" data-say="b dot append changed that one shared list. And a is just another name for it. Mystery solved.">
+<h2 class="r-fit-text ">Now, back to our mystery.</h2><div class="diagram" data-arrows="a>l,b>l" style="width:1020px;height:440px"><div class="node tag" data-key="a" data-id="E-a" style="left:0px;top:100px;width:180px;height:86px">a</div><div class="node tag" data-key="b" data-id="E-b" style="left:0px;top:260px;width:180px;height:86px">b</div><div class="node obj mut hl" data-key="l" data-id="E-l" style="left:600px;top:130px;width:420px;height:180px"><span class="t">list</span><span class="v">[1, 2, 3, 4]</span></div></div><div class="dcap"><code>b.append(4)</code> changed the one shared list. <code>a</code> sees it too.</div>
+</section>
+
+<!-- POWER TEXT celebration. -->
+<section data-transition="zoom" data-say="No magic. Just two names on one mutable object.">
+<h1 class="r-fit-text ">Mystery <span class="green">solved</span>.</h1>
+</section>
+
+<!-- TWIST SLIDE. A tuple is immutable, but can contain a mutable list. Deepens the model: the tuple holds references, not values. -->
+<section data-transition="fade" data-say="A twist. A tuple is immutable, but it can hold a list. The tuple keeps pointing at the same list, but the list itself can still change.">
+<pre><code class="language-python" data-trim data-noescape data-line-numbers="1|2|3">t = (1, [2, 3])
+t[1].append(4)
+print(t)</code></pre><div class="out fragment fade-up"><span class="lbl">Output</span>(1, [2, 3, 4])</div><p class="fragment fade-up small">The tuple still points at the <i>same</i> list. The <span class="purple">list</span> changed, not the tuple.</p>
+</section>
+
+<!-- RULE CARD 2. -->
+<section data-transition="zoom" data-say="Rule two. Immutable objects never change. Any change gives you a new object.">
+<div class="rule"><span class="rn">Rule 2</span>Immutable objects never change.<br>"Changing" them makes a <mark>new object</mark>.</div>
+</section>
+
+<!-- ================= START CHAPTER 5: FUNCTIONS ================= -->
+
+<!-- POWER TEXT. Bridge to functions — the most common place this bites. -->
+<section data-transition="slide" data-say="Where does this matter most in real code? Inside functions.">
+<h1 class="r-fit-text ">This matters most inside <span class="amber">functions</span>.</h1>
+</section>
+
+<!-- EXPLANATION. Python passes the object reference: the parameter is just one more name tag on the caller's object. -->
+<section data-transition="fade" data-say="When you call a function, Python does not copy your object. The parameter becomes one more name on the same object.">
+<h2 class="r-fit-text ">Calling a function = giving the object <span class="blue">one more name</span>.</h2><div class="diagram" data-arrows="c>l,p>l" style="width:1030px;height:360px"><div class="node tag" data-key="c" data-id="F0-c" style="left:0px;top:60px;width:230px;height:86px">scores</div><div class="node tag" data-key="p" data-id="F0-p" style="left:0px;top:230px;width:180px;height:86px">lst</div><div class="node obj mut" data-key="l" data-id="F0-l" style="left:630px;top:100px;width:400px;height:180px"><span class="t">list</span><span class="v">[90, 80]</span></div></div><div class="dcap"><span class="blue">scores</span> = caller's name · <span class="blue">lst</span> = function's parameter</div>
+</section>
+
+<!-- CASE 1: mutate inside the function → caller sees it. -->
+<section data-transition="fade" data-say="Case one. Inside the function we append to the list. The caller&#x27;s list changes, because it is the same object.">
+<pre><code class="language-python" data-trim data-noescape data-line-numbers="4|5|1-2|6">def add_bonus(lst):
+    lst.append(100)
+
+scores = [90, 80]
+add_bonus(scores)
+print(scores)</code></pre><div class="out fragment fade-up"><span class="lbl">Output</span>[90, 80, 100]</div>
+</section>
+
+<!-- CASE 2: reassign inside the function → caller unaffected. The local tag just moves. -->
+<section data-transition="fade" data-say="Case two. Inside the function we write lst equals an empty list. That only moves the local name. The caller&#x27;s list is untouched.">
+<pre><code class="language-python" data-trim data-noescape data-line-numbers="4|5|1-2|6">def reset(lst):
+    lst = []
+
+scores = [90, 80]
+reset(scores)
+print(scores)</code></pre><div class="out fragment fade-up"><span class="lbl">Output</span>[90, 80]</div>
+</section>
+
+<!-- DIAGRAM for case 2. The local tag moved to a new empty list; caller tag still on original. -->
+<section data-transition="fade" data-say="Here&#x27;s the picture. lst moved to a new empty list. scores never moved.">
+<div class="diagram" data-arrows="c>l,p>e" style="width:1280px;height:460px"><div class="node tag" data-key="c" data-id="F2-c" style="left:0px;top:40px;width:230px;height:86px">scores</div><div class="node tag" data-key="p" data-id="F2-p" style="left:0px;top:270px;width:180px;height:86px">lst</div><div class="node obj mut" data-key="l" data-id="F2-l" style="left:580px;top:0px;width:400px;height:180px"><span class="t">list</span><span class="v">[90, 80]</span></div><div class="node obj mut" data-key="e" data-id="F2-e" style="left:980px;top:250px;width:300px;height:180px"><span class="t">list</span><span class="v">[]</span></div></div><div class="dcap">Only the function's name moved. When the function ends, <span class="blue">lst</span> disappears.</div>
+</section>
+
+<!-- RULE CARD 3. The single most useful sentence for function bugs. -->
+<section data-transition="zoom" data-say="Rule three. Mutate, and the caller sees it. Reassign, and the caller doesn&#x27;t.">
+<div class="rule"><span class="rn">Rule 3</span><span class="purple">Mutate</span> → the caller sees it.<br><span class="blue">Reassign</span> → the caller doesn't.</div>
+</section>
+
+<!-- POWER TEXT warning: introduce the famous trap. -->
+<section data-transition="zoom" data-say="And now, the most famous trap in all of Python.">
+<h1 class="r-fit-text ">Now the <span class="red">most famous</span> Python trap.</h1>
+</section>
+
+<!-- TRAP CODE. Default list is created ONCE when def runs, then shared across calls. -->
+<section data-transition="fade" data-say="A function with a default empty list. First call: apple. Second call: apple AND mango! The list remembered the last call.">
+<pre><code class="language-python" data-trim data-noescape data-line-numbers="5|6">def add_item(item, bucket=[]):
+    bucket.append(item)
+    return bucket
+
+print(add_item(&quot;apple&quot;))
+print(add_item(&quot;mango&quot;))</code></pre><div class="out bad fragment fade-up"><span class="lbl">Output</span>[&#x27;apple&#x27;]
+[&#x27;apple&#x27;, &#x27;mango&#x27;]   ← where did apple come from?</div>
+</section>
+
+<!-- EXPLANATION. Default values are evaluated once, at definition time. -->
+<section data-transition="fade" data-say="Why? The default list is created only once, when Python reads the def line. Every call then shares that one list.">
+<h2 class="r-fit-text ">The default <code>[]</code> is made <span class="red">once</span>, when <code>def</code> runs.</h2><h2 class="r-fit-text fragment fade-in ">Every call shares that <span class="purple">same list</span>.</h2>
+</section>
+
+<!-- THE FIX. Use None as the sentinel and create a fresh list inside. -->
+<section data-transition="fade" data-say="The fix: use None as the default, and create a fresh list inside the function. Notice we use is None, our habit from earlier.">
+<pre><code class="language-python" data-trim data-noescape data-line-numbers="1|2-3">def add_item(item, bucket=None):
+    if bucket is None:
+        bucket = []
+    bucket.append(item)
+    return bucket</code></pre><div class="out fragment fade-up"><span class="lbl">Output</span>[&#x27;apple&#x27;]
+[&#x27;mango&#x27;]</div>
+</section>
+
+<!-- ================= START CHAPTER 6: COPIES ================= -->
+
+<!-- POWER TEXT. The natural question students now ask. -->
+<section data-transition="slide" data-say="So how do we get a real, independent copy?">
+<h1 class="r-fit-text ">"OK. How do I get a <span class="green">real copy</span>?"</h1>
+</section>
+
+<!-- FOUR WAYS to shallow copy a list, shown side by side. -->
+<section data-transition="fade" data-say="There are several ways. The copy method, slicing, the list constructor, or copy dot copy. Each makes a new list.">
+<pre><code class="language-python" data-trim data-noescape>a = [1, 2, 3]
+
+b = a.copy()      # method
+b = a[:]          # slicing
+b = list(a)       # constructor
+
+import copy
+b = copy.copy(a)  # works for any object</code></pre><div class="out fragment fade-up"><span class="lbl">Output</span>b is a  →  False   (a new list!)</div>
+</section>
+
+<!-- POWER TEXT warning — shallow copies only go one level deep. -->
+<section data-transition="zoom" data-say="But careful. These are shallow copies. They only copy the outer layer.">
+<h1 class="r-fit-text ">But careful: these are <span class="red">shallow</span> copies.</h1>
+</section>
+
+<!-- NESTED TRAP CODE. -->
+<section data-transition="fade" data-say="A list of lists. We copy it, change an inner list through b... and a changes again.">
+<pre><code class="language-python" data-trim data-noescape data-line-numbers="1|2|3|4">a = [[1, 2], [3, 4]]
+b = a.copy()
+b[0].append(99)
+print(a)</code></pre><div class="out bad fragment fade-up"><span class="lbl">Output</span>[[1, 2, 99], [3, 4]]   ← a changed again!</div>
+</section>
+
+<!-- DIAGRAM. Two different outer lists, but both point to the SAME inner lists. Object-to-object arrows show references inside containers. -->
+<section data-transition="fade" data-say="Here&#x27;s why. The copy made a new outer list, but its slots still point at the same inner lists. Shared again.">
+<div class="diagram" data-arrows="a>oa,b>ob,oa>i1,oa>i2,ob>i1,ob>i2" style="width:1340px;height:440px"><div class="node tag" data-key="a" data-id="G-a" style="left:0px;top:40px;width:180px;height:86px">a</div><div class="node tag" data-key="b" data-id="G-b" style="left:0px;top:300px;width:180px;height:86px">b</div><div class="node obj mut" data-key="oa" data-id="G-oa" style="left:320px;top:0px;width:330px;height:170px"><span class="t">list (outer)</span><span class="v">[ •, • ]</span></div><div class="node obj mut" data-key="ob" data-id="G-ob" style="left:320px;top:260px;width:330px;height:170px"><span class="t">list (outer)</span><span class="v">[ •, • ]</span></div><div class="node obj mut hl" data-key="i1" data-id="G-i1" style="left:960px;top:20px;width:380px;height:150px"><span class="t">list (inner)</span><span class="v">[1, 2, 99]</span></div><div class="node obj mut" data-key="i2" data-id="G-i2" style="left:960px;top:260px;width:380px;height:150px"><span class="t">list (inner)</span><span class="v">[3, 4]</span></div></div><div class="dcap">New outer list, but the <span class="red">inner lists are shared</span>.</div>
+</section>
+
+<!-- THE FIX: deepcopy copies all the way down. -->
+<section data-transition="fade" data-say="deepcopy copies every level, all the way down. Now a is safe.">
+<pre><code class="language-python" data-trim data-noescape data-line-numbers="4|5|6">import copy
+
+a = [[1, 2], [3, 4]]
+b = copy.deepcopy(a)
+b[0].append(99)
+print(a)</code></pre><div class="out fragment fade-up"><span class="lbl">Output</span>[[1, 2], [3, 4]]   ← untouched ✓</div>
+</section>
+
+<!-- BONUS TRAP: list multiplication creates repeated references. Very common when building a 2D grid. -->
+<section data-transition="fade" data-say="One more classic. Making a grid by multiplying a list. Change one cell, and every row changes. All three rows are the same list.">
+<pre><code class="language-python" data-trim data-noescape data-line-numbers="1|2|3">grid = [[0] * 3] * 3
+grid[0][0] = 1
+print(grid)</code></pre><div class="out bad fragment fade-up"><span class="lbl">Output</span>[[1, 0, 0], [1, 0, 0], [1, 0, 0]]</div>
+</section>
+
+<!-- FIX for the grid: a comprehension builds a NEW inner list each time. -->
+<section data-transition="fade" data-say="The fix: a list comprehension, which builds a fresh inner list for each row.">
+<pre><code class="language-python" data-trim data-noescape data-line-numbers="1|3">grid = [[0] * 3 for _ in range(3)]
+grid[0][0] = 1
+print(grid)</code></pre><div class="out fragment fade-up"><span class="lbl">Output</span>[[1, 0, 0], [0, 0, 0], [0, 0, 0]]  ✓</div>
+</section>
+
+<!-- DECISION TABLE. Which tool to reach for. -->
+<section data-transition="fade" data-say="Summary. Assignment: same object. Shallow copy: new outside, shared inside. Deep copy: completely independent.">
+<table class="tbl"><tr><th>You write</th><th>You get</th><th>Inner objects</th></tr><tr class="fragment"><td><code>b = a</code></td><td>Same object, new name</td><td class="red">shared</td></tr><tr class="fragment"><td><code>b = a.copy()</code></td><td>New outer object</td><td class="amber">shared</td></tr><tr class="fragment"><td><code>b = copy.deepcopy(a)</code></td><td>New everything</td><td class="green">independent</td></tr></table>
+</section>
+
+<!-- RULE CARD 4. -->
+<section data-transition="zoom" data-say="Rule four. If your data has lists inside lists, use deepcopy.">
+<div class="rule"><span class="rn">Rule 4</span>Nested data? Reach for <mark>deepcopy</mark>.</div>
+</section>
+
+<!-- ================= START CHAPTER 7: MEMORY ================= -->
+
+<!-- POWER TEXT. Close the loop: what happens to the 'ghost' objects we left behind? -->
+<section data-transition="slide" data-say="Remember the number 5 we left behind earlier? Who cleans up objects nobody points to?">
+<h1 class="r-fit-text ">Remember the abandoned <span class="amber">5</span>?</h1><h2 class="r-fit-text fragment fade-in ">Who cleans it up?</h2>
+</section>
+
+<!-- EXPLANATION. Reference counting in one sentence plus a counter visual. -->
+<section data-transition="fade" data-say="Every object counts how many names and containers point at it. When that count reaches zero, Python frees the memory.">
+<h2 class="r-fit-text ">Every object keeps a <span class="blue">reference count</span>.</h2><div class="counter"><div class="fragment fade-up">2 names point here → count <b>2</b></div><div class="fragment fade-up">one name leaves → count <b>1</b></div><div class="fragment fade-up red">count hits <b>0</b> → memory is freed immediately</div></div>
+</section>
+
+<!-- del removes a NAME, not the object. Object survives while another name points at it. -->
+<section data-transition="fade" data-say="del does not delete objects. It deletes a name. The list survives because b still points at it.">
+<pre><code class="language-python" data-trim data-noescape data-line-numbers="2|3|4">a = [1, 2]
+b = a
+del a
+print(b)</code></pre><div class="out fragment fade-up"><span class="lbl">Output</span>[1, 2]   ← the object is still alive</div><p class="fragment fade-up small"><code>del</code> removes a <span class="blue">name</span>, not the object.</p>
+</section>
+
+<!-- CYCLES. Objects that point at each other never reach count 0 — the garbage collector handles them. -->
+<section data-transition="fade" data-say="One special case: objects that point at each other. Their count never hits zero, so Python&#x27;s garbage collector periodically finds and frees them.">
+<pre><code class="language-python" data-trim data-noescape>a = []
+a.append(a)   # the list points at itself
+del a         # count never reaches 0...</code></pre><p class="fragment fade-up">...so Python's <span class="green">garbage collector</span> (<code>gc</code>) finds such cycles and frees them.</p>
+</section>
+
+<!-- CURIOSITY + WARNING. Small-int caching is a CPython detail — use it to reinforce the 'is only for None' habit. -->
+<section data-transition="fade" data-say="A curiosity. Python reuses small integers, so 256 is 256 is True. For bigger numbers it may differ. Never rely on it. Use double equals.">
+<pre><code class="language-python" data-trim data-noescape>a = 256
+b = 256
+print(a is b)   # True: small ints are cached</code></pre><p class="fragment fade-up">For bigger numbers like <code>257</code>, the answer can be <span class="red">True or False</span> depending on how the code runs.</p><p class="fragment fade-up green">Never rely on it. Compare numbers and strings with <code>==</code>.</p>
+</section>
+
+<!-- ================= START CHAPTER 8: RECAP & QUIZ ================= -->
+
+<!-- RECAP. All rules on one screen, revealed one by one — the screenshot slide students keep. -->
+<section data-transition="slide" data-say="Let&#x27;s recap the whole lesson in five lines.">
+<h2>The whole lesson, in five lines</h2><ol class="recap"><li class="fragment">Variables are <span class="blue">names</span>, not boxes.</li><li class="fragment">Assignment <span class="green">never copies</span>.</li><li class="fragment">Immutable objects never change — you get a <span class="amber">new object</span>.</li><li class="fragment"><span class="purple">Mutate</span>: caller sees it. <span class="blue">Reassign</span>: caller doesn't.</li><li class="fragment">Nested data needs <code>deepcopy</code>. Use <code>is</code> only for <code>None</code>.</li></ol>
+</section>
+
+<!-- POWER TEXT. Transition to self-check. -->
+<section data-transition="zoom" data-say="Now a quick test. Pause, predict the output, then reveal.">
+<h1 class="r-fit-text ">Quick test. <span class="amber">Predict</span> the output.</h1>
+</section>
+
+<!-- QUIZ 1. y = y + [2] builds a NEW list, so x is untouched. -->
+<section data-transition="fade" data-say="Question one. y equals y plus a list. The answer is just [1]. Plus builds a new list, and only y moves.">
+<p class="kicker">Question 1</p><pre><code class="language-python" data-trim data-noescape>x = [1]
+y = x
+y = y + [2]
+print(x)</code></pre><div class="out fragment fade-up"><span class="lbl">Output</span>[1]</div><p class="fragment fade-up small"><code>y + [2]</code> builds a <i>new</i> list, then moves the name y.</p>
+</section>
+
+<!-- QUIZ 2. The twist: += on a list mutates in place, so x changes. Pairs with Q1 to test real understanding. -->
+<section data-transition="fade" data-say="Question two. Almost the same, but with plus-equals. Now x is [1, 2]! For lists, plus-equals changes the object in place.">
+<p class="kicker">Question 2 &nbsp;— one tiny change</p><pre><code class="language-python" data-trim data-noescape>x = [1]
+y = x
+y += [2]
+print(x)</code></pre><div class="out bad fragment fade-up"><span class="lbl">Output</span>[1, 2]</div><p class="fragment fade-up small">For lists, <code>+=</code> <span class="purple">mutates in place</span> — same object.</p>
+</section>
+
+<!-- QUIZ 3. Immutable int passed into a function. -->
+<section data-transition="fade" data-say="Question three. We pass 5 into a function that adds one. a is still 5. Integers can&#x27;t change, so only the local name moved.">
+<p class="kicker">Question 3</p><pre><code class="language-python" data-trim data-noescape>def grow(n):
+    n += 1
+
+a = 5
+grow(a)
+print(a)</code></pre><div class="out fragment fade-up"><span class="lbl">Output</span>5</div><p class="fragment fade-up small">Integers are immutable: <code>n += 1</code> makes a new object and moves only the local name.</p>
+</section>
+
+<!-- CLOSING POWER TEXT pair. -->
+<section data-auto-animate data-transition="fade" data-say="So Python never really surprised you.">
+<h1 class="r-fit-text ">Python never surprised you.</h1>
+</section>
+
+<!-- Closing punchline. -->
+<section data-auto-animate data-transition="fade" data-say="It was just pointing.">
+<h1 class="r-fit-text ">Python never surprised you.</h1><h1 class="r-fit-text ">It was just <span class="green">pointing</span>.</h1>
+</section>
+
+<!-- FINAL slide. Sign-off + next module teaser. -->
+<section data-transition="zoom" data-say="You now see variables the way Python sees them. Next time: exceptions and files.">
+<h1 class="r-fit-text ">You now see variables the way <span class="green">Python</span> does.</h1><p class="kicker" style="margin-top:40px">Next: Module 4 · Exceptions &amp; Files</p>
+</section>
+</div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/plugin/highlight/highlight.min.js"></script>
+<script>
+// Draw name→object arrows from the explicit pixel positions in each node's style.
+document.querySelectorAll('.diagram').forEach(function (d) {
+  var spec = (d.dataset.arrows || '').split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+  if (!spec.length) return;
+  var NS = 'http://www.w3.org/2000/svg';
+  var svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('class', 'arrows');
+  svg.setAttribute('width', parseFloat(d.style.width));
+  svg.setAttribute('height', parseFloat(d.style.height));
+  function box(k) {
+    var n = d.querySelector('[data-key="' + k + '"]');
+    return n && { x: parseFloat(n.style.left), y: parseFloat(n.style.top), w: parseFloat(n.style.width), h: parseFloat(n.style.height) };
+  }
+  spec.forEach(function (s) {
+    var p = s.split('>'), a = box(p[0]), b = box(p[1]);
+    if (!a || !b) return;
+    var x1 = a.x + a.w + 6, y1 = a.y + a.h / 2, x2 = b.x - 10, y2 = b.y + b.h / 2, mx = (x1 + x2) / 2;
+    var path = document.createElementNS(NS, 'path');
+    path.setAttribute('d', 'M' + x1 + ',' + y1 + ' C' + mx + ',' + y1 + ' ' + mx + ',' + y2 + ' ' + x2 + ',' + y2);
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', '#7fdbff');
+    path.setAttribute('stroke-width', '5');
+    path.setAttribute('marker-end', 'url(#ah)');
+    svg.appendChild(path);
+  });
+  d.insertBefore(svg, d.firstChild);
+});
+
+var sayEl = document.getElementById('say');
+function updateSay() {
+  var s = Reveal.getCurrentSlide();
+  if (!s) return;
+  var idx = Reveal.getIndices().h + 1, total = Reveal.getTotalSlides();
+  sayEl.innerHTML = '<b>' + idx + '/' + total + '</b>';
+  sayEl.appendChild(document.createTextNode(s.dataset.say || ''));
+}
+function toggleSay() { sayEl.classList.toggle('on'); try { localStorage.setItem('m3say', sayEl.classList.contains('on') ? '1' : '0'); } catch (e) {} }
+document.getElementById('saybtn').addEventListener('click', function (e) { e.stopPropagation(); toggleSay(); });
+try { if (localStorage.getItem('m3say') === '1') sayEl.classList.add('on'); } catch (e) {}
+
+Reveal.initialize({
+  width: 1920, height: 1080, margin: 0.04,
+  controls: false, progress: true, hash: false, center: true,
+  transition: 'fade', autoAnimateDuration: 0.9,
+  keyboard: { 78: toggleSay },
+  plugins: [RevealHighlight]
+}).then(updateSay);
+Reveal.on('slidechanged', updateSay);
+</script>
+</body>
+</html>
