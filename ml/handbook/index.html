@@ -1,0 +1,173 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Start here · ML Bootcamp Handbook</title><style>
+:root{--bg:#141414;--card:#1e1f22;--fg:#e6e6e6;--dim:#a0a0a0;--g:#4CAF50;--a:#ffc107;--b:#4fc3f7;--r:#ff6b6b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:18px/1.7 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+main{max-width:920px;margin:0 auto;padding:40px 22px 80px}
+h1{font-size:2.1em;line-height:1.2;margin:.2em 0}h2{font-size:1.5em;margin-top:2.2em;padding-top:.6em;border-top:1px solid #333;color:#fff}
+h3{color:var(--b);margin-top:1.6em}a{color:var(--b)}
+.kicker{color:var(--dim);letter-spacing:.12em;text-transform:uppercase;font-size:.8em}
+code{background:#26272b;padding:.1em .35em;border-radius:5px;font-size:.92em}
+pre{background:#1b1c1f;border:1px solid #2c2d31;border-radius:10px;padding:16px;overflow-x:auto;line-height:1.5}pre code{background:none;padding:0}
+table{border-collapse:collapse;width:100%;margin:1em 0;font-size:.93em}th,td{border-bottom:1px solid #333;padding:8px 10px;text-align:left;vertical-align:top}th{color:var(--dim);font-weight:600}
+blockquote{margin:1.2em 0;padding:12px 18px;background:#2a2410;border-left:5px solid var(--a);border-radius:0 8px 8px 0}
+blockquote p{margin:.3em 0}
+.chart{background:#141414;border-radius:10px;padding:8px;margin:1em 0}.chart img{width:100%}
+details{background:var(--card);border-radius:8px;padding:10px 16px;margin:10px 0}summary{cursor:pointer;font-weight:600}
+.toc{background:var(--card);border-radius:10px;padding:14px 22px}.toc ol{margin:.3em 0}
+nav.top{display:flex;gap:16px;flex-wrap:wrap;font-size:.9em;margin-bottom:10px}
+.kid{background:#14263a;border-left:5px solid #4fc3f7;border-radius:0 10px 10px 0;padding:12px 18px;margin:1.2em 0}
+.kid:before{content:"Like I'm 10";display:block;font-size:.75em;letter-spacing:.1em;text-transform:uppercase;color:#4fc3f7;font-weight:700}
+.deep{background:#17271a;border-left:5px solid #4CAF50;border-radius:0 10px 10px 0;padding:12px 18px;margin:1.2em 0}
+.deep:before{content:"Going deeper";display:block;font-size:.75em;letter-spacing:.1em;text-transform:uppercase;color:#4CAF50;font-weight:700}
+.warn{background:#2e1717;border-left:5px solid #ff6b6b;border-radius:0 10px 10px 0;padding:12px 18px;margin:1.2em 0}
+.warn:before{content:"Common mistake";display:block;font-size:.75em;letter-spacing:.1em;text-transform:uppercase;color:#ff6b6b;font-weight:700}
+.try{background:#2a2410;border-left:5px solid #ffc107;border-radius:0 10px 10px 0;padding:12px 18px;margin:1.2em 0}
+.try:before{content:"Try it / think";display:block;font-size:.75em;letter-spacing:.1em;text-transform:uppercase;color:#ffc107;font-weight:700}
+.kid p,.deep p,.warn p,.try p{margin:.4em 0}
+.pager{display:flex;justify-content:space-between;margin-top:3em;padding-top:1em;border-top:1px solid #333}
+@media print{body{font-size:12pt}nav.top,.noprint{display:none}h2{page-break-after:avoid}}
+</style></head><body><main><nav class="top"><a href="index.html">Handbook home</a> · <a href="glossary.html">Glossary</a></nav>
+
+<p class="kicker">ML Bootcamp · 2 days · 16 hours</p>
+
+<h1>Machine learning from zero to a working model</h1>
+<p>This handbook assumes you know <strong>nothing</strong> about machine learning. Read it from top to bottom and you will understand what ML is, how every step of a real project works, how five important models work inside, and how to build, test, save and share a model yourself.</p>
+<h2>How to use this handbook</h2>
+<ul>
+<li><strong>Read the parts in order.</strong> Each part uses ideas from the part before it.</li>
+<li>Every concept is explained three ways:</li>
+</ul>
+<div class="kid">
+<p>A simple explanation with an everyday example. Read this first.</p>
+</div>
+<div class="deep">
+<p>The real explanation: the details, the maths in plain words, and the reasons behind it.</p>
+</div>
+<div class="warn">
+<p>A mistake beginners (and professionals) often make, and how to avoid it.</p>
+</div>
+<div class="try">
+<p>A question or small task. Stop and do it before reading on.</p>
+</div>
+<ul>
+<li><strong>Practicals</strong> are step-by-step. Every step says <strong>what</strong> we do, <strong>why</strong> we do it, and shows the <strong>code</strong> and the <strong>result</strong>. Each practical also opens as a ready-to-run notebook in Google Colab (free, runs in your browser, nothing to install).</li>
+<li>If a word is new, look it up in the <a href="glossary.html">Glossary</a>.</li>
+</ul>
+<h2>What we will cover</h2>
+<table>
+<thead>
+<tr>
+<th>Day</th>
+<th>Session</th>
+<th>Time</th>
+<th>Handbook parts</th>
+<th>Practical</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Day 1</strong></td>
+<td><strong>1 · ML workflow &amp; data preparation</strong></td>
+<td>2.5 h</td>
+<td><a href="part1_what_is_ml.html">Part 1</a> What is ML, types, challenges · <a href="part2_lifecycle.html">Part 2</a> the project lifecycle · <a href="part3_recipe.html">Part 3</a> the common recipe</td>
+<td>Practical 1, steps 1–7: load, inspect, clean, split, baseline</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>2 · Regression, classification &amp; evaluation</strong></td>
+<td>3 h</td>
+<td><a href="part4_linear_regression.html">Part 4</a> linear regression · <a href="part5_logistic_regression.html">Part 5</a> logistic regression &amp; metrics · <a href="part6_decision_trees.html">Part 6</a> decision trees · <a href="part7_random_forests.html">Part 7</a> random forests</td>
+<td>Practical 1 (finish), Practicals 2, 3 and 4</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>3 · Features, clustering &amp; model improvement</strong></td>
+<td>2.5 h</td>
+<td>Part 3 (feature engineering, tuning) · <a href="part8_kmeans.html">Part 8</a> k-means</td>
+<td>Practical 4 (tuning), Practical 5 (segments)</td>
+</tr>
+<tr>
+<td><strong>Day 2</strong></td>
+<td><strong>4 · Reproducibility, responsible use &amp; inference</strong></td>
+<td>2 h</td>
+<td><a href="part9_product.html">Part 9</a> saving, predicting, validation, drift, fairness, privacy, model cards</td>
+<td>Practical 6: save, load, predict, Streamlit app</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>5 · Project</strong></td>
+<td>6 h</td>
+<td><a href="part10_project.html">Part 10</a> brief, steps, rubric</td>
+<td>Your team's end-to-end project</td>
+</tr>
+</tbody>
+</table>
+<h2>What you will learn</h2>
+<p>By the end of the two days you should be able to tick every box below. Use it as a checklist.</p>
+<p><strong>Concepts</strong>
+- [ ] Explain what machine learning is, and when it is (and is not) the right tool
+- [ ] Tell supervised from unsupervised learning, and regression from classification
+- [ ] Explain overfitting and underfitting, and why we keep a test set
+- [ ] Explain data leakage and how to prevent it
+- [ ] Explain how linear regression, logistic regression, decision trees, random forests and k-means work inside</p>
+<p><strong>Practical skills</strong>
+- [ ] Load a dataset and check it: types, missing values, duplicates, ranges, target balance
+- [ ] Split data into training and test sets correctly
+- [ ] Prepare numbers (fill gaps, scale) and categories (one-hot encoding) inside a pipeline
+- [ ] Train a baseline and at least two real models, and compare them fairly with cross-validation
+- [ ] Choose and explain the right metric: MAE, RMSE, R², accuracy, precision, recall, F1
+- [ ] Read a confusion matrix and residuals, and explain what the errors mean
+- [ ] Improve a model with feature engineering and hyperparameter tuning
+- [ ] Find groups in data with k-means and describe them carefully
+- [ ] Save a model, load it in a new session, and predict on new rows
+- [ ] Write a model card describing intended use, limits and risks
+- [ ] Put your model behind a simple Streamlit app</p>
+<h2>The datasets we use</h2>
+<table>
+<thead>
+<tr>
+<th>Dataset</th>
+<th>Rows</th>
+<th>We predict</th>
+<th>Task</th>
+<th>Used in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Medical insurance charges</td>
+<td>1,338</td>
+<td>yearly medical charges ($)</td>
+<td>regression</td>
+<td>Practical 1</td>
+</tr>
+<tr>
+<td>Telco customer churn</td>
+<td>7,043</td>
+<td>will the customer leave?</td>
+<td>classification</td>
+<td>Practicals 2–6</td>
+</tr>
+<tr>
+<td>California housing</td>
+<td>20,640</td>
+<td>house price</td>
+<td>regression</td>
+<td>project option</td>
+</tr>
+<tr>
+<td>Titanic</td>
+<td>891</td>
+<td>did the passenger survive?</td>
+<td>classification</td>
+<td>project option</td>
+</tr>
+<tr>
+<td>Adult income</td>
+<td>48,842</td>
+<td>income above $50K?</td>
+<td>classification</td>
+<td>project option</td>
+</tr>
+</tbody>
+</table>
+<div class="pager"><span></span><a href="part1_what_is_ml.html">Part 1 · What is machine learning? →</a></div></main></body></html>

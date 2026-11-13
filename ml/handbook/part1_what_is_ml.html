@@ -1,0 +1,432 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Part 1 · What is machine learning? · ML Bootcamp Handbook</title><style>
+:root{--bg:#141414;--card:#1e1f22;--fg:#e6e6e6;--dim:#a0a0a0;--g:#4CAF50;--a:#ffc107;--b:#4fc3f7;--r:#ff6b6b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:18px/1.7 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+main{max-width:920px;margin:0 auto;padding:40px 22px 80px}
+h1{font-size:2.1em;line-height:1.2;margin:.2em 0}h2{font-size:1.5em;margin-top:2.2em;padding-top:.6em;border-top:1px solid #333;color:#fff}
+h3{color:var(--b);margin-top:1.6em}a{color:var(--b)}
+.kicker{color:var(--dim);letter-spacing:.12em;text-transform:uppercase;font-size:.8em}
+code{background:#26272b;padding:.1em .35em;border-radius:5px;font-size:.92em}
+pre{background:#1b1c1f;border:1px solid #2c2d31;border-radius:10px;padding:16px;overflow-x:auto;line-height:1.5}pre code{background:none;padding:0}
+table{border-collapse:collapse;width:100%;margin:1em 0;font-size:.93em}th,td{border-bottom:1px solid #333;padding:8px 10px;text-align:left;vertical-align:top}th{color:var(--dim);font-weight:600}
+blockquote{margin:1.2em 0;padding:12px 18px;background:#2a2410;border-left:5px solid var(--a);border-radius:0 8px 8px 0}
+blockquote p{margin:.3em 0}
+.chart{background:#141414;border-radius:10px;padding:8px;margin:1em 0}.chart img{width:100%}
+details{background:var(--card);border-radius:8px;padding:10px 16px;margin:10px 0}summary{cursor:pointer;font-weight:600}
+.toc{background:var(--card);border-radius:10px;padding:14px 22px}.toc ol{margin:.3em 0}
+nav.top{display:flex;gap:16px;flex-wrap:wrap;font-size:.9em;margin-bottom:10px}
+.kid{background:#14263a;border-left:5px solid #4fc3f7;border-radius:0 10px 10px 0;padding:12px 18px;margin:1.2em 0}
+.kid:before{content:"Like I'm 10";display:block;font-size:.75em;letter-spacing:.1em;text-transform:uppercase;color:#4fc3f7;font-weight:700}
+.deep{background:#17271a;border-left:5px solid #4CAF50;border-radius:0 10px 10px 0;padding:12px 18px;margin:1.2em 0}
+.deep:before{content:"Going deeper";display:block;font-size:.75em;letter-spacing:.1em;text-transform:uppercase;color:#4CAF50;font-weight:700}
+.warn{background:#2e1717;border-left:5px solid #ff6b6b;border-radius:0 10px 10px 0;padding:12px 18px;margin:1.2em 0}
+.warn:before{content:"Common mistake";display:block;font-size:.75em;letter-spacing:.1em;text-transform:uppercase;color:#ff6b6b;font-weight:700}
+.try{background:#2a2410;border-left:5px solid #ffc107;border-radius:0 10px 10px 0;padding:12px 18px;margin:1.2em 0}
+.try:before{content:"Try it / think";display:block;font-size:.75em;letter-spacing:.1em;text-transform:uppercase;color:#ffc107;font-weight:700}
+.kid p,.deep p,.warn p,.try p{margin:.4em 0}
+.pager{display:flex;justify-content:space-between;margin-top:3em;padding-top:1em;border-top:1px solid #333}
+@media print{body{font-size:12pt}nav.top,.noprint{display:none}h2{page-break-after:avoid}}
+</style></head><body><main><nav class="top"><a href="index.html">Handbook home</a> · <a href="glossary.html">Glossary</a></nav>
+
+<p class="kicker">Part 1 · Session 1</p>
+
+<h1>What is machine learning?</h1>
+<h2>1.1 The hook</h2>
+<p>Every time you open YouTube, a computer decides which video to show you next. Nobody wrote a rule like <em>"if Musa watched a cricket video, show him another cricket video"</em>. There are billions of people and millions of videos; no team of programmers could write all those rules.</p>
+<p>Instead, the computer <strong>looked at what millions of people watched before, and learned the pattern by itself.</strong> That is machine learning.</p>
+<p>The same idea decides whether your bank approves a loan, whether an email goes to spam, which customers a company calls before they leave, what price an insurance company quotes you, and how ChatGPT chooses its next word.</p>
+<div class="try">
+<p>Name three apps on your phone that make a guess about you. What do you think each one learned from?</p>
+</div>
+<h2>1.2 What is machine learning?</h2>
+<div class="kid">
+<p>Imagine teaching a child to recognise mangoes. You don't give them a rulebook ("oval, 8–12 cm, yellow-green skin…"). You show them many mangoes and say <em>"mango"</em>, and many other fruits and say <em>"not mango"</em>. After enough examples, the child can recognise a mango they have never seen before.</p>
+<p><strong>Machine learning is the same: we show the computer many examples with the answers, and it learns to give the answer for new examples.</strong></p>
+</div>
+<p>A classic definition (Tom Mitchell, 1997):</p>
+<blockquote>
+<p>A computer program <strong>learns</strong> from <strong>experience E</strong> with respect to a <strong>task T</strong> and a <strong>performance measure P</strong>, if its performance at T, measured by P, improves with experience E.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Spam filter example</th>
+<th>Churn example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Task T</strong></td>
+<td>label emails as spam / not spam</td>
+<td>predict which customers will leave</td>
+</tr>
+<tr>
+<td><strong>Experience E</strong></td>
+<td>thousands of emails that people marked as spam or not</td>
+<td>records of past customers, including who left</td>
+</tr>
+<tr>
+<td><strong>Performance P</strong></td>
+<td>% of emails labelled correctly</td>
+<td>how many real leavers we find</td>
+</tr>
+</tbody>
+</table>
+<h3>Traditional programming vs machine learning</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Traditional programming</th>
+<th>Machine learning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>You give the computer</td>
+<td><strong>data + rules</strong></td>
+<td><strong>data + answers</strong> (past examples)</td>
+</tr>
+<tr>
+<td>The computer gives back</td>
+<td>answers</td>
+<td><strong>rules</strong> (a model)</td>
+</tr>
+<tr>
+<td>Example</td>
+<td>"if the email contains 'free money', mark spam"</td>
+<td>learns from 100,000 labelled emails which patterns mean spam</td>
+</tr>
+</tbody>
+</table>
+<div class="deep">
+<p>The "rules" an ML system learns are called a <strong>model</strong>. A model is a mathematical function with adjustable numbers inside it, called <strong>parameters</strong>. <strong>Training</strong> means finding the parameter values that make the model's answers as close as possible to the real answers on the examples.</p>
+<p>For example, a straight-line model <code>charges = w × age + b</code> has two parameters, <code>w</code> and <code>b</code>. Training finds the best <code>w</code> and <code>b</code>. ChatGPT is the same idea with hundreds of billions of parameters.</p>
+</div>
+<h2>1.3 Why use machine learning?</h2>
+<p>ML is the right tool when:</p>
+<ol>
+<li><strong>The rules are too complex to write by hand.</strong> Recognising a face, understanding speech, judging which of 7,000 customers will leave.</li>
+<li><strong>The rules keep changing.</strong> Spammers change their tricks every week; a learned filter can retrain on new examples automatically, while hand-written rules need a programmer every time.</li>
+<li><strong>There is a lot of data hiding a pattern humans can't see.</strong> ML can reveal patterns (data mining), e.g. which combination of contract and service predicts churn.</li>
+<li><strong>The decision must be made millions of times.</strong> A person can price 20 insurance policies a day; a model can price 20,000 per second.</li>
+</ol>
+<h2>1.4 When <strong>not</strong> to use machine learning</h2>
+<p>This is just as important, and many beginners skip it.</p>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Better choice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A simple, clear rule already works (tax brackets, password length)</td>
+<td>normal code</td>
+</tr>
+<tr>
+<td>You have <strong>no past examples</strong> with answers</td>
+<td>collect data first, or use rules</td>
+</tr>
+<tr>
+<td>Every decision must be perfectly explainable by law</td>
+<td>a simple rule or a very simple model</td>
+</tr>
+<tr>
+<td>Mistakes are dangerous and rare, with no human check</td>
+<td>ML only as an assistant, a human decides</td>
+</tr>
+<tr>
+<td>The pattern of the past will not repeat (a brand-new product, a crisis)</td>
+<td>human judgement</td>
+</tr>
+</tbody>
+</table>
+<div class="warn">
+<p>Using ML because it sounds modern. Always ask first: <em>could a simple rule do this well enough?</em> In Session 1 we will see that a one-line rule ("month-to-month customers leave") already catches 88% of leavers. A model must beat that to be worth it.</p>
+</div>
+<h2>1.5 Case study: a telecom company is losing customers</h2>
+<p>A telecom company has <strong>7,043 customers</strong>. About <strong>1 in 4 left</strong> last year. Keeping a customer is much cheaper than finding a new one, so the retention team wants to <strong>call customers who are about to leave</strong> and offer them a discount. But they can't call everyone.</p>
+<p><strong>Without ML:</strong> a manager guesses ("call everyone whose bill is high"). Many calls are wasted on people who were never going to leave, and many leavers are missed.</p>
+<p><strong>With ML:</strong></p>
+<ol>
+<li><strong>Data:</strong> for each past customer we know their contract, how long they've been with us (tenure), monthly bill, services, payment method… and whether they left.</li>
+<li><strong>Learning:</strong> a model learns which patterns go with leaving (e.g. month-to-month contract + short tenure + fiber internet).</li>
+<li><strong>Prediction:</strong> every current customer gets a <strong>probability of leaving</strong>.</li>
+<li><strong>Decision:</strong> the team calls the highest-risk customers first.</li>
+</ol>
+<div class="chart"><img alt="l1deck_contract" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIKICAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4KPHN2ZyB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgd2lkdGg9Ijc5MnB0IiBoZWlnaHQ9IjM3NC40cHQiIHZpZXdCb3g9IjAgMCA3OTIgMzc0LjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmVyc2lvbj0iMS4xIj4KIDxtZXRhZGF0YT4KICA8cmRmOlJERiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOmNjPSJodHRwOi8vY3JlYXRpdmVjb21tb25zLm9yZy9ucyMiIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgIDxjYzpXb3JrPgogICAgPGRjOnR5cGUgcmRmOnJlc291cmNlPSJodHRwOi8vcHVybC5vcmcvZGMvZGNtaXR5cGUvU3RpbGxJbWFnZSIvPgogICAgPGRjOmRhdGU+MjAyNi0xMS0xMlQyMzo1NjozNC42MjMzNTg8L2RjOmRhdGU+CiAgICA8ZGM6Zm9ybWF0PmltYWdlL3N2Zyt4bWw8L2RjOmZvcm1hdD4KICAgIDxkYzpjcmVhdG9yPgogICAgIDxjYzpBZ2VudD4KICAgICAgPGRjOnRpdGxlPk1hdHBsb3RsaWIgdjMuMTEuMiwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy88L2RjOnRpdGxlPgogICAgIDwvY2M6QWdlbnQ+CiAgICA8L2RjOmNyZWF0b3I+CiAgIDwvY2M6V29yaz4KICA8L3JkZjpSREY+CiA8L21ldGFkYXRhPgogPGRlZnM+CiAgPHN0eWxlIHR5cGU9InRleHQvY3NzIj4qe3N0cm9rZS1saW5lam9pbjogcm91bmQ7IHN0cm9rZS1saW5lY2FwOiBidXR0fTwvc3R5bGU+CiA8L2RlZnM+CiA8ZyBpZD0iZmlndXJlXzEiPgogIDxnIGlkPSJwYXRjaF8xIj4KICAgPHBhdGggZD0iTSAwIDM3NC40IApMIDc5MiAzNzQuNCAKTCA3OTIgMCAKTCAwIDAgCkwgMCAzNzQuNCAKegoiIHN0eWxlPSJmaWxsOiBub25lIi8+CiAgPC9nPgogIDxnIGlkPSJheGVzXzEiPgogICA8ZyBpZD0icGF0Y2hfMiI+CiAgICA8cGF0aCBkPSJNIDkyLjc1MTk1MyAzMjcuODc4NTE2IApMIDc3MS40OCAzMjcuODc4NTE2IApMIDc3MS40OCAyNy43Mzc3NzMgCkwgOTIuNzUxOTUzIDI3LjczNzc3MyAKTCA5Mi43NTE5NTMgMzI3Ljg3ODUxNiAKegoiIHN0eWxlPSJmaWxsOiBub25lIi8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzMiPgogICAgPHBhdGggZD0iTSAxMjMuNjAzMjI4IDMyNy44Nzg1MTYgCkwgMjU2LjY4NzE1OSAzMjcuODc4NTE2IApMIDI1Ni42ODcxNTkgNzEuNTU4MzIyIApMIDEyMy42MDMyMjggNzEuNTU4MzIyIAp6CiIgY2xpcC1wYXRoPSJ1cmwoI3BhODMzOTU0MWJiKSIgc3R5bGU9ImZpbGw6ICNmZjZiNmIiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfNCI+CiAgICA8cGF0aCBkPSJNIDM2NS41NzQwMTEgMzI3Ljg3ODUxNiAKTCA0OTguNjU3OTQyIDMyNy44Nzg1MTYgCkwgNDk4LjY1Nzk0MiAyNjAuMDQ2NzA4IApMIDM2NS41NzQwMTEgMjYwLjA0NjcwOCAKegoiIGNsaXAtcGF0aD0idXJsKCNwYTgzMzk1NDFiYikiIHN0eWxlPSJmaWxsOiAjZmZjMTA3Ii8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzUiPgogICAgPHBhdGggZD0iTSA2MDcuNTQ0Nzk0IDMyNy44Nzg1MTYgCkwgNzQwLjYyODcyNSAzMjcuODc4NTE2IApMIDc0MC42Mjg3MjUgMzExLjA3MDYzNCAKTCA2MDcuNTQ0Nzk0IDMxMS4wNzA2MzQgCnoKIiBjbGlwLXBhdGg9InVybCgjcGE4MzM5NTQxYmIpIiBzdHlsZT0iZmlsbDogIzRjYWY1MCIvPgogICA8L2c+CiAgIDxnIGlkPSJtYXRwbG90bGliLmF4aXNfMSI+CiAgICA8ZyBpZD0ieHRpY2tfMSI+CiAgICAgPGcgaWQ9ImxpbmUyZF8xIj4KICAgICAgPGRlZnM+CiAgICAgICA8cGF0aCBpZD0ibTgyYjgwMjUxYjMiIGQ9Ik0gMCAwIApMIDAgMy41IAoiIHN0eWxlPSJzdHJva2U6ICNiYmJiYmI7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZGVmcz4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtODJiODAyNTFiMyIgeD0iMTkwLjE0NTE5MyIgeT0iMzI3Ljg3ODUxNiIgc3R5bGU9ImZpbGw6ICNiYmJiYmI7IHN0cm9rZTogI2JiYmJiYjsgc3Ryb2tlLXdpZHRoOiAwLjgiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF8xIj4KICAgICAgPHRleHQgc3R5bGU9ImZvbnQtc2l6ZTogMTlweDsgZm9udC1mYW1pbHk6ICdEZWphVnUgU2FucycsICdCaXRzdHJlYW0gVmVyYSBTYW5zJywgJ0NvbXB1dGVyIE1vZGVybiBTYW5zIFNlcmlmJywgJ0x1Y2lkYSBHcmFuZGUnLCAnVmVyZGFuYScsICdHZW5ldmEnLCAnTHVjaWQnLCAnQXJpYWwnLCAnSGVsdmV0aWNhJywgJ0F2YW50IEdhcmRlJywgc2Fucy1zZXJpZjsgdGV4dC1hbmNob3I6IG1pZGRsZTsgZmlsbDogI2JiYmJiYiIgeD0iMTkwLjE0NTE5MyIgeT0iMzQ5LjMxNTU0NyIgdHJhbnNmb3JtPSJyb3RhdGUoLTAgMTkwLjE0NTE5MyAzNDkuMzE1NTQ3KSI+TW9udGgtdG8tbW9udGg8L3RleHQ+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9Inh0aWNrXzIiPgogICAgIDxnIGlkPSJsaW5lMmRfMiI+CiAgICAgIDxnPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjbTgyYjgwMjUxYjMiIHg9IjQzMi4xMTU5NzciIHk9IjMyNy44Nzg1MTYiIHN0eWxlPSJmaWxsOiAjYmJiYmJiOyBzdHJva2U6ICNiYmJiYmI7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfMiI+CiAgICAgIDx0ZXh0IHN0eWxlPSJmb250LXNpemU6IDE5cHg7IGZvbnQtZmFtaWx5OiAnRGVqYVZ1IFNhbnMnLCAnQml0c3RyZWFtIFZlcmEgU2FucycsICdDb21wdXRlciBNb2Rlcm4gU2FucyBTZXJpZicsICdMdWNpZGEgR3JhbmRlJywgJ1ZlcmRhbmEnLCAnR2VuZXZhJywgJ0x1Y2lkJywgJ0FyaWFsJywgJ0hlbHZldGljYScsICdBdmFudCBHYXJkZScsIHNhbnMtc2VyaWY7IHRleHQtYW5jaG9yOiBtaWRkbGU7IGZpbGw6ICNiYmJiYmIiIHg9IjQzMi4xMTU5NzciIHk9IjM0OS4zMTQwNjIiIHRyYW5zZm9ybT0icm90YXRlKC0wIDQzMi4xMTU5NzcgMzQ5LjMxNDA2MikiPk9uZSB5ZWFyPC90ZXh0PgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ4dGlja18zIj4KICAgICA8ZyBpZD0ibGluZTJkXzMiPgogICAgICA8Zz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI204MmI4MDI1MWIzIiB4PSI2NzQuMDg2NzYiIHk9IjMyNy44Nzg1MTYiIHN0eWxlPSJmaWxsOiAjYmJiYmJiOyBzdHJva2U6ICNiYmJiYmI7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfMyI+CiAgICAgIDx0ZXh0IHN0eWxlPSJmb250LXNpemU6IDE5cHg7IGZvbnQtZmFtaWx5OiAnRGVqYVZ1IFNhbnMnLCAnQml0c3RyZWFtIFZlcmEgU2FucycsICdDb21wdXRlciBNb2Rlcm4gU2FucyBTZXJpZicsICdMdWNpZGEgR3JhbmRlJywgJ1ZlcmRhbmEnLCAnR2VuZXZhJywgJ0x1Y2lkJywgJ0FyaWFsJywgJ0hlbHZldGljYScsICdBdmFudCBHYXJkZScsIHNhbnMtc2VyaWY7IHRleHQtYW5jaG9yOiBtaWRkbGU7IGZpbGw6ICNiYmJiYmIiIHg9IjY3NC4wODY3NiIgeT0iMzQ5LjMxNDA2MiIgdHJhbnNmb3JtPSJyb3RhdGUoLTAgNjc0LjA4Njc2IDM0OS4zMTQwNjIpIj5Ud28geWVhcjwvdGV4dD4KICAgICA8L2c+CiAgICA8L2c+CiAgIDwvZz4KICAgPGcgaWQ9Im1hdHBsb3RsaWIuYXhpc18yIj4KICAgIDxnIGlkPSJ5dGlja18xIj4KICAgICA8ZyBpZD0ibGluZTJkXzQiPgogICAgICA8cGF0aCBkPSJNIDkyLjc1MTk1MyAzMjcuODc4NTE2IApMIDc3MS40OCAzMjcuODc4NTE2IAoiIGNsaXAtcGF0aD0idXJsKCNwYTgzMzk1NDFiYikiIHN0eWxlPSJmaWxsOiBub25lOyBzdHJva2U6ICMzMzMzMzM7IHN0cm9rZS13aWR0aDogMC42OyBzdHJva2UtbGluZWNhcDogc3F1YXJlIi8+CiAgICAgPC9nPgogICAgIDxnIGlkPSJsaW5lMmRfNSI+CiAgICAgIDxkZWZzPgogICAgICAgPHBhdGggaWQ9Im02ODMwMzhlNmY2IiBkPSJNIDAgMCAKTCAtMy41IDAgCiIgc3R5bGU9InN0cm9rZTogI2JiYmJiYjsgc3Ryb2tlLXdpZHRoOiAwLjgiLz4KICAgICAgPC9kZWZzPgogICAgICA8Zz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI202ODMwMzhlNmY2IiB4PSI5Mi43NTE5NTMiIHk9IjMyNy44Nzg1MTYiIHN0eWxlPSJmaWxsOiAjYmJiYmJiOyBzdHJva2U6ICNiYmJiYmI7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfNCI+CiAgICAgIDx0ZXh0IHN0eWxlPSJmb250LXNpemU6IDE5cHg7IGZvbnQtZmFtaWx5OiAnRGVqYVZ1IFNhbnMnLCAnQml0c3RyZWFtIFZlcmEgU2FucycsICdDb21wdXRlciBNb2Rlcm4gU2FucyBTZXJpZicsICdMdWNpZGEgR3JhbmRlJywgJ1ZlcmRhbmEnLCAnR2VuZXZhJywgJ0x1Y2lkJywgJ0FyaWFsJywgJ0hlbHZldGljYScsICdBdmFudCBHYXJkZScsIHNhbnMtc2VyaWY7IHRleHQtYW5jaG9yOiBlbmQ7IGZpbGw6ICNiYmJiYmIiIHg9Ijg1Ljc1MTk1MyIgeT0iMzM1LjA5NjI4OSIgdHJhbnNmb3JtPSJyb3RhdGUoLTAgODUuNzUxOTUzIDMzNS4wOTYyODkpIj4wJTwvdGV4dD4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieXRpY2tfMiI+CiAgICAgPGcgaWQ9ImxpbmUyZF82Ij4KICAgICAgPHBhdGggZD0iTSA5Mi43NTE5NTMgMjY3Ljg1MDM2NyAKTCA3NzEuNDggMjY3Ljg1MDM2NyAKIiBjbGlwLXBhdGg9InVybCgjcGE4MzM5NTQxYmIpIiBzdHlsZT0iZmlsbDogbm9uZTsgc3Ryb2tlOiAjMzMzMzMzOyBzdHJva2Utd2lkdGg6IDAuNjsgc3Ryb2tlLWxpbmVjYXA6IHNxdWFyZSIvPgogICAgIDwvZz4KICAgICA8ZyBpZD0ibGluZTJkXzciPgogICAgICA8Zz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI202ODMwMzhlNmY2IiB4PSI5Mi43NTE5NTMiIHk9IjI2Ny44NTAzNjciIHN0eWxlPSJmaWxsOiAjYmJiYmJiOyBzdHJva2U6ICNiYmJiYmI7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfNSI+CiAgICAgIDx0ZXh0IHN0eWxlPSJmb250LXNpemU6IDE5cHg7IGZvbnQtZmFtaWx5OiAnRGVqYVZ1IFNhbnMnLCAnQml0c3RyZWFtIFZlcmEgU2FucycsICdDb21wdXRlciBNb2Rlcm4gU2FucyBTZXJpZicsICdMdWNpZGEgR3JhbmRlJywgJ1ZlcmRhbmEnLCAnR2VuZXZhJywgJ0x1Y2lkJywgJ0FyaWFsJywgJ0hlbHZldGljYScsICdBdmFudCBHYXJkZScsIHNhbnMtc2VyaWY7IHRleHQtYW5jaG9yOiBlbmQ7IGZpbGw6ICNiYmJiYmIiIHg9Ijg1Ljc1MTk1MyIgeT0iMjc1LjA2ODE0MSIgdHJhbnNmb3JtPSJyb3RhdGUoLTAgODUuNzUxOTUzIDI3NS4wNjgxNDEpIj4xMCU8L3RleHQ+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9Inl0aWNrXzMiPgogICAgIDxnIGlkPSJsaW5lMmRfOCI+CiAgICAgIDxwYXRoIGQ9Ik0gOTIuNzUxOTUzIDIwNy44MjIyMTkgCkwgNzcxLjQ4IDIwNy44MjIyMTkgCiIgY2xpcC1wYXRoPSJ1cmwoI3BhODMzOTU0MWJiKSIgc3R5bGU9ImZpbGw6IG5vbmU7IHN0cm9rZTogIzMzMzMzMzsgc3Ryb2tlLXdpZHRoOiAwLjY7IHN0cm9rZS1saW5lY2FwOiBzcXVhcmUiLz4KICAgICA8L2c+CiAgICAgPGcgaWQ9ImxpbmUyZF85Ij4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtNjgzMDM4ZTZmNiIgeD0iOTIuNzUxOTUzIiB5PSIyMDcuODIyMjE5IiBzdHlsZT0iZmlsbDogI2JiYmJiYjsgc3Ryb2tlOiAjYmJiYmJiOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzYiPgogICAgICA8dGV4dCBzdHlsZT0iZm9udC1zaXplOiAxOXB4OyBmb250LWZhbWlseTogJ0RlamFWdSBTYW5zJywgJ0JpdHN0cmVhbSBWZXJhIFNhbnMnLCAnQ29tcHV0ZXIgTW9kZXJuIFNhbnMgU2VyaWYnLCAnTHVjaWRhIEdyYW5kZScsICdWZXJkYW5hJywgJ0dlbmV2YScsICdMdWNpZCcsICdBcmlhbCcsICdIZWx2ZXRpY2EnLCAnQXZhbnQgR2FyZGUnLCBzYW5zLXNlcmlmOyB0ZXh0LWFuY2hvcjogZW5kOyBmaWxsOiAjYmJiYmJiIiB4PSI4NS43NTE5NTMiIHk9IjIxNS4wMzk5OTIiIHRyYW5zZm9ybT0icm90YXRlKC0wIDg1Ljc1MTk1MyAyMTUuMDM5OTkyKSI+MjAlPC90ZXh0PgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ5dGlja180Ij4KICAgICA8ZyBpZD0ibGluZTJkXzEwIj4KICAgICAgPHBhdGggZD0iTSA5Mi43NTE5NTMgMTQ3Ljc5NDA3IApMIDc3MS40OCAxNDcuNzk0MDcgCiIgY2xpcC1wYXRoPSJ1cmwoI3BhODMzOTU0MWJiKSIgc3R5bGU9ImZpbGw6IG5vbmU7IHN0cm9rZTogIzMzMzMzMzsgc3Ryb2tlLXdpZHRoOiAwLjY7IHN0cm9rZS1saW5lY2FwOiBzcXVhcmUiLz4KICAgICA8L2c+CiAgICAgPGcgaWQ9ImxpbmUyZF8xMSI+CiAgICAgIDxnPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjbTY4MzAzOGU2ZjYiIHg9IjkyLjc1MTk1MyIgeT0iMTQ3Ljc5NDA3IiBzdHlsZT0iZmlsbDogI2JiYmJiYjsgc3Ryb2tlOiAjYmJiYmJiOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzciPgogICAgICA8dGV4dCBzdHlsZT0iZm9udC1zaXplOiAxOXB4OyBmb250LWZhbWlseTogJ0RlamFWdSBTYW5zJywgJ0JpdHN0cmVhbSBWZXJhIFNhbnMnLCAnQ29tcHV0ZXIgTW9kZXJuIFNhbnMgU2VyaWYnLCAnTHVjaWRhIEdyYW5kZScsICdWZXJkYW5hJywgJ0dlbmV2YScsICdMdWNpZCcsICdBcmlhbCcsICdIZWx2ZXRpY2EnLCAnQXZhbnQgR2FyZGUnLCBzYW5zLXNlcmlmOyB0ZXh0LWFuY2hvcjogZW5kOyBmaWxsOiAjYmJiYmJiIiB4PSI4NS43NTE5NTMiIHk9IjE1NS4wMTE4NDQiIHRyYW5zZm9ybT0icm90YXRlKC0wIDg1Ljc1MTk1MyAxNTUuMDExODQ0KSI+MzAlPC90ZXh0PgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ5dGlja181Ij4KICAgICA8ZyBpZD0ibGluZTJkXzEyIj4KICAgICAgPHBhdGggZD0iTSA5Mi43NTE5NTMgODcuNzY1OTIyIApMIDc3MS40OCA4Ny43NjU5MjIgCiIgY2xpcC1wYXRoPSJ1cmwoI3BhODMzOTU0MWJiKSIgc3R5bGU9ImZpbGw6IG5vbmU7IHN0cm9rZTogIzMzMzMzMzsgc3Ryb2tlLXdpZHRoOiAwLjY7IHN0cm9rZS1saW5lY2FwOiBzcXVhcmUiLz4KICAgICA8L2c+CiAgICAgPGcgaWQ9ImxpbmUyZF8xMyI+CiAgICAgIDxnPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjbTY4MzAzOGU2ZjYiIHg9IjkyLjc1MTk1MyIgeT0iODcuNzY1OTIyIiBzdHlsZT0iZmlsbDogI2JiYmJiYjsgc3Ryb2tlOiAjYmJiYmJiOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzgiPgogICAgICA8dGV4dCBzdHlsZT0iZm9udC1zaXplOiAxOXB4OyBmb250LWZhbWlseTogJ0RlamFWdSBTYW5zJywgJ0JpdHN0cmVhbSBWZXJhIFNhbnMnLCAnQ29tcHV0ZXIgTW9kZXJuIFNhbnMgU2VyaWYnLCAnTHVjaWRhIEdyYW5kZScsICdWZXJkYW5hJywgJ0dlbmV2YScsICdMdWNpZCcsICdBcmlhbCcsICdIZWx2ZXRpY2EnLCAnQXZhbnQgR2FyZGUnLCBzYW5zLXNlcmlmOyB0ZXh0LWFuY2hvcjogZW5kOyBmaWxsOiAjYmJiYmJiIiB4PSI4NS43NTE5NTMiIHk9Ijk0Ljk4MzY5NSIgdHJhbnNmb3JtPSJyb3RhdGUoLTAgODUuNzUxOTUzIDk0Ljk4MzY5NSkiPjQwJTwvdGV4dD4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieXRpY2tfNiI+CiAgICAgPGcgaWQ9ImxpbmUyZF8xNCI+CiAgICAgIDxwYXRoIGQ9Ik0gOTIuNzUxOTUzIDI3LjczNzc3MyAKTCA3NzEuNDggMjcuNzM3NzczIAoiIGNsaXAtcGF0aD0idXJsKCNwYTgzMzk1NDFiYikiIHN0eWxlPSJmaWxsOiBub25lOyBzdHJva2U6ICMzMzMzMzM7IHN0cm9rZS13aWR0aDogMC42OyBzdHJva2UtbGluZWNhcDogc3F1YXJlIi8+CiAgICAgPC9nPgogICAgIDxnIGlkPSJsaW5lMmRfMTUiPgogICAgICA8Zz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI202ODMwMzhlNmY2IiB4PSI5Mi43NTE5NTMiIHk9IjI3LjczNzc3MyIgc3R5bGU9ImZpbGw6ICNiYmJiYmI7IHN0cm9rZTogI2JiYmJiYjsgc3Ryb2tlLXdpZHRoOiAwLjgiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF85Ij4KICAgICAgPHRleHQgc3R5bGU9ImZvbnQtc2l6ZTogMTlweDsgZm9udC1mYW1pbHk6ICdEZWphVnUgU2FucycsICdCaXRzdHJlYW0gVmVyYSBTYW5zJywgJ0NvbXB1dGVyIE1vZGVybiBTYW5zIFNlcmlmJywgJ0x1Y2lkYSBHcmFuZGUnLCAnVmVyZGFuYScsICdHZW5ldmEnLCAnTHVjaWQnLCAnQXJpYWwnLCAnSGVsdmV0aWNhJywgJ0F2YW50IEdhcmRlJywgc2Fucy1zZXJpZjsgdGV4dC1hbmNob3I6IGVuZDsgZmlsbDogI2JiYmJiYiIgeD0iODUuNzUxOTUzIiB5PSIzNC45NTU1NDciIHRyYW5zZm9ybT0icm90YXRlKC0wIDg1Ljc1MTk1MyAzNC45NTU1NDcpIj41MCU8L3RleHQ+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9InRleHRfMTAiPgogICAgIDx0ZXh0IHN0eWxlPSJmb250LXNpemU6IDE5cHg7IGZvbnQtZmFtaWx5OiAnRGVqYVZ1IFNhbnMnLCAnQml0c3RyZWFtIFZlcmEgU2FucycsICdDb21wdXRlciBNb2Rlcm4gU2FucyBTZXJpZicsICdMdWNpZGEgR3JhbmRlJywgJ1ZlcmRhbmEnLCAnR2VuZXZhJywgJ0x1Y2lkJywgJ0FyaWFsJywgJ0hlbHZldGljYScsICdBdmFudCBHYXJkZScsIHNhbnMtc2VyaWY7IHRleHQtYW5jaG9yOiBtaWRkbGU7IGZpbGw6ICNjY2NjY2MiIHg9IjM0Ljk1NzAzMSIgeT0iMTc3LjgwODE0NSIgdHJhbnNmb3JtPSJyb3RhdGUoLTkwIDM0Ljk1NzAzMSAxNzcuODA4MTQ1KSI+JSB3aG8gbGVmdDwvdGV4dD4KICAgIDwvZz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfNiI+CiAgICA8cGF0aCBkPSJNIDkyLjc1MTk1MyAzMjcuODc4NTE2IApMIDkyLjc1MTk1MyAyNy43Mzc3NzMgCiIgc3R5bGU9ImZpbGw6IG5vbmU7IHN0cm9rZTogIzU1NTU1NTsgc3Ryb2tlLXdpZHRoOiAwLjg7IHN0cm9rZS1saW5lam9pbjogbWl0ZXI7IHN0cm9rZS1saW5lY2FwOiBzcXVhcmUiLz4KICAgPC9nPgogICA8ZyBpZD0icGF0Y2hfNyI+CiAgICA8cGF0aCBkPSJNIDkyLjc1MTk1MyAzMjcuODc4NTE2IApMIDc3MS40OCAzMjcuODc4NTE2IAoiIHN0eWxlPSJmaWxsOiBub25lOyBzdHJva2U6ICM1NTU1NTU7IHN0cm9rZS13aWR0aDogMC44OyBzdHJva2UtbGluZWpvaW46IG1pdGVyOyBzdHJva2UtbGluZWNhcDogc3F1YXJlIi8+CiAgIDwvZz4KICAgPGcgaWQ9InRleHRfMTEiPgogICAgPHRleHQgc3R5bGU9ImZvbnQtd2VpZ2h0OiA3MDA7IGZvbnQtc2l6ZTogMjRweDsgZm9udC1mYW1pbHk6ICdEZWphVnUgU2FucycsICdCaXRzdHJlYW0gVmVyYSBTYW5zJywgJ0NvbXB1dGVyIE1vZGVybiBTYW5zIFNlcmlmJywgJ0x1Y2lkYSBHcmFuZGUnLCAnVmVyZGFuYScsICdHZW5ldmEnLCAnTHVjaWQnLCAnQXJpYWwnLCAnSGVsdmV0aWNhJywgJ0F2YW50IEdhcmRlJywgc2Fucy1zZXJpZjsgdGV4dC1hbmNob3I6IG1pZGRsZTsgZmlsbDogI2ZmZmZmZiIgeD0iMTkwLjE0NTE5MyIgeT0iNjUuNTU1NTA3IiB0cmFuc2Zvcm09InJvdGF0ZSgtMCAxOTAuMTQ1MTkzIDY1LjU1NTUwNykiPjQyLjclPC90ZXh0PgogICA8L2c+CiAgIDxnIGlkPSJ0ZXh0XzEyIj4KICAgIDx0ZXh0IHN0eWxlPSJmb250LXdlaWdodDogNzAwOyBmb250LXNpemU6IDI0cHg7IGZvbnQtZmFtaWx5OiAnRGVqYVZ1IFNhbnMnLCAnQml0c3RyZWFtIFZlcmEgU2FucycsICdDb21wdXRlciBNb2Rlcm4gU2FucyBTZXJpZicsICdMdWNpZGEgR3JhbmRlJywgJ1ZlcmRhbmEnLCAnR2VuZXZhJywgJ0x1Y2lkJywgJ0FyaWFsJywgJ0hlbHZldGljYScsICdBdmFudCBHYXJkZScsIHNhbnMtc2VyaWY7IHRleHQtYW5jaG9yOiBtaWRkbGU7IGZpbGw6ICNmZmZmZmYiIHg9IjQzMi4xMTU5NzciIHk9IjI1NC4wNDM4OTMiIHRyYW5zZm9ybT0icm90YXRlKC0wIDQzMi4xMTU5NzcgMjU0LjA0Mzg5MykiPjExLjMlPC90ZXh0PgogICA8L2c+CiAgIDxnIGlkPSJ0ZXh0XzEzIj4KICAgIDx0ZXh0IHN0eWxlPSJmb250LXdlaWdodDogNzAwOyBmb250LXNpemU6IDI0cHg7IGZvbnQtZmFtaWx5OiAnRGVqYVZ1IFNhbnMnLCAnQml0c3RyZWFtIFZlcmEgU2FucycsICdDb21wdXRlciBNb2Rlcm4gU2FucyBTZXJpZicsICdMdWNpZGEgR3JhbmRlJywgJ1ZlcmRhbmEnLCAnR2VuZXZhJywgJ0x1Y2lkJywgJ0FyaWFsJywgJ0hlbHZldGljYScsICdBdmFudCBHYXJkZScsIHNhbnMtc2VyaWY7IHRleHQtYW5jaG9yOiBtaWRkbGU7IGZpbGw6ICNmZmZmZmYiIHg9IjY3NC4wODY3NiIgeT0iMzA1LjA2NzgxOSIgdHJhbnNmb3JtPSJyb3RhdGUoLTAgNjc0LjA4Njc2IDMwNS4wNjc4MTkpIj4yLjglPC90ZXh0PgogICA8L2c+CiAgPC9nPgogPC9nPgogPGRlZnM+CiAgPGNsaXBQYXRoIGlkPSJwYTgzMzk1NDFiYiI+CiAgIDxyZWN0IHg9IjkyLjc1MTk1MyIgeT0iMjcuNzM3NzczIiB3aWR0aD0iNjc4LjcyODA0NyIgaGVpZ2h0PSIzMDAuMTQwNzQyIi8+CiAgPC9jbGlwUGF0aD4KIDwvZGVmcz4KPC9zdmc+Cg=="></div>
+
+<p>The chart shows one pattern the model can learn: customers on <strong>month-to-month</strong> contracts leave far more often than those on 1- or 2-year contracts.</p>
+<div class="try">
+<p>Before reading on: list five pieces of information about a customer you think would help predict whether they leave.</p>
+</div>
+<h2>1.6 Types of machine learning</h2>
+<p>There are several ways to sort ML systems. The most important question is: <strong>does the training data include the answers?</strong></p>
+<h3>A. Supervised learning: learning with an answer key</h3>
+<div class="kid">
+<p>Like studying with a book that has the answers at the back. You try, you check, you learn from your mistakes.</p>
+</div>
+<p>Every training example has the correct answer, called the <strong>label</strong> or <strong>target</strong>. The model learns to predict the label for new examples. Two kinds:</p>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>The answer is…</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Regression</strong></td>
+<td>a <strong>number</strong></td>
+<td>house price, medical charges, temperature tomorrow, sales next month</td>
+</tr>
+<tr>
+<td><strong>Classification</strong></td>
+<td>a <strong>category</strong></td>
+<td>spam / not spam, will leave / will stay, cat / dog / bird, disease / healthy</td>
+</tr>
+</tbody>
+</table>
+<p>Models we study: <strong>linear regression</strong> (regression), <strong>logistic regression</strong> (classification), <strong>decision trees</strong> and <strong>random forests</strong> (both).</p>
+<h3>B. Unsupervised learning: no answer key</h3>
+<div class="kid">
+<p>Like being given a box of 500 mixed buttons and asked to sort them into groups. Nobody tells you the groups; you decide from colour, size and shape.</p>
+</div>
+<p>The data has <strong>no labels</strong>. The model looks for structure by itself:</p>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Clustering</strong></td>
+<td>finds groups of similar examples</td>
+<td>customer segments for marketing</td>
+</tr>
+<tr>
+<td><strong>Anomaly detection</strong></td>
+<td>finds examples that look unusual</td>
+<td>fraud, broken sensors, data errors</td>
+</tr>
+<tr>
+<td><strong>Dimensionality reduction</strong></td>
+<td>squeezes many columns into a few that keep most information</td>
+<td>visualising data, speeding up models</td>
+</tr>
+</tbody>
+</table>
+<p>Model we study: <strong>k-means</strong> clustering.</p>
+<h3>C. Semi-supervised learning: a few answers, lots of data</h3>
+<p>Only some examples are labelled (labels are expensive: a doctor must read every scan). The model uses the many unlabelled examples to learn better from the few labelled ones. <em>Example: your photo app groups faces by itself (unsupervised), then you name one photo of each person and it labels all the rest.</em></p>
+<h3>D. Self-supervised learning: the data creates its own answers</h3>
+<p>The model hides part of the data and learns to predict the hidden part. <strong>This is how ChatGPT and other large language models (LLMs) are trained:</strong> take a sentence from the internet, hide the next word, and learn to predict it. Billions of sentences = billions of free "answers", no human labelling needed.</p>
+<h3>E. Reinforcement learning: learning by trial and reward</h3>
+<div class="kid">
+<p>Like training a dog: it tries something, gets a treat (reward) or nothing, and slowly learns which actions earn treats.</p>
+</div>
+<p>An <strong>agent</strong> acts in an environment, receives <strong>rewards</strong> or <strong>penalties</strong>, and learns a <strong>policy</strong> (which action to take in each situation). Examples: game-playing programs (AlphaGo), robots learning to walk, and the step that makes chatbots helpful and polite (RLHF: reinforcement learning from human feedback).</p>
+<h3>Two more ways to sort ML systems</h3>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Option 1</th>
+<th>Option 2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>How does it learn over time?</strong></td>
+<td><strong>Batch (offline):</strong> train once on all data, deploy, retrain from scratch later (most business models, including ours)</td>
+<td><strong>Online:</strong> keeps learning from each new example as it arrives (stock prices, news feeds)</td>
+</tr>
+<tr>
+<td><strong>How does it generalise?</strong></td>
+<td><strong>Instance-based:</strong> remembers examples and compares new ones to them ("this customer looks like these 5 who left")</td>
+<td><strong>Model-based:</strong> builds a formula from the examples and uses the formula (linear regression)</td>
+</tr>
+</tbody>
+</table>
+<h2>1.7 Where each type leads: from this bootcamp to modern AI</h2>
+<table>
+<thead>
+<tr>
+<th>What you learn here</th>
+<th>Where it leads</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Supervised learning on tables (regression, classification)</td>
+<td>credit scoring, fraud, pricing, demand forecasting, medical risk: still most ML in companies</td>
+</tr>
+<tr>
+<td>Linear &amp; logistic regression, gradient descent</td>
+<td>the <strong>building blocks of neural networks</strong>: a neural network is many logistic-regression-like units stacked in layers</td>
+</tr>
+<tr>
+<td>Decision trees → random forests → gradient boosting</td>
+<td>the best tools today for tabular data (XGBoost, LightGBM, CatBoost)</td>
+</tr>
+<tr>
+<td>Unsupervised learning (clustering, PCA)</td>
+<td><strong>embeddings</strong> and vector search: how RAG systems and recommendation engines find similar items</td>
+</tr>
+<tr>
+<td>Self-supervised learning</td>
+<td><strong>large language models</strong> (ChatGPT, Claude, Gemini)</td>
+</tr>
+<tr>
+<td>Reinforcement learning</td>
+<td><strong>AI agents</strong> that plan and act, robots, RLHF for chatbots</td>
+</tr>
+<tr>
+<td>Data splits, leakage, metrics, monitoring</td>
+<td><strong>every</strong> AI job: an LLM product still needs honest evaluation, clean data and monitoring</td>
+</tr>
+</tbody>
+</table>
+<div class="deep">
+<p>Deep learning is not a different kind of learning; it is a different kind of <strong>model</strong> (neural networks with many layers) that can be trained in any of the ways above. It dominates images, audio and text. On tables of data (rows and columns, like customer records), classic models such as gradient-boosted trees usually still win.</p>
+</div>
+<h2>1.8 AI, ML and deep learning</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Artificial intelligence (AI)</strong></td>
+<td>any technique that makes a computer act smart, <strong>including hand-written rules</strong> (a 1990s chess program)</td>
+</tr>
+<tr>
+<td><strong>Machine learning (ML)</strong></td>
+<td>a part of AI: the computer <strong>learns</strong> the rules from examples</td>
+</tr>
+<tr>
+<td><strong>Deep learning (DL)</strong></td>
+<td>a part of ML: learning with large neural networks</td>
+</tr>
+</tbody>
+</table>
+<p>So: every DL system is ML, every ML system is AI, but not every AI system learns.</p>
+<h2>1.9 The main challenges of machine learning</h2>
+<p>A model can only be as good as its <strong>data</strong> and its <strong>fit</strong>. Things go wrong in two places.</p>
+<h3>Bad data</h3>
+<table>
+<thead>
+<tr>
+<th>Problem</th>
+<th>Example</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Not enough data</strong></td>
+<td>50 customers</td>
+<td>the model can't tell pattern from luck</td>
+</tr>
+<tr>
+<td><strong>Non-representative data</strong></td>
+<td>training only on city customers, then predicting villages</td>
+<td>wrong for the people you didn't include</td>
+</tr>
+<tr>
+<td><strong>Poor-quality data</strong></td>
+<td>typos, missing values, impossible ages</td>
+<td>the model learns the errors</td>
+</tr>
+<tr>
+<td><strong>Irrelevant features</strong></td>
+<td>customer's favourite colour</td>
+<td>noise that confuses the model</td>
+</tr>
+<tr>
+<td><strong>Sampling bias</strong></td>
+<td>a survey answered only by happy customers</td>
+<td>a picture of the world that is wrong in a hidden way</td>
+</tr>
+</tbody>
+</table>
+<div class="kid">
+<p>If you learn cooking only from burnt recipes, you will cook burnt food. <strong>Garbage in, garbage out.</strong></p>
+</div>
+<h3>Bad fit: overfitting and underfitting</h3>
+<div class="kid">
+<p><strong>Overfitting</strong> is like a student who memorises the answers to last year's exam word for word. Perfect on that paper, lost on a new one.
+<strong>Underfitting</strong> is like a student who only learned "the answer is usually C". Bad on every paper.
+We want the student who <strong>understood</strong> the subject.</p>
+</div>
+<div class="chart"><img alt="l2_depth" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIKICAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4KPHN2ZyB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgd2lkdGg9Ijg2NHB0IiBoZWlnaHQ9IjQ0Ni40cHQiIHZpZXdCb3g9IjAgMCA4NjQgNDQ2LjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmVyc2lvbj0iMS4xIj4KIDxtZXRhZGF0YT4KICA8cmRmOlJERiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOmNjPSJodHRwOi8vY3JlYXRpdmVjb21tb25zLm9yZy9ucyMiIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgIDxjYzpXb3JrPgogICAgPGRjOnR5cGUgcmRmOnJlc291cmNlPSJodHRwOi8vcHVybC5vcmcvZGMvZGNtaXR5cGUvU3RpbGxJbWFnZSIvPgogICAgPGRjOmRhdGU+MjAyNi0xMS0xM1QwMDowNjo1Ni4yODYwMzg8L2RjOmRhdGU+CiAgICA8ZGM6Zm9ybWF0PmltYWdlL3N2Zyt4bWw8L2RjOmZvcm1hdD4KICAgIDxkYzpjcmVhdG9yPgogICAgIDxjYzpBZ2VudD4KICAgICAgPGRjOnRpdGxlPk1hdHBsb3RsaWIgdjMuMTEuMiwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy88L2RjOnRpdGxlPgogICAgIDwvY2M6QWdlbnQ+CiAgICA8L2RjOmNyZWF0b3I+CiAgIDwvY2M6V29yaz4KICA8L3JkZjpSREY+CiA8L21ldGFkYXRhPgogPGRlZnM+CiAgPHN0eWxlIHR5cGU9InRleHQvY3NzIj4qe3N0cm9rZS1saW5lam9pbjogcm91bmQ7IHN0cm9rZS1saW5lY2FwOiBidXR0fTwvc3R5bGU+CiA8L2RlZnM+CiA8ZyBpZD0iZmlndXJlXzEiPgogIDxnIGlkPSJwYXRjaF8xIj4KICAgPHBhdGggZD0iTSAwIDQ0Ni40IApMIDg2NCA0NDYuNCAKTCA4NjQgMCAKTCAwIDAgCkwgMCA0NDYuNCAKegoiIHN0eWxlPSJmaWxsOiBub25lIi8+CiAgPC9nPgogIDxnIGlkPSJheGVzXzEiPgogICA8ZyBpZD0icGF0Y2hfMiI+CiAgICA8cGF0aCBkPSJNIDg2Ljc4NjI1IDMxOC4wMzMwNzIgCkwgODQzLjQ4IDMxOC4wMzMwNzIgCkwgODQzLjQ4IDIwLjUyIApMIDg2Ljc4NjI1IDIwLjUyIApMIDg2Ljc4NjI1IDMxOC4wMzMwNzIgCnoKIiBzdHlsZT0iZmlsbDogbm9uZSIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF8zIj4KICAgIDxwYXRoIGQ9Ik0gMTIxLjE4MTQyIDMxOC4wMzMwNzIgCkwgMjM1LjgzMTk4OSAzMTguMDMzMDcyIApMIDIzNS44MzE5ODkgMjAuNTIgCkwgMTIxLjE4MTQyIDIwLjUyIAp6CiIgY2xpcC1wYXRoPSJ1cmwoI3AwODVkMDQzYzU3KSIgc3R5bGU9ImZpbGw6ICNmZmMxMDc7IG9wYWNpdHk6IDAuMDg7IHN0cm9rZTogI2ZmYzEwNzsgc3Ryb2tlLWxpbmVqb2luOiBtaXRlciIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF80Ij4KICAgIDxwYXRoIGQ9Ik0gMjM1LjgzMTk4OSAzMTguMDMzMDcyIApMIDQ2NS4xMzMxMjUgMzE4LjAzMzA3MiAKTCA0NjUuMTMzMTI1IDIwLjUyIApMIDIzNS44MzE5ODkgMjAuNTIgCnoKIiBjbGlwLXBhdGg9InVybCgjcDA4NWQwNDNjNTcpIiBzdHlsZT0iZmlsbDogIzRjYWY1MDsgb3BhY2l0eTogMC4wODsgc3Ryb2tlOiAjNGNhZjUwOyBzdHJva2UtbGluZWpvaW46IG1pdGVyIi8+CiAgIDwvZz4KICAgPGcgaWQ9InBhdGNoXzUiPgogICAgPHBhdGggZD0iTSA0NjUuMTMzMTI1IDMxOC4wMzMwNzIgCkwgODA5LjA4NDgzIDMxOC4wMzMwNzIgCkwgODA5LjA4NDgzIDIwLjUyIApMIDQ2NS4xMzMxMjUgMjAuNTIgCnoKIiBjbGlwLXBhdGg9InVybCgjcDA4NWQwNDNjNTcpIiBzdHlsZT0iZmlsbDogI2ZmNmI2Yjsgb3BhY2l0eTogMC4wODsgc3Ryb2tlOiAjZmY2YjZiOyBzdHJva2UtbGluZWpvaW46IG1pdGVyIi8+CiAgIDwvZz4KICAgPGcgaWQ9Im1hdHBsb3RsaWIuYXhpc18xIj4KICAgIDxnIGlkPSJ4dGlja18xIj4KICAgICA8ZyBpZD0ibGluZTJkXzEiPgogICAgICA8cGF0aCBkPSJNIDE0OS44NDQwNjMgMzE4LjAzMzA3MiAKTCAxNDkuODQ0MDYzIDIwLjUyIAoiIGNsaXAtcGF0aD0idXJsKCNwMDg1ZDA0M2M1NykiIHN0eWxlPSJmaWxsOiBub25lOyBzdHJva2U6ICMzMzMzMzM7IHN0cm9rZS13aWR0aDogMC42OyBzdHJva2UtbGluZWNhcDogc3F1YXJlIi8+CiAgICAgPC9nPgogICAgIDxnIGlkPSJsaW5lMmRfMiI+CiAgICAgIDxkZWZzPgogICAgICAgPHBhdGggaWQ9Im1iZjE5YWVkNDg2IiBkPSJNIDAgMCAKTCAwIDMuNSAKIiBzdHlsZT0ic3Ryb2tlOiAjYmJiYmJiOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2RlZnM+CiAgICAgIDxnPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjbWJmMTlhZWQ0ODYiIHg9IjE0OS44NDQwNjMiIHk9IjMxOC4wMzMwNzIiIHN0eWxlPSJmaWxsOiAjYmJiYmJiOyBzdHJva2U6ICNiYmJiYmI7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfMSI+CiAgICAgIDx0ZXh0IHN0eWxlPSJmb250LXNpemU6IDE5cHg7IGZvbnQtZmFtaWx5OiAnRGVqYVZ1IFNhbnMnLCAnQml0c3RyZWFtIFZlcmEgU2FucycsICdDb21wdXRlciBNb2Rlcm4gU2FucyBTZXJpZicsICdMdWNpZGEgR3JhbmRlJywgJ1ZlcmRhbmEnLCAnR2VuZXZhJywgJ0x1Y2lkJywgJ0FyaWFsJywgJ0hlbHZldGljYScsICdBdmFudCBHYXJkZScsIHNhbnMtc2VyaWY7IHRleHQtYW5jaG9yOiBtaWRkbGU7IGZpbGw6ICNiYmJiYmIiIHg9IjE0OS44NDQwNjMiIHk9IjMzOS40Njg2MTkiIHRyYW5zZm9ybT0icm90YXRlKC0wIDE0OS44NDQwNjMgMzM5LjQ2ODYxOSkiPjE8L3RleHQ+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9Inh0aWNrXzIiPgogICAgIDxnIGlkPSJsaW5lMmRfMyI+CiAgICAgIDxwYXRoIGQ9Ik0gMjA3LjE2OTM0NyAzMTguMDMzMDcyIApMIDIwNy4xNjkzNDcgMjAuNTIgCiIgY2xpcC1wYXRoPSJ1cmwoI3AwODVkMDQzYzU3KSIgc3R5bGU9ImZpbGw6IG5vbmU7IHN0cm9rZTogIzMzMzMzMzsgc3Ryb2tlLXdpZHRoOiAwLjY7IHN0cm9rZS1saW5lY2FwOiBzcXVhcmUiLz4KICAgICA8L2c+CiAgICAgPGcgaWQ9ImxpbmUyZF80Ij4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYmYxOWFlZDQ4NiIgeD0iMjA3LjE2OTM0NyIgeT0iMzE4LjAzMzA3MiIgc3R5bGU9ImZpbGw6ICNiYmJiYmI7IHN0cm9rZTogI2JiYmJiYjsgc3Ryb2tlLXdpZHRoOiAwLjgiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF8yIj4KICAgICAgPHRleHQgc3R5bGU9ImZvbnQtc2l6ZTogMTlweDsgZm9udC1mYW1pbHk6ICdEZWphVnUgU2FucycsICdCaXRzdHJlYW0gVmVyYSBTYW5zJywgJ0NvbXB1dGVyIE1vZGVybiBTYW5zIFNlcmlmJywgJ0x1Y2lkYSBHcmFuZGUnLCAnVmVyZGFuYScsICdHZW5ldmEnLCAnTHVjaWQnLCAnQXJpYWwnLCAnSGVsdmV0aWNhJywgJ0F2YW50IEdhcmRlJywgc2Fucy1zZXJpZjsgdGV4dC1hbmNob3I6IG1pZGRsZTsgZmlsbDogI2JiYmJiYiIgeD0iMjA3LjE2OTM0NyIgeT0iMzM5LjQ2ODYxOSIgdHJhbnNmb3JtPSJyb3RhdGUoLTAgMjA3LjE2OTM0NyAzMzkuNDY4NjE5KSI+MjwvdGV4dD4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieHRpY2tfMyI+CiAgICAgPGcgaWQ9ImxpbmUyZF81Ij4KICAgICAgPHBhdGggZD0iTSAyNjQuNDk0NjMxIDMxOC4wMzMwNzIgCkwgMjY0LjQ5NDYzMSAyMC41MiAKIiBjbGlwLXBhdGg9InVybCgjcDA4NWQwNDNjNTcpIiBzdHlsZT0iZmlsbDogbm9uZTsgc3Ryb2tlOiAjMzMzMzMzOyBzdHJva2Utd2lkdGg6IDAuNjsgc3Ryb2tlLWxpbmVjYXA6IHNxdWFyZSIvPgogICAgIDwvZz4KICAgICA8ZyBpZD0ibGluZTJkXzYiPgogICAgICA8Zz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI21iZjE5YWVkNDg2IiB4PSIyNjQuNDk0NjMxIiB5PSIzMTguMDMzMDcyIiBzdHlsZT0iZmlsbDogI2JiYmJiYjsgc3Ryb2tlOiAjYmJiYmJiOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzMiPgogICAgICA8dGV4dCBzdHlsZT0iZm9udC1zaXplOiAxOXB4OyBmb250LWZhbWlseTogJ0RlamFWdSBTYW5zJywgJ0JpdHN0cmVhbSBWZXJhIFNhbnMnLCAnQ29tcHV0ZXIgTW9kZXJuIFNhbnMgU2VyaWYnLCAnTHVjaWRhIEdyYW5kZScsICdWZXJkYW5hJywgJ0dlbmV2YScsICdMdWNpZCcsICdBcmlhbCcsICdIZWx2ZXRpY2EnLCAnQXZhbnQgR2FyZGUnLCBzYW5zLXNlcmlmOyB0ZXh0LWFuY2hvcjogbWlkZGxlOyBmaWxsOiAjYmJiYmJiIiB4PSIyNjQuNDk0NjMxIiB5PSIzMzkuNDY4NjE5IiB0cmFuc2Zvcm09InJvdGF0ZSgtMCAyNjQuNDk0NjMxIDMzOS40Njg2MTkpIj4zPC90ZXh0PgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ4dGlja180Ij4KICAgICA8ZyBpZD0ibGluZTJkXzciPgogICAgICA8cGF0aCBkPSJNIDMyMS44MTk5MTUgMzE4LjAzMzA3MiAKTCAzMjEuODE5OTE1IDIwLjUyIAoiIGNsaXAtcGF0aD0idXJsKCNwMDg1ZDA0M2M1NykiIHN0eWxlPSJmaWxsOiBub25lOyBzdHJva2U6ICMzMzMzMzM7IHN0cm9rZS13aWR0aDogMC42OyBzdHJva2UtbGluZWNhcDogc3F1YXJlIi8+CiAgICAgPC9nPgogICAgIDxnIGlkPSJsaW5lMmRfOCI+CiAgICAgIDxnPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjbWJmMTlhZWQ0ODYiIHg9IjMyMS44MTk5MTUiIHk9IjMxOC4wMzMwNzIiIHN0eWxlPSJmaWxsOiAjYmJiYmJiOyBzdHJva2U6ICNiYmJiYmI7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfNCI+CiAgICAgIDx0ZXh0IHN0eWxlPSJmb250LXNpemU6IDE5cHg7IGZvbnQtZmFtaWx5OiAnRGVqYVZ1IFNhbnMnLCAnQml0c3RyZWFtIFZlcmEgU2FucycsICdDb21wdXRlciBNb2Rlcm4gU2FucyBTZXJpZicsICdMdWNpZGEgR3JhbmRlJywgJ1ZlcmRhbmEnLCAnR2VuZXZhJywgJ0x1Y2lkJywgJ0FyaWFsJywgJ0hlbHZldGljYScsICdBdmFudCBHYXJkZScsIHNhbnMtc2VyaWY7IHRleHQtYW5jaG9yOiBtaWRkbGU7IGZpbGw6ICNiYmJiYmIiIHg9IjMyMS44MTk5MTUiIHk9IjMzOS40Njg2MTkiIHRyYW5zZm9ybT0icm90YXRlKC0wIDMyMS44MTk5MTUgMzM5LjQ2ODYxOSkiPjQ8L3RleHQ+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9Inh0aWNrXzUiPgogICAgIDxnIGlkPSJsaW5lMmRfOSI+CiAgICAgIDxwYXRoIGQ9Ik0gMzc5LjE0NTE5OSAzMTguMDMzMDcyIApMIDM3OS4xNDUxOTkgMjAuNTIgCiIgY2xpcC1wYXRoPSJ1cmwoI3AwODVkMDQzYzU3KSIgc3R5bGU9ImZpbGw6IG5vbmU7IHN0cm9rZTogIzMzMzMzMzsgc3Ryb2tlLXdpZHRoOiAwLjY7IHN0cm9rZS1saW5lY2FwOiBzcXVhcmUiLz4KICAgICA8L2c+CiAgICAgPGcgaWQ9ImxpbmUyZF8xMCI+CiAgICAgIDxnPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjbWJmMTlhZWQ0ODYiIHg9IjM3OS4xNDUxOTkiIHk9IjMxOC4wMzMwNzIiIHN0eWxlPSJmaWxsOiAjYmJiYmJiOyBzdHJva2U6ICNiYmJiYmI7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfNSI+CiAgICAgIDx0ZXh0IHN0eWxlPSJmb250LXNpemU6IDE5cHg7IGZvbnQtZmFtaWx5OiAnRGVqYVZ1IFNhbnMnLCAnQml0c3RyZWFtIFZlcmEgU2FucycsICdDb21wdXRlciBNb2Rlcm4gU2FucyBTZXJpZicsICdMdWNpZGEgR3JhbmRlJywgJ1ZlcmRhbmEnLCAnR2VuZXZhJywgJ0x1Y2lkJywgJ0FyaWFsJywgJ0hlbHZldGljYScsICdBdmFudCBHYXJkZScsIHNhbnMtc2VyaWY7IHRleHQtYW5jaG9yOiBtaWRkbGU7IGZpbGw6ICNiYmJiYmIiIHg9IjM3OS4xNDUxOTkiIHk9IjMzOS40Njg2MTkiIHRyYW5zZm9ybT0icm90YXRlKC0wIDM3OS4xNDUxOTkgMzM5LjQ2ODYxOSkiPjU8L3RleHQ+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9Inh0aWNrXzYiPgogICAgIDxnIGlkPSJsaW5lMmRfMTEiPgogICAgICA8cGF0aCBkPSJNIDQzNi40NzA0ODMgMzE4LjAzMzA3MiAKTCA0MzYuNDcwNDgzIDIwLjUyIAoiIGNsaXAtcGF0aD0idXJsKCNwMDg1ZDA0M2M1NykiIHN0eWxlPSJmaWxsOiBub25lOyBzdHJva2U6ICMzMzMzMzM7IHN0cm9rZS13aWR0aDogMC42OyBzdHJva2UtbGluZWNhcDogc3F1YXJlIi8+CiAgICAgPC9nPgogICAgIDxnIGlkPSJsaW5lMmRfMTIiPgogICAgICA8Zz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI21iZjE5YWVkNDg2IiB4PSI0MzYuNDcwNDgzIiB5PSIzMTguMDMzMDcyIiBzdHlsZT0iZmlsbDogI2JiYmJiYjsgc3Ryb2tlOiAjYmJiYmJiOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzYiPgogICAgICA8dGV4dCBzdHlsZT0iZm9udC1zaXplOiAxOXB4OyBmb250LWZhbWlseTogJ0RlamFWdSBTYW5zJywgJ0JpdHN0cmVhbSBWZXJhIFNhbnMnLCAnQ29tcHV0ZXIgTW9kZXJuIFNhbnMgU2VyaWYnLCAnTHVjaWRhIEdyYW5kZScsICdWZXJkYW5hJywgJ0dlbmV2YScsICdMdWNpZCcsICdBcmlhbCcsICdIZWx2ZXRpY2EnLCAnQXZhbnQgR2FyZGUnLCBzYW5zLXNlcmlmOyB0ZXh0LWFuY2hvcjogbWlkZGxlOyBmaWxsOiAjYmJiYmJiIiB4PSI0MzYuNDcwNDgzIiB5PSIzMzkuNDY4NjE5IiB0cmFuc2Zvcm09InJvdGF0ZSgtMCA0MzYuNDcwNDgzIDMzOS40Njg2MTkpIj42PC90ZXh0PgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ4dGlja183Ij4KICAgICA8ZyBpZD0ibGluZTJkXzEzIj4KICAgICAgPHBhdGggZD0iTSA0OTMuNzk1NzY3IDMxOC4wMzMwNzIgCkwgNDkzLjc5NTc2NyAyMC41MiAKIiBjbGlwLXBhdGg9InVybCgjcDA4NWQwNDNjNTcpIiBzdHlsZT0iZmlsbDogbm9uZTsgc3Ryb2tlOiAjMzMzMzMzOyBzdHJva2Utd2lkdGg6IDAuNjsgc3Ryb2tlLWxpbmVjYXA6IHNxdWFyZSIvPgogICAgIDwvZz4KICAgICA8ZyBpZD0ibGluZTJkXzE0Ij4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYmYxOWFlZDQ4NiIgeD0iNDkzLjc5NTc2NyIgeT0iMzE4LjAzMzA3MiIgc3R5bGU9ImZpbGw6ICNiYmJiYmI7IHN0cm9rZTogI2JiYmJiYjsgc3Ryb2tlLXdpZHRoOiAwLjgiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF83Ij4KICAgICAgPHRleHQgc3R5bGU9ImZvbnQtc2l6ZTogMTlweDsgZm9udC1mYW1pbHk6ICdEZWphVnUgU2FucycsICdCaXRzdHJlYW0gVmVyYSBTYW5zJywgJ0NvbXB1dGVyIE1vZGVybiBTYW5zIFNlcmlmJywgJ0x1Y2lkYSBHcmFuZGUnLCAnVmVyZGFuYScsICdHZW5ldmEnLCAnTHVjaWQnLCAnQXJpYWwnLCAnSGVsdmV0aWNhJywgJ0F2YW50IEdhcmRlJywgc2Fucy1zZXJpZjsgdGV4dC1hbmNob3I6IG1pZGRsZTsgZmlsbDogI2JiYmJiYiIgeD0iNDkzLjc5NTc2NyIgeT0iMzM5LjQ2ODYxOSIgdHJhbnNmb3JtPSJyb3RhdGUoLTAgNDkzLjc5NTc2NyAzMzkuNDY4NjE5KSI+ODwvdGV4dD4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieHRpY2tfOCI+CiAgICAgPGcgaWQ9ImxpbmUyZF8xNSI+CiAgICAgIDxwYXRoIGQ9Ik0gNTUxLjEyMTA1MSAzMTguMDMzMDcyIApMIDU1MS4xMjEwNTEgMjAuNTIgCiIgY2xpcC1wYXRoPSJ1cmwoI3AwODVkMDQzYzU3KSIgc3R5bGU9ImZpbGw6IG5vbmU7IHN0cm9rZTogIzMzMzMzMzsgc3Ryb2tlLXdpZHRoOiAwLjY7IHN0cm9rZS1saW5lY2FwOiBzcXVhcmUiLz4KICAgICA8L2c+CiAgICAgPGcgaWQ9ImxpbmUyZF8xNiI+CiAgICAgIDxnPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjbWJmMTlhZWQ0ODYiIHg9IjU1MS4xMjEwNTEiIHk9IjMxOC4wMzMwNzIiIHN0eWxlPSJmaWxsOiAjYmJiYmJiOyBzdHJva2U6ICNiYmJiYmI7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfOCI+CiAgICAgIDx0ZXh0IHN0eWxlPSJmb250LXNpemU6IDE5cHg7IGZvbnQtZmFtaWx5OiAnRGVqYVZ1IFNhbnMnLCAnQml0c3RyZWFtIFZlcmEgU2FucycsICdDb21wdXRlciBNb2Rlcm4gU2FucyBTZXJpZicsICdMdWNpZGEgR3JhbmRlJywgJ1ZlcmRhbmEnLCAnR2VuZXZhJywgJ0x1Y2lkJywgJ0FyaWFsJywgJ0hlbHZldGljYScsICdBdmFudCBHYXJkZScsIHNhbnMtc2VyaWY7IHRleHQtYW5jaG9yOiBtaWRkbGU7IGZpbGw6ICNiYmJiYmIiIHg9IjU1MS4xMjEwNTEiIHk9IjMzOS40Njg2MTkiIHRyYW5zZm9ybT0icm90YXRlKC0wIDU1MS4xMjEwNTEgMzM5LjQ2ODYxOSkiPjEwPC90ZXh0PgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ4dGlja185Ij4KICAgICA8ZyBpZD0ibGluZTJkXzE3Ij4KICAgICAgPHBhdGggZD0iTSA2MDguNDQ2MzM1IDMxOC4wMzMwNzIgCkwgNjA4LjQ0NjMzNSAyMC41MiAKIiBjbGlwLXBhdGg9InVybCgjcDA4NWQwNDNjNTcpIiBzdHlsZT0iZmlsbDogbm9uZTsgc3Ryb2tlOiAjMzMzMzMzOyBzdHJva2Utd2lkdGg6IDAuNjsgc3Ryb2tlLWxpbmVjYXA6IHNxdWFyZSIvPgogICAgIDwvZz4KICAgICA8ZyBpZD0ibGluZTJkXzE4Ij4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYmYxOWFlZDQ4NiIgeD0iNjA4LjQ0NjMzNSIgeT0iMzE4LjAzMzA3MiIgc3R5bGU9ImZpbGw6ICNiYmJiYmI7IHN0cm9rZTogI2JiYmJiYjsgc3Ryb2tlLXdpZHRoOiAwLjgiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF85Ij4KICAgICAgPHRleHQgc3R5bGU9ImZvbnQtc2l6ZTogMTlweDsgZm9udC1mYW1pbHk6ICdEZWphVnUgU2FucycsICdCaXRzdHJlYW0gVmVyYSBTYW5zJywgJ0NvbXB1dGVyIE1vZGVybiBTYW5zIFNlcmlmJywgJ0x1Y2lkYSBHcmFuZGUnLCAnVmVyZGFuYScsICdHZW5ldmEnLCAnTHVjaWQnLCAnQXJpYWwnLCAnSGVsdmV0aWNhJywgJ0F2YW50IEdhcmRlJywgc2Fucy1zZXJpZjsgdGV4dC1hbmNob3I6IG1pZGRsZTsgZmlsbDogI2JiYmJiYiIgeD0iNjA4LjQ0NjMzNSIgeT0iMzM5LjQ2ODYxOSIgdHJhbnNmb3JtPSJyb3RhdGUoLTAgNjA4LjQ0NjMzNSAzMzkuNDY4NjE5KSI+MTI8L3RleHQ+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9Inh0aWNrXzEwIj4KICAgICA8ZyBpZD0ibGluZTJkXzE5Ij4KICAgICAgPHBhdGggZD0iTSA2NjUuNzcxNjE5IDMxOC4wMzMwNzIgCkwgNjY1Ljc3MTYxOSAyMC41MiAKIiBjbGlwLXBhdGg9InVybCgjcDA4NWQwNDNjNTcpIiBzdHlsZT0iZmlsbDogbm9uZTsgc3Ryb2tlOiAjMzMzMzMzOyBzdHJva2Utd2lkdGg6IDAuNjsgc3Ryb2tlLWxpbmVjYXA6IHNxdWFyZSIvPgogICAgIDwvZz4KICAgICA8ZyBpZD0ibGluZTJkXzIwIj4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYmYxOWFlZDQ4NiIgeD0iNjY1Ljc3MTYxOSIgeT0iMzE4LjAzMzA3MiIgc3R5bGU9ImZpbGw6ICNiYmJiYmI7IHN0cm9rZTogI2JiYmJiYjsgc3Ryb2tlLXdpZHRoOiAwLjgiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF8xMCI+CiAgICAgIDx0ZXh0IHN0eWxlPSJmb250LXNpemU6IDE5cHg7IGZvbnQtZmFtaWx5OiAnRGVqYVZ1IFNhbnMnLCAnQml0c3RyZWFtIFZlcmEgU2FucycsICdDb21wdXRlciBNb2Rlcm4gU2FucyBTZXJpZicsICdMdWNpZGEgR3JhbmRlJywgJ1ZlcmRhbmEnLCAnR2VuZXZhJywgJ0x1Y2lkJywgJ0FyaWFsJywgJ0hlbHZldGljYScsICdBdmFudCBHYXJkZScsIHNhbnMtc2VyaWY7IHRleHQtYW5jaG9yOiBtaWRkbGU7IGZpbGw6ICNiYmJiYmIiIHg9IjY2NS43NzE2MTkiIHk9IjMzOS40Njg2MTkiIHRyYW5zZm9ybT0icm90YXRlKC0wIDY2NS43NzE2MTkgMzM5LjQ2ODYxOSkiPjE1PC90ZXh0PgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ4dGlja18xMSI+CiAgICAgPGcgaWQ9ImxpbmUyZF8yMSI+CiAgICAgIDxwYXRoIGQ9Ik0gNzIzLjA5NjkwMyAzMTguMDMzMDcyIApMIDcyMy4wOTY5MDMgMjAuNTIgCiIgY2xpcC1wYXRoPSJ1cmwoI3AwODVkMDQzYzU3KSIgc3R5bGU9ImZpbGw6IG5vbmU7IHN0cm9rZTogIzMzMzMzMzsgc3Ryb2tlLXdpZHRoOiAwLjY7IHN0cm9rZS1saW5lY2FwOiBzcXVhcmUiLz4KICAgICA8L2c+CiAgICAgPGcgaWQ9ImxpbmUyZF8yMiI+CiAgICAgIDxnPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjbWJmMTlhZWQ0ODYiIHg9IjcyMy4wOTY5MDMiIHk9IjMxOC4wMzMwNzIiIHN0eWxlPSJmaWxsOiAjYmJiYmJiOyBzdHJva2U6ICNiYmJiYmI7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfMTEiPgogICAgICA8dGV4dCBzdHlsZT0iZm9udC1zaXplOiAxOXB4OyBmb250LWZhbWlseTogJ0RlamFWdSBTYW5zJywgJ0JpdHN0cmVhbSBWZXJhIFNhbnMnLCAnQ29tcHV0ZXIgTW9kZXJuIFNhbnMgU2VyaWYnLCAnTHVjaWRhIEdyYW5kZScsICdWZXJkYW5hJywgJ0dlbmV2YScsICdMdWNpZCcsICdBcmlhbCcsICdIZWx2ZXRpY2EnLCAnQXZhbnQgR2FyZGUnLCBzYW5zLXNlcmlmOyB0ZXh0LWFuY2hvcjogbWlkZGxlOyBmaWxsOiAjYmJiYmJiIiB4PSI3MjMuMDk2OTAzIiB5PSIzMzkuNDY4NjE5IiB0cmFuc2Zvcm09InJvdGF0ZSgtMCA3MjMuMDk2OTAzIDMzOS40Njg2MTkpIj4yMDwvdGV4dD4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieHRpY2tfMTIiPgogICAgIDxnIGlkPSJsaW5lMmRfMjMiPgogICAgICA8cGF0aCBkPSJNIDc4MC40MjIxODggMzE4LjAzMzA3MiAKTCA3ODAuNDIyMTg4IDIwLjUyIAoiIGNsaXAtcGF0aD0idXJsKCNwMDg1ZDA0M2M1NykiIHN0eWxlPSJmaWxsOiBub25lOyBzdHJva2U6ICMzMzMzMzM7IHN0cm9rZS13aWR0aDogMC42OyBzdHJva2UtbGluZWNhcDogc3F1YXJlIi8+CiAgICAgPC9nPgogICAgIDxnIGlkPSJsaW5lMmRfMjQiPgogICAgICA8Zz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI21iZjE5YWVkNDg2IiB4PSI3ODAuNDIyMTg4IiB5PSIzMTguMDMzMDcyIiBzdHlsZT0iZmlsbDogI2JiYmJiYjsgc3Ryb2tlOiAjYmJiYmJiOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzEyIj4KICAgICAgPHRleHQgc3R5bGU9ImZvbnQtc2l6ZTogMTlweDsgZm9udC1mYW1pbHk6ICdEZWphVnUgU2FucycsICdCaXRzdHJlYW0gVmVyYSBTYW5zJywgJ0NvbXB1dGVyIE1vZGVybiBTYW5zIFNlcmlmJywgJ0x1Y2lkYSBHcmFuZGUnLCAnVmVyZGFuYScsICdHZW5ldmEnLCAnTHVjaWQnLCAnQXJpYWwnLCAnSGVsdmV0aWNhJywgJ0F2YW50IEdhcmRlJywgc2Fucy1zZXJpZjsgdGV4dC1hbmNob3I6IG1pZGRsZTsgZmlsbDogI2JiYmJiYiIgeD0iNzgwLjQyMjE4OCIgeT0iMzM5LjQ3MDEwMyIgdHJhbnNmb3JtPSJyb3RhdGUoLTAgNzgwLjQyMjE4OCAzMzkuNDcwMTAzKSI+bm8gbGltaXQ8L3RleHQ+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9InRleHRfMTMiPgogICAgIDx0ZXh0IHN0eWxlPSJmb250LXNpemU6IDE5cHg7IGZvbnQtZmFtaWx5OiAnRGVqYVZ1IFNhbnMnLCAnQml0c3RyZWFtIFZlcmEgU2FucycsICdDb21wdXRlciBNb2Rlcm4gU2FucyBTZXJpZicsICdMdWNpZGEgR3JhbmRlJywgJ1ZlcmRhbmEnLCAnR2VuZXZhJywgJ0x1Y2lkJywgJ0FyaWFsJywgJ0hlbHZldGljYScsICdBdmFudCBHYXJkZScsIHNhbnMtc2VyaWY7IHRleHQtYW5jaG9yOiBtaWRkbGU7IGZpbGw6ICNjY2NjY2MiIHg9IjQ2NS4xMzMxMjUiIHk9IjM2Mi40NzE1ODgiIHRyYW5zZm9ybT0icm90YXRlKC0wIDQ2NS4xMzMxMjUgMzYyLjQ3MTU4OCkiPm1vZGVsIGNvbXBsZXhpdHkgKHRyZWUgZGVwdGgpPC90ZXh0PgogICAgPC9nPgogICA8L2c+CiAgIDxnIGlkPSJtYXRwbG90bGliLmF4aXNfMiI+CiAgICA8ZyBpZD0ieXRpY2tfMSI+CiAgICAgPGcgaWQ9ImxpbmUyZF8yNSI+CiAgICAgIDxwYXRoIGQ9Ik0gODYuNzg2MjUgMzE4LjAzMzA3MiAKTCA4NDMuNDggMzE4LjAzMzA3MiAKIiBjbGlwLXBhdGg9InVybCgjcDA4NWQwNDNjNTcpIiBzdHlsZT0iZmlsbDogbm9uZTsgc3Ryb2tlOiAjMzMzMzMzOyBzdHJva2Utd2lkdGg6IDAuNjsgc3Ryb2tlLWxpbmVjYXA6IHNxdWFyZSIvPgogICAgIDwvZz4KICAgICA8ZyBpZD0ibGluZTJkXzI2Ij4KICAgICAgPGRlZnM+CiAgICAgICA8cGF0aCBpZD0ibWFmZTYxZTk3NGQiIGQ9Ik0gMCAwIApMIC0zLjUgMCAKIiBzdHlsZT0ic3Ryb2tlOiAjYmJiYmJiOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2RlZnM+CiAgICAgIDxnPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjbWFmZTYxZTk3NGQiIHg9Ijg2Ljc4NjI1IiB5PSIzMTguMDMzMDcyIiBzdHlsZT0iZmlsbDogI2JiYmJiYjsgc3Ryb2tlOiAjYmJiYmJiOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzE0Ij4KICAgICAgPHRleHQgc3R5bGU9ImZvbnQtc2l6ZTogMTlweDsgZm9udC1mYW1pbHk6ICdEZWphVnUgU2FucycsICdCaXRzdHJlYW0gVmVyYSBTYW5zJywgJ0NvbXB1dGVyIE1vZGVybiBTYW5zIFNlcmlmJywgJ0x1Y2lkYSBHcmFuZGUnLCAnVmVyZGFuYScsICdHZW5ldmEnLCAnTHVjaWQnLCAnQXJpYWwnLCAnSGVsdmV0aWNhJywgJ0F2YW50IEdhcmRlJywgc2Fucy1zZXJpZjsgdGV4dC1hbmNob3I6IGVuZDsgZmlsbDogI2JiYmJiYiIgeD0iNzkuNzg2MjUiIHk9IjMyNS4yNTA4NDUiIHRyYW5zZm9ybT0icm90YXRlKC0wIDc5Ljc4NjI1IDMyNS4yNTA4NDUpIj43MDwvdGV4dD4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieXRpY2tfMiI+CiAgICAgPGcgaWQ9ImxpbmUyZF8yNyI+CiAgICAgIDxwYXRoIGQ9Ik0gODYuNzg2MjUgMjc0LjI4MTE1IApMIDg0My40OCAyNzQuMjgxMTUgCiIgY2xpcC1wYXRoPSJ1cmwoI3AwODVkMDQzYzU3KSIgc3R5bGU9ImZpbGw6IG5vbmU7IHN0cm9rZTogIzMzMzMzMzsgc3Ryb2tlLXdpZHRoOiAwLjY7IHN0cm9rZS1saW5lY2FwOiBzcXVhcmUiLz4KICAgICA8L2c+CiAgICAgPGcgaWQ9ImxpbmUyZF8yOCI+CiAgICAgIDxnPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjbWFmZTYxZTk3NGQiIHg9Ijg2Ljc4NjI1IiB5PSIyNzQuMjgxMTUiIHN0eWxlPSJmaWxsOiAjYmJiYmJiOyBzdHJva2U6ICNiYmJiYmI7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfMTUiPgogICAgICA8dGV4dCBzdHlsZT0iZm9udC1zaXplOiAxOXB4OyBmb250LWZhbWlseTogJ0RlamFWdSBTYW5zJywgJ0JpdHN0cmVhbSBWZXJhIFNhbnMnLCAnQ29tcHV0ZXIgTW9kZXJuIFNhbnMgU2VyaWYnLCAnTHVjaWRhIEdyYW5kZScsICdWZXJkYW5hJywgJ0dlbmV2YScsICdMdWNpZCcsICdBcmlhbCcsICdIZWx2ZXRpY2EnLCAnQXZhbnQgR2FyZGUnLCBzYW5zLXNlcmlmOyB0ZXh0LWFuY2hvcjogZW5kOyBmaWxsOiAjYmJiYmJiIiB4PSI3OS43ODYyNSIgeT0iMjgxLjQ5ODkyMyIgdHJhbnNmb3JtPSJyb3RhdGUoLTAgNzkuNzg2MjUgMjgxLjQ5ODkyMykiPjc1PC90ZXh0PgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ5dGlja18zIj4KICAgICA8ZyBpZD0ibGluZTJkXzI5Ij4KICAgICAgPHBhdGggZD0iTSA4Ni43ODYyNSAyMzAuNTI5MjI3IApMIDg0My40OCAyMzAuNTI5MjI3IAoiIGNsaXAtcGF0aD0idXJsKCNwMDg1ZDA0M2M1NykiIHN0eWxlPSJmaWxsOiBub25lOyBzdHJva2U6ICMzMzMzMzM7IHN0cm9rZS13aWR0aDogMC42OyBzdHJva2UtbGluZWNhcDogc3F1YXJlIi8+CiAgICAgPC9nPgogICAgIDxnIGlkPSJsaW5lMmRfMzAiPgogICAgICA8Zz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI21hZmU2MWU5NzRkIiB4PSI4Ni43ODYyNSIgeT0iMjMwLjUyOTIyNyIgc3R5bGU9ImZpbGw6ICNiYmJiYmI7IHN0cm9rZTogI2JiYmJiYjsgc3Ryb2tlLXdpZHRoOiAwLjgiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF8xNiI+CiAgICAgIDx0ZXh0IHN0eWxlPSJmb250LXNpemU6IDE5cHg7IGZvbnQtZmFtaWx5OiAnRGVqYVZ1IFNhbnMnLCAnQml0c3RyZWFtIFZlcmEgU2FucycsICdDb21wdXRlciBNb2Rlcm4gU2FucyBTZXJpZicsICdMdWNpZGEgR3JhbmRlJywgJ1ZlcmRhbmEnLCAnR2VuZXZhJywgJ0x1Y2lkJywgJ0FyaWFsJywgJ0hlbHZldGljYScsICdBdmFudCBHYXJkZScsIHNhbnMtc2VyaWY7IHRleHQtYW5jaG9yOiBlbmQ7IGZpbGw6ICNiYmJiYmIiIHg9Ijc5Ljc4NjI1IiB5PSIyMzcuNzQ3MDAxIiB0cmFuc2Zvcm09InJvdGF0ZSgtMCA3OS43ODYyNSAyMzcuNzQ3MDAxKSI+ODA8L3RleHQ+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9Inl0aWNrXzQiPgogICAgIDxnIGlkPSJsaW5lMmRfMzEiPgogICAgICA8cGF0aCBkPSJNIDg2Ljc4NjI1IDE4Ni43NzczMDUgCkwgODQzLjQ4IDE4Ni43NzczMDUgCiIgY2xpcC1wYXRoPSJ1cmwoI3AwODVkMDQzYzU3KSIgc3R5bGU9ImZpbGw6IG5vbmU7IHN0cm9rZTogIzMzMzMzMzsgc3Ryb2tlLXdpZHRoOiAwLjY7IHN0cm9rZS1saW5lY2FwOiBzcXVhcmUiLz4KICAgICA8L2c+CiAgICAgPGcgaWQ9ImxpbmUyZF8zMiI+CiAgICAgIDxnPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjbWFmZTYxZTk3NGQiIHg9Ijg2Ljc4NjI1IiB5PSIxODYuNzc3MzA1IiBzdHlsZT0iZmlsbDogI2JiYmJiYjsgc3Ryb2tlOiAjYmJiYmJiOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzE3Ij4KICAgICAgPHRleHQgc3R5bGU9ImZvbnQtc2l6ZTogMTlweDsgZm9udC1mYW1pbHk6ICdEZWphVnUgU2FucycsICdCaXRzdHJlYW0gVmVyYSBTYW5zJywgJ0NvbXB1dGVyIE1vZGVybiBTYW5zIFNlcmlmJywgJ0x1Y2lkYSBHcmFuZGUnLCAnVmVyZGFuYScsICdHZW5ldmEnLCAnTHVjaWQnLCAnQXJpYWwnLCAnSGVsdmV0aWNhJywgJ0F2YW50IEdhcmRlJywgc2Fucy1zZXJpZjsgdGV4dC1hbmNob3I6IGVuZDsgZmlsbDogI2JiYmJiYiIgeD0iNzkuNzg2MjUiIHk9IjE5My45OTUwNzgiIHRyYW5zZm9ybT0icm90YXRlKC0wIDc5Ljc4NjI1IDE5My45OTUwNzgpIj44NTwvdGV4dD4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0ieXRpY2tfNSI+CiAgICAgPGcgaWQ9ImxpbmUyZF8zMyI+CiAgICAgIDxwYXRoIGQ9Ik0gODYuNzg2MjUgMTQzLjAyNTM4MyAKTCA4NDMuNDggMTQzLjAyNTM4MyAKIiBjbGlwLXBhdGg9InVybCgjcDA4NWQwNDNjNTcpIiBzdHlsZT0iZmlsbDogbm9uZTsgc3Ryb2tlOiAjMzMzMzMzOyBzdHJva2Utd2lkdGg6IDAuNjsgc3Ryb2tlLWxpbmVjYXA6IHNxdWFyZSIvPgogICAgIDwvZz4KICAgICA8ZyBpZD0ibGluZTJkXzM0Ij4KICAgICAgPGc+CiAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtYWZlNjFlOTc0ZCIgeD0iODYuNzg2MjUiIHk9IjE0My4wMjUzODMiIHN0eWxlPSJmaWxsOiAjYmJiYmJiOyBzdHJva2U6ICNiYmJiYmI7IHN0cm9rZS13aWR0aDogMC44Ii8+CiAgICAgIDwvZz4KICAgICA8L2c+CiAgICAgPGcgaWQ9InRleHRfMTgiPgogICAgICA8dGV4dCBzdHlsZT0iZm9udC1zaXplOiAxOXB4OyBmb250LWZhbWlseTogJ0RlamFWdSBTYW5zJywgJ0JpdHN0cmVhbSBWZXJhIFNhbnMnLCAnQ29tcHV0ZXIgTW9kZXJuIFNhbnMgU2VyaWYnLCAnTHVjaWRhIEdyYW5kZScsICdWZXJkYW5hJywgJ0dlbmV2YScsICdMdWNpZCcsICdBcmlhbCcsICdIZWx2ZXRpY2EnLCAnQXZhbnQgR2FyZGUnLCBzYW5zLXNlcmlmOyB0ZXh0LWFuY2hvcjogZW5kOyBmaWxsOiAjYmJiYmJiIiB4PSI3OS43ODYyNSIgeT0iMTUwLjI0MzE1NiIgdHJhbnNmb3JtPSJyb3RhdGUoLTAgNzkuNzg2MjUgMTUwLjI0MzE1NikiPjkwPC90ZXh0PgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ5dGlja182Ij4KICAgICA8ZyBpZD0ibGluZTJkXzM1Ij4KICAgICAgPHBhdGggZD0iTSA4Ni43ODYyNSA5OS4yNzM0NiAKTCA4NDMuNDggOTkuMjczNDYgCiIgY2xpcC1wYXRoPSJ1cmwoI3AwODVkMDQzYzU3KSIgc3R5bGU9ImZpbGw6IG5vbmU7IHN0cm9rZTogIzMzMzMzMzsgc3Ryb2tlLXdpZHRoOiAwLjY7IHN0cm9rZS1saW5lY2FwOiBzcXVhcmUiLz4KICAgICA8L2c+CiAgICAgPGcgaWQ9ImxpbmUyZF8zNiI+CiAgICAgIDxnPgogICAgICAgPHVzZSB4bGluazpocmVmPSIjbWFmZTYxZTk3NGQiIHg9Ijg2Ljc4NjI1IiB5PSI5OS4yNzM0NiIgc3R5bGU9ImZpbGw6ICNiYmJiYmI7IHN0cm9rZTogI2JiYmJiYjsgc3Ryb2tlLXdpZHRoOiAwLjgiLz4KICAgICAgPC9nPgogICAgIDwvZz4KICAgICA8ZyBpZD0idGV4dF8xOSI+CiAgICAgIDx0ZXh0IHN0eWxlPSJmb250LXNpemU6IDE5cHg7IGZvbnQtZmFtaWx5OiAnRGVqYVZ1IFNhbnMnLCAnQml0c3RyZWFtIFZlcmEgU2FucycsICdDb21wdXRlciBNb2Rlcm4gU2FucyBTZXJpZicsICdMdWNpZGEgR3JhbmRlJywgJ1ZlcmRhbmEnLCAnR2VuZXZhJywgJ0x1Y2lkJywgJ0FyaWFsJywgJ0hlbHZldGljYScsICdBdmFudCBHYXJkZScsIHNhbnMtc2VyaWY7IHRleHQtYW5jaG9yOiBlbmQ7IGZpbGw6ICNiYmJiYmIiIHg9Ijc5Ljc4NjI1IiB5PSIxMDYuNDkxMjM0IiB0cmFuc2Zvcm09InJvdGF0ZSgtMCA3OS43ODYyNSAxMDYuNDkxMjM0KSI+OTU8L3RleHQ+CiAgICAgPC9nPgogICAgPC9nPgogICAgPGcgaWQ9Inl0aWNrXzciPgogICAgIDxnIGlkPSJsaW5lMmRfMzciPgogICAgICA8cGF0aCBkPSJNIDg2Ljc4NjI1IDU1LjUyMTUzOCAKTCA4NDMuNDggNTUuNTIxNTM4IAoiIGNsaXAtcGF0aD0idXJsKCNwMDg1ZDA0M2M1NykiIHN0eWxlPSJmaWxsOiBub25lOyBzdHJva2U6ICMzMzMzMzM7IHN0cm9rZS13aWR0aDogMC42OyBzdHJva2UtbGluZWNhcDogc3F1YXJlIi8+CiAgICAgPC9nPgogICAgIDxnIGlkPSJsaW5lMmRfMzgiPgogICAgICA8Zz4KICAgICAgIDx1c2UgeGxpbms6aHJlZj0iI21hZmU2MWU5NzRkIiB4PSI4Ni43ODYyNSIgeT0iNTUuNTIxNTM4IiBzdHlsZT0iZmlsbDogI2JiYmJiYjsgc3Ryb2tlOiAjYmJiYmJiOyBzdHJva2Utd2lkdGg6IDAuOCIvPgogICAgICA8L2c+CiAgICAgPC9nPgogICAgIDxnIGlkPSJ0ZXh0XzIwIj4KICAgICAgPHRleHQgc3R5bGU9ImZvbnQtc2l6ZTogMTlweDsgZm9udC1mYW1pbHk6ICdEZWphVnUgU2FucycsICdCaXRzdHJlYW0gVmVyYSBTYW5zJywgJ0NvbXB1dGVyIE1vZGVybiBTYW5zIFNlcmlmJywgJ0x1Y2lkYSBHcmFuZGUnLCAnVmVyZGFuYScsICdHZW5ldmEnLCAnTHVjaWQnLCAnQXJpYWwnLCAnSGVsdmV0aWNhJywgJ0F2YW50IEdhcmRlJywgc2Fucy1zZXJpZjsgdGV4dC1hbmNob3I6IGVuZDsgZmlsbDogI2JiYmJiYiIgeD0iNzkuNzg2MjUiIHk9IjYyLjczOTMxMSIgdHJhbnNmb3JtPSJyb3RhdGUoLTAgNzkuNzg2MjUgNjIuNzM5MzExKSI+MTAwPC90ZXh0PgogICAgIDwvZz4KICAgIDwvZz4KICAgIDxnIGlkPSJ0ZXh0XzIxIj4KICAgICA8dGV4dCBzdHlsZT0iZm9udC1zaXplOiAxOXB4OyBmb250LWZhbWlseTogJ0RlamFWdSBTYW5zJywgJ0JpdHN0cmVhbSBWZXJhIFNhbnMnLCAnQ29tcHV0ZXIgTW9kZXJuIFNhbnMgU2VyaWYnLCAnTHVjaWRhIEdyYW5kZScsICdWZXJkYW5hJywgJ0dlbmV2YScsICdMdWNpZCcsICdBcmlhbCcsICdIZWx2ZXRpY2EnLCAnQXZhbnQgR2FyZGUnLCBzYW5zLXNlcmlmOyB0ZXh0LWFuY2hvcjogbWlkZGxlOyBmaWxsOiAjY2NjY2NjIiB4PSIzNC45NTU1NDciIHk9IjE2OS4yNzY1MzYiIHRyYW5zZm9ybT0icm90YXRlKC05MCAzNC45NTU1NDcgMTY5LjI3NjUzNikiPmFjY3VyYWN5ICU8L3RleHQ+CiAgICA8L2c+CiAgIDwvZz4KICAgPGcgaWQ9ImxpbmUyZF8zOSI+CiAgICA8cGF0aCBkPSJNIDE0OS44NDQwNjMgMjg3LjQwNjcyNiAKTCAyMDcuMTY5MzQ3IDIzOC40MDQ1NzMgCkwgMjY0LjQ5NDYzMSAyMzguNDA0NTczIApMIDMyMS44MTk5MTUgMjM2LjY1NDQ5NiAKTCAzNzkuMTQ1MTk5IDIyOC43NzkxNSAKTCA0MzYuNDcwNDgzIDIyMC45MDM4MDQgCkwgNDkzLjc5NTc2NyAxOTkuMDI3ODQzIApMIDU1MS4xMjEwNTEgMTY2LjY1MTQyMSAKTCA2MDguNDQ2MzM1IDEyOS4wMjQ3NjcgCkwgNjY1Ljc3MTYxOSA4Mi42NDc3MyAKTCA3MjMuMDk2OTAzIDU5Ljg5NjczIApMIDc4MC40MjIxODggNTcuMjcxNjE1IAoiIGNsaXAtcGF0aD0idXJsKCNwMDg1ZDA0M2M1NykiIHN0eWxlPSJmaWxsOiBub25lOyBzdHJva2U6ICM0ZmMzZjc7IHN0cm9rZS13aWR0aDogNDsgc3Ryb2tlLWxpbmVjYXA6IHNxdWFyZSIvPgogICAgPGRlZnM+CiAgICAgPHBhdGggaWQ9Im03OWU2Y2ZjZjJlIiBkPSJNIDAgMyAKQyAwLjc5NTYwOSAzIDEuNTU4NzQgMi42ODM5MDEgMi4xMjEzMiAyLjEyMTMyIApDIDIuNjgzOTAxIDEuNTU4NzQgMyAwLjc5NTYwOSAzIDAgCkMgMyAtMC43OTU2MDkgMi42ODM5MDEgLTEuNTU4NzQgMi4xMjEzMiAtMi4xMjEzMiAKQyAxLjU1ODc0IC0yLjY4MzkwMSAwLjc5NTYwOSAtMyAwIC0zIApDIC0wLjc5NTYwOSAtMyAtMS41NTg3NCAtMi42ODM5MDEgLTIuMTIxMzIgLTIuMTIxMzIgCkMgLTIuNjgzOTAxIC0xLjU1ODc0IC0zIC0wLjc5NTYwOSAtMyAwIApDIC0zIDAuNzk1NjA5IC0yLjY4MzkwMSAxLjU1ODc0IC0yLjEyMTMyIDIuMTIxMzIgCkMgLTEuNTU4NzQgMi42ODM5MDEgLTAuNzk1NjA5IDMgMCAzIAp6CiIgc3R5bGU9InN0cm9rZTogIzRmYzNmNyIvPgogICAgPC9kZWZzPgogICAgPGcgY2xpcC1wYXRoPSJ1cmwoI3AwODVkMDQzYzU3KSI+CiAgICAgPHVzZSB4bGluazpocmVmPSIjbTc5ZTZjZmNmMmUiIHg9IjE0OS44NDQwNjMiIHk9IjI4Ny40MDY3MjYiIHN0eWxlPSJmaWxsOiAjNGZjM2Y3OyBzdHJva2U6ICM0ZmMzZjciLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtNzllNmNmY2YyZSIgeD0iMjA3LjE2OTM0NyIgeT0iMjM4LjQwNDU3MyIgc3R5bGU9ImZpbGw6ICM0ZmMzZjc7IHN0cm9rZTogIzRmYzNmNyIvPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI203OWU2Y2ZjZjJlIiB4PSIyNjQuNDk0NjMxIiB5PSIyMzguNDA0NTczIiBzdHlsZT0iZmlsbDogIzRmYzNmNzsgc3Ryb2tlOiAjNGZjM2Y3Ii8+CiAgICAgPHVzZSB4bGluazpocmVmPSIjbTc5ZTZjZmNmMmUiIHg9IjMyMS44MTk5MTUiIHk9IjIzNi42NTQ0OTYiIHN0eWxlPSJmaWxsOiAjNGZjM2Y3OyBzdHJva2U6ICM0ZmMzZjciLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtNzllNmNmY2YyZSIgeD0iMzc5LjE0NTE5OSIgeT0iMjI4Ljc3OTE1IiBzdHlsZT0iZmlsbDogIzRmYzNmNzsgc3Ryb2tlOiAjNGZjM2Y3Ii8+CiAgICAgPHVzZSB4bGluazpocmVmPSIjbTc5ZTZjZmNmMmUiIHg9IjQzNi40NzA0ODMiIHk9IjIyMC45MDM4MDQiIHN0eWxlPSJmaWxsOiAjNGZjM2Y3OyBzdHJva2U6ICM0ZmMzZjciLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtNzllNmNmY2YyZSIgeD0iNDkzLjc5NTc2NyIgeT0iMTk5LjAyNzg0MyIgc3R5bGU9ImZpbGw6ICM0ZmMzZjc7IHN0cm9rZTogIzRmYzNmNyIvPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI203OWU2Y2ZjZjJlIiB4PSI1NTEuMTIxMDUxIiB5PSIxNjYuNjUxNDIxIiBzdHlsZT0iZmlsbDogIzRmYzNmNzsgc3Ryb2tlOiAjNGZjM2Y3Ii8+CiAgICAgPHVzZSB4bGluazpocmVmPSIjbTc5ZTZjZmNmMmUiIHg9IjYwOC40NDYzMzUiIHk9IjEyOS4wMjQ3NjciIHN0eWxlPSJmaWxsOiAjNGZjM2Y3OyBzdHJva2U6ICM0ZmMzZjciLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtNzllNmNmY2YyZSIgeD0iNjY1Ljc3MTYxOSIgeT0iODIuNjQ3NzMiIHN0eWxlPSJmaWxsOiAjNGZjM2Y3OyBzdHJva2U6ICM0ZmMzZjciLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtNzllNmNmY2YyZSIgeD0iNzIzLjA5NjkwMyIgeT0iNTkuODk2NzMiIHN0eWxlPSJmaWxsOiAjNGZjM2Y3OyBzdHJva2U6ICM0ZmMzZjciLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtNzllNmNmY2YyZSIgeD0iNzgwLjQyMjE4OCIgeT0iNTcuMjcxNjE1IiBzdHlsZT0iZmlsbDogIzRmYzNmNzsgc3Ryb2tlOiAjNGZjM2Y3Ii8+CiAgICA8L2c+CiAgIDwvZz4KICAgPGcgaWQ9ImxpbmUyZF80MCI+CiAgICA8cGF0aCBkPSJNIDE0OS44NDQwNjMgMjg3LjQwNjcyNiAKTCAyMDcuMTY5MzQ3IDI0Ni4yNzk5MTkgCkwgMjY0LjQ5NDYzMSAyNDAuMTU0NjUgCkwgMzIxLjgxOTkxNSAyNDQuNTI5ODQyIApMIDM3OS4xNDUxOTkgMjQwLjE1NDY1IApMIDQzNi40NzA0ODMgMjQzLjY1NDgwNCAKTCA0OTMuNzk1NzY3IDI1NC4xNTUyNjUgCkwgNTUxLjEyMTA1MSAyNjQuNjU1NzI3IApMIDYwOC40NDYzMzUgMjc0LjI4MTE1IApMIDY2NS43NzE2MTkgMjg3LjQwNjcyNiAKTCA3MjMuMDk2OTAzIDI5Mi42NTY5NTcgCkwgNzgwLjQyMjE4OCAyODguMjgxNzY1IAoiIGNsaXAtcGF0aD0idXJsKCNwMDg1ZDA0M2M1NykiIHN0eWxlPSJmaWxsOiBub25lOyBzdHJva2U6ICM0Y2FmNTA7IHN0cm9rZS13aWR0aDogNDsgc3Ryb2tlLWxpbmVjYXA6IHNxdWFyZSIvPgogICAgPGRlZnM+CiAgICAgPHBhdGggaWQ9Im0yZGNiYzhmOWRjIiBkPSJNIDAgMyAKQyAwLjc5NTYwOSAzIDEuNTU4NzQgMi42ODM5MDEgMi4xMjEzMiAyLjEyMTMyIApDIDIuNjgzOTAxIDEuNTU4NzQgMyAwLjc5NTYwOSAzIDAgCkMgMyAtMC43OTU2MDkgMi42ODM5MDEgLTEuNTU4NzQgMi4xMjEzMiAtMi4xMjEzMiAKQyAxLjU1ODc0IC0yLjY4MzkwMSAwLjc5NTYwOSAtMyAwIC0zIApDIC0wLjc5NTYwOSAtMyAtMS41NTg3NCAtMi42ODM5MDEgLTIuMTIxMzIgLTIuMTIxMzIgCkMgLTIuNjgzOTAxIC0xLjU1ODc0IC0zIC0wLjc5NTYwOSAtMyAwIApDIC0zIDAuNzk1NjA5IC0yLjY4MzkwMSAxLjU1ODc0IC0yLjEyMTMyIDIuMTIxMzIgCkMgLTEuNTU4NzQgMi42ODM5MDEgLTAuNzk1NjA5IDMgMCAzIAp6CiIgc3R5bGU9InN0cm9rZTogIzRjYWY1MCIvPgogICAgPC9kZWZzPgogICAgPGcgY2xpcC1wYXRoPSJ1cmwoI3AwODVkMDQzYzU3KSI+CiAgICAgPHVzZSB4bGluazpocmVmPSIjbTJkY2JjOGY5ZGMiIHg9IjE0OS44NDQwNjMiIHk9IjI4Ny40MDY3MjYiIHN0eWxlPSJmaWxsOiAjNGNhZjUwOyBzdHJva2U6ICM0Y2FmNTAiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtMmRjYmM4ZjlkYyIgeD0iMjA3LjE2OTM0NyIgeT0iMjQ2LjI3OTkxOSIgc3R5bGU9ImZpbGw6ICM0Y2FmNTA7IHN0cm9rZTogIzRjYWY1MCIvPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI20yZGNiYzhmOWRjIiB4PSIyNjQuNDk0NjMxIiB5PSIyNDAuMTU0NjUiIHN0eWxlPSJmaWxsOiAjNGNhZjUwOyBzdHJva2U6ICM0Y2FmNTAiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtMmRjYmM4ZjlkYyIgeD0iMzIxLjgxOTkxNSIgeT0iMjQ0LjUyOTg0MiIgc3R5bGU9ImZpbGw6ICM0Y2FmNTA7IHN0cm9rZTogIzRjYWY1MCIvPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI20yZGNiYzhmOWRjIiB4PSIzNzkuMTQ1MTk5IiB5PSIyNDAuMTU0NjUiIHN0eWxlPSJmaWxsOiAjNGNhZjUwOyBzdHJva2U6ICM0Y2FmNTAiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtMmRjYmM4ZjlkYyIgeD0iNDM2LjQ3MDQ4MyIgeT0iMjQzLjY1NDgwNCIgc3R5bGU9ImZpbGw6ICM0Y2FmNTA7IHN0cm9rZTogIzRjYWY1MCIvPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI20yZGNiYzhmOWRjIiB4PSI0OTMuNzk1NzY3IiB5PSIyNTQuMTU1MjY1IiBzdHlsZT0iZmlsbDogIzRjYWY1MDsgc3Ryb2tlOiAjNGNhZjUwIi8+CiAgICAgPHVzZSB4bGluazpocmVmPSIjbTJkY2JjOGY5ZGMiIHg9IjU1MS4xMjEwNTEiIHk9IjI2NC42NTU3MjciIHN0eWxlPSJmaWxsOiAjNGNhZjUwOyBzdHJva2U6ICM0Y2FmNTAiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtMmRjYmM4ZjlkYyIgeD0iNjA4LjQ0NjMzNSIgeT0iMjc0LjI4MTE1IiBzdHlsZT0iZmlsbDogIzRjYWY1MDsgc3Ryb2tlOiAjNGNhZjUwIi8+CiAgICAgPHVzZSB4bGluazpocmVmPSIjbTJkY2JjOGY5ZGMiIHg9IjY2NS43NzE2MTkiIHk9IjI4Ny40MDY3MjYiIHN0eWxlPSJmaWxsOiAjNGNhZjUwOyBzdHJva2U6ICM0Y2FmNTAiLz4KICAgICA8dXNlIHhsaW5rOmhyZWY9IiNtMmRjYmM4ZjlkYyIgeD0iNzIzLjA5NjkwMyIgeT0iMjkyLjY1Njk1NyIgc3R5bGU9ImZpbGw6ICM0Y2FmNTA7IHN0cm9rZTogIzRjYWY1MCIvPgogICAgIDx1c2UgeGxpbms6aHJlZj0iI20yZGNiYzhmOWRjIiB4PSI3ODAuNDIyMTg4IiB5PSIyODguMjgxNzY1IiBzdHlsZT0iZmlsbDogIzRjYWY1MDsgc3Ryb2tlOiAjNGNhZjUwIi8+CiAgICA8L2c+CiAgIDwvZz4KICAgPGcgaWQ9ImxpbmUyZF80MSI+CiAgICA8cGF0aCBkPSJNIDg2Ljc4NjI1IDI4Ny40MDY3MjYgCkwgODQzLjQ4IDI4Ny40MDY3MjYgCiIgY2xpcC1wYXRoPSJ1cmwoI3AwODVkMDQzYzU3KSIgc3R5bGU9ImZpbGw6IG5vbmU7IHN0cm9rZS1kYXNoYXJyYXk6IDcuNCwzLjI7IHN0cm9rZS1kYXNob2Zmc2V0OiAwOyBzdHJva2U6ICM5OTk5OTk7IHN0cm9rZS13aWR0aDogMiIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF82Ij4KICAgIDxwYXRoIGQ9Ik0gODYuNzg2MjUgMzE4LjAzMzA3MiAKTCA4Ni43ODYyNSAyMC41MiAKIiBzdHlsZT0iZmlsbDogbm9uZTsgc3Ryb2tlOiAjNTU1NTU1OyBzdHJva2Utd2lkdGg6IDAuODsgc3Ryb2tlLWxpbmVqb2luOiBtaXRlcjsgc3Ryb2tlLWxpbmVjYXA6IHNxdWFyZSIvPgogICA8L2c+CiAgIDxnIGlkPSJwYXRjaF83Ij4KICAgIDxwYXRoIGQ9Ik0gODYuNzg2MjUgMzE4LjAzMzA3MiAKTCA4NDMuNDggMzE4LjAzMzA3MiAKIiBzdHlsZT0iZmlsbDogbm9uZTsgc3Ryb2tlOiAjNTU1NTU1OyBzdHJva2Utd2lkdGg6IDAuODsgc3Ryb2tlLWxpbmVqb2luOiBtaXRlcjsgc3Ryb2tlLWxpbmVjYXA6IHNxdWFyZSIvPgogICA8L2c+CiAgIDxnIGlkPSJ0ZXh0XzIyIj4KICAgIDx0ZXh0IHN0eWxlPSJmb250LXNpemU6IDE2cHg7IGZvbnQtZmFtaWx5OiAnRGVqYVZ1IFNhbnMnLCAnQml0c3RyZWFtIFZlcmEgU2FucycsICdDb21wdXRlciBNb2Rlcm4gU2FucyBTZXJpZicsICdMdWNpZGEgR3JhbmRlJywgJ1ZlcmRhbmEnLCAnR2VuZXZhJywgJ0x1Y2lkJywgJ0FyaWFsJywgJ0hlbHZldGljYScsICdBdmFudCBHYXJkZScsIHNhbnMtc2VyaWY7IHRleHQtYW5jaG9yOiBzdGFydDsgZmlsbDogI2FhYWFhYSIgeD0iMTMyLjY0NjQ3NyIgeT0iMzA3LjUzMjYxMSIgdHJhbnNmb3JtPSJyb3RhdGUoLTAgMTMyLjY0NjQ3NyAzMDcuNTMyNjExKSI+Im5vYm9keSBjaHVybnMiIGd1ZXNzID0gNzMuNSU8L3RleHQ+CiAgIDwvZz4KICAgPGcgaWQ9InRleHRfMjMiPgogICAgPHRleHQgc3R5bGU9ImZvbnQtd2VpZ2h0OiA3MDA7IGZvbnQtc2l6ZTogMThweDsgZm9udC1mYW1pbHk6ICdEZWphVnUgU2FucycsICdCaXRzdHJlYW0gVmVyYSBTYW5zJywgJ0NvbXB1dGVyIE1vZGVybiBTYW5zIFNlcmlmJywgJ0x1Y2lkYSBHcmFuZGUnLCAnVmVyZGFuYScsICdHZW5ldmEnLCAnTHVjaWQnLCAnQXJpYWwnLCAnSGVsdmV0aWNhJywgJ0F2YW50IEdhcmRlJywgc2Fucy1zZXJpZjsgdGV4dC1hbmNob3I6IG1pZGRsZTsgZmlsbDogI2ZmYzEwNyIgeD0iMTc4LjUwNjcwNSIgeT0iNDYuNzcxMTUzIiB0cmFuc2Zvcm09InJvdGF0ZSgtMCAxNzguNTA2NzA1IDQ2Ljc3MTE1MykiPnRvbyBzaW1wbGU8L3RleHQ+CiAgIDwvZz4KICAgPGcgaWQ9InRleHRfMjQiPgogICAgPHRleHQgc3R5bGU9ImZvbnQtd2VpZ2h0OiA3MDA7IGZvbnQtc2l6ZTogMThweDsgZm9udC1mYW1pbHk6ICdEZWphVnUgU2FucycsICdCaXRzdHJlYW0gVmVyYSBTYW5zJywgJ0NvbXB1dGVyIE1vZGVybiBTYW5zIFNlcmlmJywgJ0x1Y2lkYSBHcmFuZGUnLCAnVmVyZGFuYScsICdHZW5ldmEnLCAnTHVjaWQnLCAnQXJpYWwnLCAnSGVsdmV0aWNhJywgJ0F2YW50IEdhcmRlJywgc2Fucy1zZXJpZjsgdGV4dC1hbmNob3I6IG1pZGRsZTsgZmlsbDogIzRjYWY1MCIgeD0iMzUwLjQ4MjU1NyIgeT0iNDYuNzcxMTUzIiB0cmFuc2Zvcm09InJvdGF0ZSgtMCAzNTAuNDgyNTU3IDQ2Ljc3MTE1MykiPnN3ZWV0IHNwb3Q8L3RleHQ+CiAgIDwvZz4KICAgPGcgaWQ9InRleHRfMjUiPgogICAgPHRleHQgc3R5bGU9ImZvbnQtd2VpZ2h0OiA3MDA7IGZvbnQtc2l6ZTogMThweDsgZm9udC1mYW1pbHk6ICdEZWphVnUgU2FucycsICdCaXRzdHJlYW0gVmVyYSBTYW5zJywgJ0NvbXB1dGVyIE1vZGVybiBTYW5zIFNlcmlmJywgJ0x1Y2lkYSBHcmFuZGUnLCAnVmVyZGFuYScsICdHZW5ldmEnLCAnTHVjaWQnLCAnQXJpYWwnLCAnSGVsdmV0aWNhJywgJ0F2YW50IEdhcmRlJywgc2Fucy1zZXJpZjsgdGV4dC1hbmNob3I6IG1pZGRsZTsgZmlsbDogI2ZmNmI2YiIgeD0iNjM3LjEwODk3NyIgeT0iNDYuNzcxMTUzIiB0cmFuc2Zvcm09InJvdGF0ZSgtMCA2MzcuMTA4OTc3IDQ2Ljc3MTE1MykiPm1lbW9yaXNpbmc8L3RleHQ+CiAgIDwvZz4KICAgPGcgaWQ9ImxlZ2VuZF8xIj4KICAgIDxnIGlkPSJsaW5lMmRfNDIiPgogICAgIDxwYXRoIGQ9Ik0gMTg1LjU2MDE1NiAzOTkuODAzMDMgCkwgMjAyLjU2MDE1NiAzOTkuODAzMDMgCkwgMjE5LjU2MDE1NiAzOTkuODAzMDMgCiIgc3R5bGU9ImZpbGw6IG5vbmU7IHN0cm9rZTogIzRmYzNmNzsgc3Ryb2tlLXdpZHRoOiA0OyBzdHJva2UtbGluZWNhcDogc3F1YXJlIi8+CiAgICAgPGc+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI203OWU2Y2ZjZjJlIiB4PSIyMDIuNTYwMTU2IiB5PSIzOTkuODAzMDMiIHN0eWxlPSJmaWxsOiAjNGZjM2Y3OyBzdHJva2U6ICM0ZmMzZjciLz4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0idGV4dF8yNiI+CiAgICAgPHRleHQgc3R5bGU9ImZvbnQtc2l6ZTogMTdweDsgZm9udC1mYW1pbHk6ICdEZWphVnUgU2FucycsICdCaXRzdHJlYW0gVmVyYSBTYW5zJywgJ0NvbXB1dGVyIE1vZGVybiBTYW5zIFNlcmlmJywgJ0x1Y2lkYSBHcmFuZGUnLCAnVmVyZGFuYScsICdHZW5ldmEnLCAnTHVjaWQnLCAnQXJpYWwnLCAnSGVsdmV0aWNhJywgJ0F2YW50IEdhcmRlJywgc2Fucy1zZXJpZjsgdGV4dC1hbmNob3I6IHN0YXJ0OyBmaWxsOiAjZGRkZGRkIiB4PSIyMzMuMTYwMTU2IiB5PSI0MDUuNzUzMDMiIHRyYW5zZm9ybT0icm90YXRlKC0wIDIzMy4xNjAxNTYgNDA1Ljc1MzAzKSI+b24gY3VzdG9tZXJzIGl0IGxlYXJuZWQgZnJvbTwvdGV4dD4KICAgIDwvZz4KICAgIDxnIGlkPSJsaW5lMmRfNDMiPgogICAgIDxwYXRoIGQ9Ik0gNTE0LjExOTY4OCAzOTkuODAzMDMgCkwgNTMxLjExOTY4OCAzOTkuODAzMDMgCkwgNTQ4LjExOTY4OCAzOTkuODAzMDMgCiIgc3R5bGU9ImZpbGw6IG5vbmU7IHN0cm9rZTogIzRjYWY1MDsgc3Ryb2tlLXdpZHRoOiA0OyBzdHJva2UtbGluZWNhcDogc3F1YXJlIi8+CiAgICAgPGc+CiAgICAgIDx1c2UgeGxpbms6aHJlZj0iI20yZGNiYzhmOWRjIiB4PSI1MzEuMTE5Njg4IiB5PSIzOTkuODAzMDMiIHN0eWxlPSJmaWxsOiAjNGNhZjUwOyBzdHJva2U6ICM0Y2FmNTAiLz4KICAgICA8L2c+CiAgICA8L2c+CiAgICA8ZyBpZD0idGV4dF8yNyI+CiAgICAgPHRleHQgc3R5bGU9ImZvbnQtc2l6ZTogMTdweDsgZm9udC1mYW1pbHk6ICdEZWphVnUgU2FucycsICdCaXRzdHJlYW0gVmVyYSBTYW5zJywgJ0NvbXB1dGVyIE1vZGVybiBTYW5zIFNlcmlmJywgJ0x1Y2lkYSBHcmFuZGUnLCAnVmVyZGFuYScsICdHZW5ldmEnLCAnTHVjaWQnLCAnQXJpYWwnLCAnSGVsdmV0aWNhJywgJ0F2YW50IEdhcmRlJywgc2Fucy1zZXJpZjsgdGV4dC1hbmNob3I6IHN0YXJ0OyBmaWxsOiAjZGRkZGRkIiB4PSI1NjEuNzE5Njg4IiB5PSI0MDUuNzUzMDMiIHRyYW5zZm9ybT0icm90YXRlKC0wIDU2MS43MTk2ODggNDA1Ljc1MzAzKSI+b24gdW5zZWVuIGN1c3RvbWVyczwvdGV4dD4KICAgIDwvZz4KICAgPC9nPgogIDwvZz4KIDwvZz4KIDxkZWZzPgogIDxjbGlwUGF0aCBpZD0icDA4NWQwNDNjNTciPgogICA8cmVjdCB4PSI4Ni43ODYyNSIgeT0iMjAuNTIiIHdpZHRoPSI3NTYuNjkzNzUiIGhlaWdodD0iMjk3LjUxMzA3MiIvPgogIDwvY2xpcFBhdGg+CiA8L2RlZnM+Cjwvc3ZnPgo="></div>
+
+<p>The chart shows a decision tree on our churn data. As we let the tree grow deeper (more complex), its score on the <strong>training</strong> data keeps rising towards 100%, but its score on <strong>new</strong> data rises, peaks, and then falls. Left of the peak: <strong>underfitting</strong> (too simple). Right of the peak: <strong>overfitting</strong> (memorising).</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Underfitting</th>
+<th>Overfitting</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Training score</td>
+<td>low</td>
+<td>very high</td>
+</tr>
+<tr>
+<td>Score on new data</td>
+<td>low</td>
+<td>much lower than training</td>
+</tr>
+<tr>
+<td>Cause</td>
+<td>model too simple, missing features</td>
+<td>model too complex, too little data, noise</td>
+</tr>
+<tr>
+<td>Fixes</td>
+<td>more complex model, better features</td>
+<td>simpler model, more data, regularisation, stop earlier</td>
+</tr>
+</tbody>
+</table>
+<h3>Testing and validating</h3>
+<p>The only way to know whether a model works on <strong>new</strong> data is to test it on data it has <strong>never seen</strong>. So we split our data:</p>
+<ul>
+<li><strong>Training set</strong> (~80%): the model learns from it.</li>
+<li><strong>Test set</strong> (~20%): locked away, used <strong>once</strong> at the end to measure the final, honest score.</li>
+<li>To choose between models without touching the test set, we use a <strong>validation set</strong> or, better, <strong>cross-validation</strong> (Part 3).</li>
+</ul>
+<div class="deep">
+<p><strong>No Free Lunch theorem (Wolpert, 1996):</strong> if you make no assumptions about the data, no model is better than any other on all problems. That is why we always <strong>try several models</strong> and compare them on our own data, instead of trusting that one is "the best".</p>
+</div>
+<h2>1.10 Questions students often ask</h2>
+<details><summary>Is ML the same as AI?</summary>No. ML is one part of AI. AI also includes hand-written rules, search and planning.</details>
+<details><summary>Do I need to be good at maths?</summary>To <i>use</i> ML well you need to understand ideas (averages, errors, probability), not do heavy maths by hand. Libraries do the calculations. This handbook explains the maths in plain words.</details>
+<details><summary>How much data do I need?</summary>It depends on how complex the pattern is. Simple models on tables can work with hundreds of rows; image models need thousands to millions. More data usually beats a cleverer model.</details>
+<details><summary>Is a model ever 100% accurate?</summary>Almost never on new data, and if it is, check for leakage (Part 3). Real data contains noise and things we can't measure.</details>
+<details><summary>What is the difference between a model and an algorithm?</summary>The <b>algorithm</b> is the learning procedure (e.g. "find the line with the smallest squared error"). The <b>model</b> is what you get after training (e.g. the line with w = 265, b = −1,961).</details>
+<details><summary>Why is ChatGPT "self-supervised" and not "supervised"?</summary>Nobody labelled its training text. It created its own answers by hiding the next word in each sentence. (Later steps, like RLHF, add human feedback.)</details>
+
+<h2>Check yourself</h2>
+<details><summary>1. Predicting a house price: regression or classification?</summary>Regression: the answer is a number.</details>
+<details><summary>2. Grouping 10,000 customers into segments without any labels: which type?</summary>Unsupervised learning (clustering).</details>
+<details><summary>3. A model scores 99% on training data and 70% on new data. What is happening?</summary>Overfitting: it memorised the training data.</details>
+<details><summary>4. Give one situation where you should NOT use ML.</summary>When a simple stable rule works (e.g. tax brackets), or when there are no past examples with answers.</details>
+<details><summary>5. Which type of learning trains large language models like ChatGPT?</summary>Mainly self-supervised learning (predict the next word), followed by fine-tuning and reinforcement learning from human feedback.</details>
+
+<p class="kicker" style="margin-top:3em">Background reading (optional): Géron, <i>Hands-On Machine Learning</i>, Chapter 1 "The Machine Learning Landscape".</p>
+
+<div class="pager"><a href="index.html">← Start here</a><a href="part2_lifecycle.html">Part 2 · The ML project lifecycle →</a></div></main></body></html>
