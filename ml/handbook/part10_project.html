@@ -1,0 +1,316 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Part 10 · The project · ML Bootcamp Handbook</title><style>
+:root{--bg:#141414;--card:#1e1f22;--fg:#e6e6e6;--dim:#a0a0a0;--g:#4CAF50;--a:#ffc107;--b:#4fc3f7;--r:#ff6b6b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:18px/1.7 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+main{max-width:920px;margin:0 auto;padding:40px 22px 80px}
+h1{font-size:2.1em;line-height:1.2;margin:.2em 0}h2{font-size:1.5em;margin-top:2.2em;padding-top:.6em;border-top:1px solid #333;color:#fff}
+h3{color:var(--b);margin-top:1.6em}a{color:var(--b)}
+.kicker{color:var(--dim);letter-spacing:.12em;text-transform:uppercase;font-size:.8em}
+code{background:#26272b;padding:.1em .35em;border-radius:5px;font-size:.92em}
+pre{background:#1b1c1f;border:1px solid #2c2d31;border-radius:10px;padding:16px;overflow-x:auto;line-height:1.5}pre code{background:none;padding:0}
+table{border-collapse:collapse;width:100%;margin:1em 0;font-size:.93em}th,td{border-bottom:1px solid #333;padding:8px 10px;text-align:left;vertical-align:top}th{color:var(--dim);font-weight:600}
+blockquote{margin:1.2em 0;padding:12px 18px;background:#2a2410;border-left:5px solid var(--a);border-radius:0 8px 8px 0}
+blockquote p{margin:.3em 0}
+.chart{background:#141414;border-radius:10px;padding:8px;margin:1em 0}.chart img{width:100%}
+details{background:var(--card);border-radius:8px;padding:10px 16px;margin:10px 0}summary{cursor:pointer;font-weight:600}
+.toc{background:var(--card);border-radius:10px;padding:14px 22px}.toc ol{margin:.3em 0}
+nav.top{display:flex;gap:16px;flex-wrap:wrap;font-size:.9em;margin-bottom:10px}
+.kid{background:#14263a;border-left:5px solid #4fc3f7;border-radius:0 10px 10px 0;padding:12px 18px;margin:1.2em 0}
+.kid:before{content:"Like I'm 10";display:block;font-size:.75em;letter-spacing:.1em;text-transform:uppercase;color:#4fc3f7;font-weight:700}
+.deep{background:#17271a;border-left:5px solid #4CAF50;border-radius:0 10px 10px 0;padding:12px 18px;margin:1.2em 0}
+.deep:before{content:"Going deeper";display:block;font-size:.75em;letter-spacing:.1em;text-transform:uppercase;color:#4CAF50;font-weight:700}
+.warn{background:#2e1717;border-left:5px solid #ff6b6b;border-radius:0 10px 10px 0;padding:12px 18px;margin:1.2em 0}
+.warn:before{content:"Common mistake";display:block;font-size:.75em;letter-spacing:.1em;text-transform:uppercase;color:#ff6b6b;font-weight:700}
+.try{background:#2a2410;border-left:5px solid #ffc107;border-radius:0 10px 10px 0;padding:12px 18px;margin:1.2em 0}
+.try:before{content:"Try it / think";display:block;font-size:.75em;letter-spacing:.1em;text-transform:uppercase;color:#ffc107;font-weight:700}
+.kid p,.deep p,.warn p,.try p{margin:.4em 0}
+.nbimg{background:#fff;border-radius:8px;padding:6px;margin:.6em 0 1.2em}.nbimg img{width:100%}
+.nbout{overflow-x:auto;margin:.4em 0 1.2em;font-size:.85em}.nbout table{width:auto}
+pre.nbtext{background:#101112;border-left:3px solid #555;font-size:.85em;color:#cfcfcf}
+.pager{display:flex;justify-content:space-between;margin-top:3em;padding-top:1em;border-top:1px solid #333}
+@media print{body{font-size:12pt}nav.top,.noprint{display:none}h2{page-break-after:avoid}}
+</style></head><body><main><nav class="top"><a href="index.html">Handbook home</a> · <a href="glossary.html">Glossary</a></nav>
+
+<p class="kicker">Part 10 · Session 5 (Day 2, ~6 hours)</p>
+
+<h1>The project: an end-to-end tabular ML baseline</h1>
+<p>Your team builds a <strong>complete, documented ML solution</strong> on one dataset, from problem statement to a working app, using everything in Parts 1–9. You won't start from zero: you already have your problem statement, split and baseline from Session 1, models from Session 2, and an improvement from Session 3.</p>
+<h2>10.1 The brief</h2>
+<p><strong>User story:</strong> <em>As a business owner, I want a working, documented model that predicts </em><em>[target]</em><em> from </em><em>[data]</em><em>, with a simple app, so that my team can use it and trust its limits.</em></p>
+<h3>Acceptance criteria (all required)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Requirement</th>
+<th>Where it lives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Clear problem statement, target and metric (with a reason)</td>
+<td>README</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Leakage-aware split (split before fitting anything; seed recorded)</td>
+<td><code>src/data.py</code>, README</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Preprocessing in a scikit-learn pipeline</td>
+<td><code>src/features.py</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>A baseline <strong>plus at least two</strong> candidate models, same folds</td>
+<td><code>src/models.py</code>, <code>reports/cv_results.csv</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Appropriate metrics; test set used once</td>
+<td><code>reports/metrics.json</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Brief error analysis explained in context</td>
+<td>README (confusion matrix or residuals)</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Saved pipeline predicts on unseen rows in a fresh session; tests pass</td>
+<td><code>predict.py</code>, <code>pytest</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>Streamlit app showing a prediction and the results</td>
+<td><code>app.py</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td>README write-up and model card completed</td>
+<td><code>README.md</code>, <code>MODEL_CARD.md</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>Code, outputs and history on GitHub</td>
+<td>your repository</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Stretch (optional):</strong> a FastAPI endpoint · tuning with <code>python train.py --tune</code> · a clustering comparison.</p>
+<h2>10.2 The starter project</h2>
+<p><strong><a href="ml-project-starter.zip">Download ml-project-starter.zip</a></strong>: a ready-made folder with the 5 datasets, configs, and working code for training, saving, batch prediction, input validation, a fairness report, tests and a Streamlit app. It runs out of the box with a <strong>baseline</strong> only. <strong>Your team makes the ML decisions</strong>: models, features, metric, threshold, interpretation.</p>
+<pre><code class="language-bash"># 1 · unzip, put it under Git, push to your own GitHub repository
+cd ml-project-starter
+git init &amp;&amp; git add . &amp;&amp; git commit -m &quot;Starter project&quot;
+pip install -r requirements.txt
+
+# 2 · choose your dataset
+cp datasets/titanic/config.json config.json
+
+# 3 · run everything
+python train.py
+python predict.py --input reports/new_rows_example.csv
+pytest -q
+streamlit run app.py
+</code></pre>
+<p>Then search the code for <strong>TODO</strong> (the starter's README lists them by session).</p>
+<h2>10.3 The datasets</h2>
+<table>
+<thead>
+<tr>
+<th>Dataset</th>
+<th>Task</th>
+<th>Target</th>
+<th>Traps to watch</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Telco churn</td>
+<td>classification</td>
+<td><code>Churn</code> = Yes</td>
+<td>blank TotalCharges; imbalance; choose a threshold</td>
+</tr>
+<tr>
+<td>Medical charges</td>
+<td>regression</td>
+<td><code>charges</code></td>
+<td>one exact duplicate; skewed target; smoker × BMI interaction</td>
+</tr>
+<tr>
+<td>California housing</td>
+<td>regression</td>
+<td><code>median_house_value</code></td>
+<td>207 missing bedroom counts; prices capped at $500,001; nearby districts on both sides of a random split</td>
+</tr>
+<tr>
+<td>Titanic</td>
+<td>classification</td>
+<td><code>Survived</code> = 1</td>
+<td>small data; Age 20% missing; Name/Ticket act like IDs; Cabin mostly missing</td>
+</tr>
+<tr>
+<td>Adult income</td>
+<td>classification</td>
+<td><code>income</code> = "&gt;50K"</td>
+<td>"?" means missing; <code>fnlwgt</code> is a sampling weight, not a feature; sex and race: fairness discussion</td>
+</tr>
+</tbody>
+</table>
+<h2>10.4 The 6 hours, step by step</h2>
+<table>
+<thead>
+<tr>
+<th>Time</th>
+<th>Step</th>
+<th>You produce</th>
+<th>TA checkpoint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0:00–0:30</td>
+<td><strong>Set up:</strong> unzip, Git, GitHub, config, first <code>train.py</code> run</td>
+<td>repo online; baseline scores</td>
+<td>"Show me your repo and baseline."</td>
+</tr>
+<tr>
+<td>0:30–1:30</td>
+<td><strong>Data &amp; problem:</strong> inspect, clean in <code>src/data.py</code> if needed, write the problem statement</td>
+<td>README sections 1–3</td>
+<td>"Why this metric? Why this split? Which column worried you for leakage?"</td>
+</tr>
+<tr>
+<td>1:30–2:30</td>
+<td><strong>Models:</strong> add ≥ 2 candidates; compare with CV</td>
+<td><code>reports/cv_results.csv</code></td>
+<td>"Are all models compared on the same folds? Which won, and by how much vs the spread?"</td>
+</tr>
+<tr>
+<td>2:30–3:30</td>
+<td><strong>Improve:</strong> one feature hypothesis and/or tuning; record each try</td>
+<td><code>experiments.csv</code>, README section 5</td>
+<td>"What was your hypothesis, and did the data support it?"</td>
+</tr>
+<tr>
+<td>3:30–4:15</td>
+<td><strong>Evaluate &amp; explain:</strong> test once; error analysis; fairness table</td>
+<td><code>reports/</code>, README</td>
+<td>"Explain one false positive and one false negative in business terms."</td>
+</tr>
+<tr>
+<td>4:15–5:00</td>
+<td><strong>Product:</strong> <code>predict.py</code> on new rows, <code>pytest</code>, app improvements</td>
+<td>working app</td>
+<td>"Load your model in a fresh terminal and predict."</td>
+</tr>
+<tr>
+<td>5:00–5:30</td>
+<td><strong>Document:</strong> model card, README, final commit</td>
+<td><code>MODEL_CARD.md</code></td>
+<td>"What should this model NOT be used for?"</td>
+</tr>
+<tr>
+<td>5:30–6:00</td>
+<td><strong>Demo:</strong> 5 minutes per team</td>
+<td>live demo</td>
+<td>rubric scoring</td>
+</tr>
+</tbody>
+</table>
+<h2>10.5 The demo (5 minutes)</h2>
+<ol>
+<li><strong>The problem</strong> in one sentence and the decision it supports (30 s)</li>
+<li><strong>The data</strong> and one surprising finding (45 s)</li>
+<li><strong>Models compared</strong> and why you chose the winner (60 s)</li>
+<li><strong>Live app:</strong> one prediction, explained (60 s)</li>
+<li><strong>Limits and risks:</strong> from your model card (45 s)</li>
+<li><strong>One thing you would do next</strong> (30 s)</li>
+</ol>
+<h2>10.6 Rubric</h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Weight</th>
+<th>Excellent looks like</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Problem framing and data handling</td>
+<td>20%</td>
+<td>clear decision; cleaning choices explained with reasons; leakage checked</td>
+</tr>
+<tr>
+<td>Pipeline and reproducibility</td>
+<td>20%</td>
+<td>everything in a pipeline; seed recorded; <code>experiments.csv</code> used; tests pass</td>
+</tr>
+<tr>
+<td>Evaluation and error analysis</td>
+<td>20%</td>
+<td>fair CV comparison against the baseline; right metric; errors explained in business terms</td>
+</tr>
+<tr>
+<td>App integration and usability</td>
+<td>15%</td>
+<td>app loads the saved model, validates input, explains the result</td>
+</tr>
+<tr>
+<td>Code and documentation</td>
+<td>10%</td>
+<td>clean commits; README a stranger can follow</td>
+</tr>
+<tr>
+<td>Responsible-use discussion and demo</td>
+<td>15%</td>
+<td>honest model card: limits, fairness, privacy, monitoring; clear demo</td>
+</tr>
+</tbody>
+</table>
+<h2>10.7 Common problems and fixes</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>KeyError: 'column'</code></td>
+<td>config target/drop names don't match the CSV</td>
+<td>check spelling and case in <code>config.json</code></td>
+</tr>
+<tr>
+<td>Score suspiciously close to perfect</td>
+<td>leakage (an ID-like or after-the-fact column)</td>
+<td>look at the top features; drop the culprit</td>
+</tr>
+<tr>
+<td>Classification recall 0</td>
+<td>baseline only, or threshold too high</td>
+<td>add models; choose a threshold</td>
+</tr>
+<tr>
+<td><code>predict.py</code> rejects input</td>
+<td>missing column or text in a number column</td>
+<td>read the ERROR lines; fix the file</td>
+</tr>
+<tr>
+<td>Model won't load elsewhere</td>
+<td>different scikit-learn version</td>
+<td>install the version in <code>reports/metrics.json</code></td>
+</tr>
+<tr>
+<td>App says "No trained model found"</td>
+<td><code>train.py</code> not run in this folder</td>
+<td>run <code>python train.py</code> first</td>
+</tr>
+</tbody>
+</table>
+<div class="pager"><a href="part9_product.html">← Part 9 · From notebook to product</a><a href="glossary.html">Glossary & FAQ →</a></div></main></body></html>

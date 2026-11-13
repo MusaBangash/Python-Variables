@@ -1,0 +1,417 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Glossary & FAQ · ML Bootcamp Handbook</title><style>
+:root{--bg:#141414;--card:#1e1f22;--fg:#e6e6e6;--dim:#a0a0a0;--g:#4CAF50;--a:#ffc107;--b:#4fc3f7;--r:#ff6b6b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:18px/1.7 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+main{max-width:920px;margin:0 auto;padding:40px 22px 80px}
+h1{font-size:2.1em;line-height:1.2;margin:.2em 0}h2{font-size:1.5em;margin-top:2.2em;padding-top:.6em;border-top:1px solid #333;color:#fff}
+h3{color:var(--b);margin-top:1.6em}a{color:var(--b)}
+.kicker{color:var(--dim);letter-spacing:.12em;text-transform:uppercase;font-size:.8em}
+code{background:#26272b;padding:.1em .35em;border-radius:5px;font-size:.92em}
+pre{background:#1b1c1f;border:1px solid #2c2d31;border-radius:10px;padding:16px;overflow-x:auto;line-height:1.5}pre code{background:none;padding:0}
+table{border-collapse:collapse;width:100%;margin:1em 0;font-size:.93em}th,td{border-bottom:1px solid #333;padding:8px 10px;text-align:left;vertical-align:top}th{color:var(--dim);font-weight:600}
+blockquote{margin:1.2em 0;padding:12px 18px;background:#2a2410;border-left:5px solid var(--a);border-radius:0 8px 8px 0}
+blockquote p{margin:.3em 0}
+.chart{background:#141414;border-radius:10px;padding:8px;margin:1em 0}.chart img{width:100%}
+details{background:var(--card);border-radius:8px;padding:10px 16px;margin:10px 0}summary{cursor:pointer;font-weight:600}
+.toc{background:var(--card);border-radius:10px;padding:14px 22px}.toc ol{margin:.3em 0}
+nav.top{display:flex;gap:16px;flex-wrap:wrap;font-size:.9em;margin-bottom:10px}
+.kid{background:#14263a;border-left:5px solid #4fc3f7;border-radius:0 10px 10px 0;padding:12px 18px;margin:1.2em 0}
+.kid:before{content:"Like I'm 10";display:block;font-size:.75em;letter-spacing:.1em;text-transform:uppercase;color:#4fc3f7;font-weight:700}
+.deep{background:#17271a;border-left:5px solid #4CAF50;border-radius:0 10px 10px 0;padding:12px 18px;margin:1.2em 0}
+.deep:before{content:"Going deeper";display:block;font-size:.75em;letter-spacing:.1em;text-transform:uppercase;color:#4CAF50;font-weight:700}
+.warn{background:#2e1717;border-left:5px solid #ff6b6b;border-radius:0 10px 10px 0;padding:12px 18px;margin:1.2em 0}
+.warn:before{content:"Common mistake";display:block;font-size:.75em;letter-spacing:.1em;text-transform:uppercase;color:#ff6b6b;font-weight:700}
+.try{background:#2a2410;border-left:5px solid #ffc107;border-radius:0 10px 10px 0;padding:12px 18px;margin:1.2em 0}
+.try:before{content:"Try it / think";display:block;font-size:.75em;letter-spacing:.1em;text-transform:uppercase;color:#ffc107;font-weight:700}
+.kid p,.deep p,.warn p,.try p{margin:.4em 0}
+.nbimg{background:#fff;border-radius:8px;padding:6px;margin:.6em 0 1.2em}.nbimg img{width:100%}
+.nbout{overflow-x:auto;margin:.4em 0 1.2em;font-size:.85em}.nbout table{width:auto}
+pre.nbtext{background:#101112;border-left:3px solid #555;font-size:.85em;color:#cfcfcf}
+.pager{display:flex;justify-content:space-between;margin-top:3em;padding-top:1em;border-top:1px solid #333}
+@media print{body{font-size:12pt}nav.top,.noprint{display:none}h2{page-break-after:avoid}}
+</style></head><body><main><nav class="top"><a href="index.html">Handbook home</a> · <a href="glossary.html">Glossary</a></nav>
+
+<p class="kicker">Reference</p>
+
+<h1>Glossary and frequently asked questions</h1>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Accuracy</strong></td>
+<td>share of predictions that are correct; misleading when one class is rare</td>
+</tr>
+<tr>
+<td><strong>Algorithm</strong></td>
+<td>the learning procedure (e.g. least squares, CART)</td>
+</tr>
+<tr>
+<td><strong>AUC (ROC AUC)</strong></td>
+<td>chance that a random positive gets a higher score than a random negative; 0.5 = random, 1 = perfect</td>
+</tr>
+<tr>
+<td><strong>Bagging</strong></td>
+<td>training many models on random bootstrap samples and averaging them</td>
+</tr>
+<tr>
+<td><strong>Baseline</strong></td>
+<td>the score of the simplest possible approach; every model must beat it</td>
+</tr>
+<tr>
+<td><strong>Batch inference</strong></td>
+<td>predicting for a whole file at once, on a schedule</td>
+</tr>
+<tr>
+<td><strong>Bias (fairness)</strong></td>
+<td>systematic unfairness towards some group, often learned from the data</td>
+</tr>
+<tr>
+<td><strong>Bias (intercept)</strong></td>
+<td>the constant term b in a linear model</td>
+</tr>
+<tr>
+<td><strong>Boosting</strong></td>
+<td>training models one after another, each fixing the previous mistakes</td>
+</tr>
+<tr>
+<td><strong>Bootstrap sample</strong></td>
+<td>a random sample with replacement</td>
+</tr>
+<tr>
+<td><strong>Calibration</strong></td>
+<td>whether predicted probabilities match real frequencies</td>
+</tr>
+<tr>
+<td><strong>CART</strong></td>
+<td>the greedy algorithm that grows decision trees</td>
+</tr>
+<tr>
+<td><strong>Categorical feature</strong></td>
+<td>a feature whose values are categories (nominal or ordinal)</td>
+</tr>
+<tr>
+<td><strong>Centroid</strong></td>
+<td>the centre (mean point) of a cluster in k-means</td>
+</tr>
+<tr>
+<td><strong>Classification</strong></td>
+<td>predicting a category</td>
+</tr>
+<tr>
+<td><strong>Clustering</strong></td>
+<td>grouping similar examples without labels</td>
+</tr>
+<tr>
+<td><strong>Concept drift</strong></td>
+<td>the relationship between inputs and the answer changes over time</td>
+</tr>
+<tr>
+<td><strong>Confusion matrix</strong></td>
+<td>table of true/false positives/negatives</td>
+</tr>
+<tr>
+<td><strong>Correlation</strong></td>
+<td>how strongly two numbers move together in a straight line (−1 to 1)</td>
+</tr>
+<tr>
+<td><strong>Cross-validation (k-fold)</strong></td>
+<td>split training data into k parts; train on k−1, score on 1; rotate; average</td>
+</tr>
+<tr>
+<td><strong>Data drift</strong></td>
+<td>new input data looks different from training data</td>
+</tr>
+<tr>
+<td><strong>Data leakage</strong></td>
+<td>the model sees information during training that it won't have when used for real</td>
+</tr>
+<tr>
+<td><strong>DataFrame</strong></td>
+<td>a pandas table</td>
+</tr>
+<tr>
+<td><strong>Decision boundary</strong></td>
+<td>where a classifier switches from one class to another</td>
+</tr>
+<tr>
+<td><strong>Decision tree</strong></td>
+<td>a model that predicts by asking a series of yes/no questions</td>
+</tr>
+<tr>
+<td><strong>Deep learning</strong></td>
+<td>machine learning with many-layer neural networks</td>
+</tr>
+<tr>
+<td><strong>Early stopping</strong></td>
+<td>stop training when validation error stops improving</td>
+</tr>
+<tr>
+<td><strong>Embedding</strong></td>
+<td>a list of numbers representing an item (e.g. text) so that similar items are close</td>
+</tr>
+<tr>
+<td><strong>Ensemble</strong></td>
+<td>a group of models whose predictions are combined</td>
+</tr>
+<tr>
+<td><strong>Entropy</strong></td>
+<td>an impurity measure from information theory</td>
+</tr>
+<tr>
+<td><strong>Epoch</strong></td>
+<td>one pass over all training data (gradient descent)</td>
+</tr>
+<tr>
+<td><strong>F1 score</strong></td>
+<td>balance (harmonic mean) of precision and recall</td>
+</tr>
+<tr>
+<td><strong>False negative (FN)</strong></td>
+<td>a real positive predicted as negative (missed)</td>
+</tr>
+<tr>
+<td><strong>False positive (FP)</strong></td>
+<td>a real negative predicted as positive (false alarm)</td>
+</tr>
+<tr>
+<td><strong>Feature</strong></td>
+<td>an input column used to predict</td>
+</tr>
+<tr>
+<td><strong>Feature engineering</strong></td>
+<td>creating new useful features from existing ones</td>
+</tr>
+<tr>
+<td><strong>Feature importance</strong></td>
+<td>how much a model relies on each feature</td>
+</tr>
+<tr>
+<td><strong>Fit</strong></td>
+<td>learn from data (<code>model.fit(X, y)</code>)</td>
+</tr>
+<tr>
+<td><strong>Gini impurity</strong></td>
+<td>chance two random items in a box belong to different classes</td>
+</tr>
+<tr>
+<td><strong>Gradient</strong></td>
+<td>the direction and steepness in which the error increases</td>
+</tr>
+<tr>
+<td><strong>Gradient descent</strong></td>
+<td>repeatedly step the parameters downhill on the error</td>
+</tr>
+<tr>
+<td><strong>GridSearchCV</strong></td>
+<td>try every listed combination of hyperparameters with cross-validation</td>
+</tr>
+<tr>
+<td><strong>Hyperparameter</strong></td>
+<td>a setting you choose before training (depth, alpha, learning rate)</td>
+</tr>
+<tr>
+<td><strong>Imputation</strong></td>
+<td>filling missing values</td>
+</tr>
+<tr>
+<td><strong>Inertia</strong></td>
+<td>total squared distance from points to their k-means centres</td>
+</tr>
+<tr>
+<td><strong>Inference</strong></td>
+<td>using a trained model to predict</td>
+</tr>
+<tr>
+<td><strong>Intercept</strong></td>
+<td>see bias (intercept)</td>
+</tr>
+<tr>
+<td><strong>k-means</strong></td>
+<td>clustering by repeatedly assigning points to the nearest centre and moving the centres</td>
+</tr>
+<tr>
+<td><strong>Label / target</strong></td>
+<td>the answer the model learns to predict</td>
+</tr>
+<tr>
+<td><strong>Lasso</strong></td>
+<td>regularisation that can shrink useless weights to zero (L1)</td>
+</tr>
+<tr>
+<td><strong>Learning rate</strong></td>
+<td>step size in gradient descent / boosting</td>
+</tr>
+<tr>
+<td><strong>Linear regression</strong></td>
+<td>predicts a number as a weighted sum of features</td>
+</tr>
+<tr>
+<td><strong>Log loss (cross-entropy)</strong></td>
+<td>classification loss that punishes confident wrong predictions</td>
+</tr>
+<tr>
+<td><strong>Logistic regression</strong></td>
+<td>linear score squeezed by the sigmoid into a probability</td>
+</tr>
+<tr>
+<td><strong>MAE / MSE / RMSE</strong></td>
+<td>average absolute / squared / root-squared error</td>
+</tr>
+<tr>
+<td><strong>Model</strong></td>
+<td>what you get after training: a function with learned parameters</td>
+</tr>
+<tr>
+<td><strong>Model card</strong></td>
+<td>short document describing a model's use, performance, limits and risks</td>
+</tr>
+<tr>
+<td><strong>One-hot encoding</strong></td>
+<td>one 0/1 column per category</td>
+</tr>
+<tr>
+<td><strong>Out-of-bag (OOB)</strong></td>
+<td>scoring each row with the trees that didn't see it: free validation in bagging</td>
+</tr>
+<tr>
+<td><strong>Overfitting</strong></td>
+<td>memorising training data; poor on new data</td>
+</tr>
+<tr>
+<td><strong>Parameter</strong></td>
+<td>a number learned during training (weights)</td>
+</tr>
+<tr>
+<td><strong>PCA</strong></td>
+<td>finds the directions of greatest spread to reduce dimensions</td>
+</tr>
+<tr>
+<td><strong>Permutation importance</strong></td>
+<td>score drop when one feature is shuffled</td>
+</tr>
+<tr>
+<td><strong>Pipeline</strong></td>
+<td>preprocessing steps + model chained into one object</td>
+</tr>
+<tr>
+<td><strong>Precision</strong></td>
+<td>of the predicted positives, the share that are right</td>
+</tr>
+<tr>
+<td><strong>PSI</strong></td>
+<td>population stability index: a drift measure</td>
+</tr>
+<tr>
+<td><strong>R²</strong></td>
+<td>share of variation explained; 0 = as good as the mean, 1 = perfect</td>
+</tr>
+<tr>
+<td><strong>Random forest</strong></td>
+<td>bagging of decision trees with random feature subsets</td>
+</tr>
+<tr>
+<td><strong>RandomizedSearchCV</strong></td>
+<td>try a random sample of hyperparameter combinations with cross-validation</td>
+</tr>
+<tr>
+<td><strong>Recall</strong></td>
+<td>of the real positives, the share we found</td>
+</tr>
+<tr>
+<td><strong>Regression</strong></td>
+<td>predicting a number</td>
+</tr>
+<tr>
+<td><strong>Regularisation</strong></td>
+<td>penalising complexity to reduce overfitting</td>
+</tr>
+<tr>
+<td><strong>Reinforcement learning</strong></td>
+<td>learning by trial, error and rewards</td>
+</tr>
+<tr>
+<td><strong>Residual</strong></td>
+<td>actual minus predicted</td>
+</tr>
+<tr>
+<td><strong>Ridge</strong></td>
+<td>regularisation that shrinks all weights (L2)</td>
+</tr>
+<tr>
+<td><strong>Scaling</strong></td>
+<td>putting numeric features on a similar scale (e.g. StandardScaler)</td>
+</tr>
+<tr>
+<td><strong>Schema</strong></td>
+<td>the expected columns, types and value ranges of input data</td>
+</tr>
+<tr>
+<td><strong>Self-supervised learning</strong></td>
+<td>the data provides its own labels (e.g. predict the next word)</td>
+</tr>
+<tr>
+<td><strong>Sigmoid</strong></td>
+<td>S-shaped function turning any number into 0–1</td>
+</tr>
+<tr>
+<td><strong>Silhouette score</strong></td>
+<td>how well separated clusters are (−1 to 1)</td>
+</tr>
+<tr>
+<td><strong>Softmax</strong></td>
+<td>turns several scores into probabilities that add up to 1</td>
+</tr>
+<tr>
+<td><strong>Stratified split</strong></td>
+<td>split that keeps class proportions equal</td>
+</tr>
+<tr>
+<td><strong>Supervised learning</strong></td>
+<td>learning from examples with answers</td>
+</tr>
+<tr>
+<td><strong>Test set</strong></td>
+<td>data held back and used once for the final honest score</td>
+</tr>
+<tr>
+<td><strong>Threshold</strong></td>
+<td>probability above which a classifier says "positive"</td>
+</tr>
+<tr>
+<td><strong>Training set</strong></td>
+<td>data the model learns from</td>
+</tr>
+<tr>
+<td><strong>Transformer (scikit-learn)</strong></td>
+<td>an object with <code>fit</code> and <code>transform</code> (scaler, encoder, imputer)</td>
+</tr>
+<tr>
+<td><strong>Underfitting</strong></td>
+<td>model too simple to capture the pattern</td>
+</tr>
+<tr>
+<td><strong>Unsupervised learning</strong></td>
+<td>finding structure without answers</td>
+</tr>
+<tr>
+<td><strong>Validation set</strong></td>
+<td>data used to choose models and settings</td>
+</tr>
+<tr>
+<td><strong>Weight</strong></td>
+<td>a learned multiplier for a feature</td>
+</tr>
+</tbody>
+</table>
+<h2>Frequently asked questions</h2>
+<details><summary>Do I need a GPU for this bootcamp?</summary>No. Every practical runs in seconds to a few minutes on a normal laptop or free Colab.</details>
+<details><summary>Which model should I learn first?</summary>Linear and logistic regression: they teach loss functions, gradient descent and evaluation that every other model uses.</details>
+<details><summary>Why do my numbers differ slightly from the handbook?</summary>Different library versions or random seeds. Small differences (third decimal) are normal; big ones mean a step differs.</details>
+<details><summary>How do I know if my model is good enough?</summary>Compare with the baseline and with a simple model, using cross-validation, and translate the result into the business decision (money, risk, workload).</details>
+<details><summary>What should I learn after this bootcamp?</summary>Gradient boosting libraries (XGBoost, LightGBM), SHAP for explanations, then neural networks (PyTorch), and from there transformers and LLMs.</details>
+
+<div class="pager"><a href="part10_project.html">← Part 10 · The project</a><span></span></div></main></body></html>
