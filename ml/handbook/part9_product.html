@@ -1,0 +1,872 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Part 9 · From notebook to product · ML Bootcamp Handbook</title><style>
+:root{--bg:#141414;--card:#1e1f22;--fg:#e6e6e6;--dim:#a0a0a0;--g:#4CAF50;--a:#ffc107;--b:#4fc3f7;--r:#ff6b6b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:18px/1.7 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+main{max-width:920px;margin:0 auto;padding:40px 22px 80px}
+h1{font-size:2.1em;line-height:1.2;margin:.2em 0}h2{font-size:1.5em;margin-top:2.2em;padding-top:.6em;border-top:1px solid #333;color:#fff}
+h3{color:var(--b);margin-top:1.6em}a{color:var(--b)}
+.kicker{color:var(--dim);letter-spacing:.12em;text-transform:uppercase;font-size:.8em}
+code{background:#26272b;padding:.1em .35em;border-radius:5px;font-size:.92em}
+pre{background:#1b1c1f;border:1px solid #2c2d31;border-radius:10px;padding:16px;overflow-x:auto;line-height:1.5}pre code{background:none;padding:0}
+table{border-collapse:collapse;width:100%;margin:1em 0;font-size:.93em}th,td{border-bottom:1px solid #333;padding:8px 10px;text-align:left;vertical-align:top}th{color:var(--dim);font-weight:600}
+blockquote{margin:1.2em 0;padding:12px 18px;background:#2a2410;border-left:5px solid var(--a);border-radius:0 8px 8px 0}
+blockquote p{margin:.3em 0}
+.chart{background:#141414;border-radius:10px;padding:8px;margin:1em 0}.chart img{width:100%}
+details{background:var(--card);border-radius:8px;padding:10px 16px;margin:10px 0}summary{cursor:pointer;font-weight:600}
+.toc{background:var(--card);border-radius:10px;padding:14px 22px}.toc ol{margin:.3em 0}
+nav.top{display:flex;gap:16px;flex-wrap:wrap;font-size:.9em;margin-bottom:10px}
+.kid{background:#14263a;border-left:5px solid #4fc3f7;border-radius:0 10px 10px 0;padding:12px 18px;margin:1.2em 0}
+.kid:before{content:"Like I'm 10";display:block;font-size:.75em;letter-spacing:.1em;text-transform:uppercase;color:#4fc3f7;font-weight:700}
+.deep{background:#17271a;border-left:5px solid #4CAF50;border-radius:0 10px 10px 0;padding:12px 18px;margin:1.2em 0}
+.deep:before{content:"Going deeper";display:block;font-size:.75em;letter-spacing:.1em;text-transform:uppercase;color:#4CAF50;font-weight:700}
+.warn{background:#2e1717;border-left:5px solid #ff6b6b;border-radius:0 10px 10px 0;padding:12px 18px;margin:1.2em 0}
+.warn:before{content:"Common mistake";display:block;font-size:.75em;letter-spacing:.1em;text-transform:uppercase;color:#ff6b6b;font-weight:700}
+.try{background:#2a2410;border-left:5px solid #ffc107;border-radius:0 10px 10px 0;padding:12px 18px;margin:1.2em 0}
+.try:before{content:"Try it / think";display:block;font-size:.75em;letter-spacing:.1em;text-transform:uppercase;color:#ffc107;font-weight:700}
+.kid p,.deep p,.warn p,.try p{margin:.4em 0}
+.nbimg{background:#fff;border-radius:8px;padding:6px;margin:.6em 0 1.2em}.nbimg img{width:100%}
+.nbout{overflow-x:auto;margin:.4em 0 1.2em;font-size:.85em}.nbout table{width:auto}
+pre.nbtext{background:#101112;border-left:3px solid #555;font-size:.85em;color:#cfcfcf}
+.pager{display:flex;justify-content:space-between;margin-top:3em;padding-top:1em;border-top:1px solid #333}
+@media print{body{font-size:12pt}nav.top,.noprint{display:none}h2{page-break-after:avoid}}
+</style></head><body><main><nav class="top"><a href="index.html">Handbook home</a> · <a href="glossary.html">Glossary</a></nav>
+
+<p class="kicker">Part 9 · Session 4 (Day 2)</p>
+
+<h1>From notebook to product: reproducibility, responsible use and inference</h1>
+<p>A model in a notebook helps nobody. This part covers what it takes to let <strong>other people</strong> use a model <strong>safely</strong>: saving it, predicting on new data, checking inputs, watching for drift, checking fairness, protecting privacy, explaining it honestly, and documenting it in a <strong>model card</strong>. <strong>Part B</strong> is Practical 6, which does all of it, ending with a Streamlit app. <a href="https://colab.research.google.com/github/MusaBangash/Python-Variables/blob/main/ml/handbook/practical6_product.ipynb">Open Practical 6 in Colab</a>.</p>
+<h1>Part A · The concepts</h1>
+<h2>9.1 Reproducibility: can someone get the same result again?</h2>
+<div class="kid">
+<p>A good recipe lists exact ingredients, amounts and oven temperature, so anyone can bake the same cake. "Some flour, bake until done" can't be repeated. An ML experiment needs the same: exact data, code, settings and random seeds.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Practice</th>
+<th>How</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Fix random seeds</strong></td>
+<td><code>random_state=42</code> in splits, models, CV folds</td>
+</tr>
+<tr>
+<td><strong>Record each experiment</strong></td>
+<td>date, data version, features, model, settings, CV and test scores (a CSV or a tool like MLflow)</td>
+</tr>
+<tr>
+<td><strong>Version the code</strong></td>
+<td>Git: every result points to a commit</td>
+</tr>
+<tr>
+<td><strong>Record library versions</strong></td>
+<td><code>requirements.txt</code>; a model saved with one scikit-learn version may not load in another</td>
+</tr>
+<tr>
+<td><strong>Keep the data version</strong></td>
+<td>the exact file (or a date / hash) used for training</td>
+</tr>
+<tr>
+<td><strong>One pipeline</strong></td>
+<td>the same preprocessing for training and prediction</td>
+</tr>
+</tbody>
+</table>
+<h2>9.2 Saving and loading model artifacts</h2>
+<pre><code class="language-python">import joblib
+joblib.dump(pipeline, 'model.joblib')     # save the WHOLE pipeline, not just the model step
+pipeline = joblib.load('model.joblib')    # in another program, another day
+</code></pre>
+<p>Save <strong>next to the model</strong>: the input <strong>schema</strong> (columns, types, allowed values), the <strong>threshold</strong>, and a <strong>record</strong> of how it was made (Practical 6 saves <code>schema.json</code> and <code>model_info.json</code>).</p>
+<div class="warn">
+<p><strong>Never load a <code>.joblib</code> / pickle file from someone you don't trust</strong>: loading can run hidden code. And load with the same library versions that saved it.</p>
+</div>
+<h2>9.3 Inference: using the model</h2>
+<p><strong>Inference</strong> = making predictions with a trained model.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>How</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Batch</strong></td>
+<td>run on a whole file on a schedule</td>
+<td>Monday morning call list of risky customers</td>
+</tr>
+<tr>
+<td><strong>Real-time (online)</strong></td>
+<td>one request at a time, answer in milliseconds, usually through an API</td>
+<td>loan check while the customer waits</td>
+</tr>
+<tr>
+<td><strong>Interactive app</strong></td>
+<td>a person fills a form</td>
+<td>Streamlit page for the sales team</td>
+</tr>
+</tbody>
+</table>
+<h2>9.4 Input schema and validation</h2>
+<p>Models never complain: they will happily predict for tenure = −5, a column with a typo, or a contract type that doesn't exist. <strong>Validate before predicting:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>If it fails</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>all expected columns present</td>
+<td><strong>reject</strong> (error)</td>
+</tr>
+<tr>
+<td>numbers are numbers</td>
+<td><strong>reject</strong></td>
+</tr>
+<tr>
+<td>values inside the training range</td>
+<td>predict, but <strong>warn</strong> (the model is guessing outside its experience)</td>
+</tr>
+<tr>
+<td>categories seen in training</td>
+<td>predict (one-hot "ignore"), but <strong>warn</strong></td>
+</tr>
+<tr>
+<td>missing values</td>
+<td>impute, but <strong>log</strong> how often</td>
+</tr>
+</tbody>
+</table>
+<h2>9.5 Drift: models age</h2>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>What changes</th>
+<th>Example</th>
+<th>How to detect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Data drift</strong></td>
+<td>the inputs</td>
+<td>many more new customers after a marketing campaign</td>
+<td>compare input or score distributions (PSI) with training</td>
+</tr>
+<tr>
+<td><strong>Concept drift</strong></td>
+<td>the relationship between inputs and the answer</td>
+<td>a competitor's offer makes long-time customers leave too</td>
+<td>performance drops when real outcomes arrive</td>
+</tr>
+<tr>
+<td><strong>Performance drift</strong></td>
+<td>the measured quality</td>
+<td>recall falls from 0.81 to 0.65</td>
+<td>track metrics on new labelled data</td>
+</tr>
+</tbody>
+</table>
+<p><strong>PSI (population stability index):</strong> &lt; 0.1 stable · 0.1–0.25 watch · &gt; 0.25 investigate. When alarms ring: investigate, collect fresh labelled data, retrain with the <strong>same</strong> pipeline, re-test, update the model card.</p>
+<h2>9.6 Bias, fairness and representativeness</h2>
+<p>A model learns the patterns in its data, <strong>including unfair ones</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Source of bias</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Unrepresentative data</strong></td>
+<td>a face-recognition model trained mostly on light-skinned faces works worse on darker skin</td>
+</tr>
+<tr>
+<td><strong>Historical bias</strong></td>
+<td>a hiring model trained on past hires copies past discrimination</td>
+</tr>
+<tr>
+<td><strong>Proxy features</strong></td>
+<td>removing "gender" doesn't help if "first name" or "job title" still encodes it</td>
+</tr>
+<tr>
+<td><strong>Label bias</strong></td>
+<td>"who was arrested" is not the same as "who committed a crime"</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What to do:</strong>
+1. <strong>Measure per group:</strong> compute the same metric (recall, precision, error) for each group of a sensitive attribute (sex, age group, region…). Practical 6 does this.
+2. <strong>Explain gaps</strong> in the model card; decide with the business whether they are acceptable.
+3. Consider removing sensitive features <strong>if</strong> they add nothing, but remember proxies.
+4. Keep a <strong>human in the loop</strong> for high-stakes decisions.</p>
+<div class="warn">
+<p>Equal accuracy is not the only kind of fairness, and different fairness definitions can't all be satisfied at once. Write down which one matters for your use case and why.</p>
+</div>
+<h2>9.7 Privacy and sensitive data</h2>
+<table>
+<thead>
+<tr>
+<th>Principle</th>
+<th>In practice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Collect the minimum</strong></td>
+<td>don't keep names or phone numbers in training data if the model doesn't need them</td>
+</tr>
+<tr>
+<td><strong>Remove direct identifiers</strong></td>
+<td>drop IDs, names, emails; keep a separate protected lookup if needed</td>
+</tr>
+<tr>
+<td><strong>Protect access</strong></td>
+<td>who can read the data and the model's outputs?</td>
+</tr>
+<tr>
+<td><strong>Purpose limitation</strong></td>
+<td>data collected for billing shouldn't silently be reused for something else</td>
+</tr>
+<tr>
+<td><strong>Retention</strong></td>
+<td>delete data you no longer need</td>
+</tr>
+<tr>
+<td><strong>Legal duties</strong></td>
+<td>many countries have data-protection laws (e.g. GDPR in Europe); follow your organisation's rules</td>
+</tr>
+<tr>
+<td><strong>Special care</strong></td>
+<td>health, finances, religion, ethnicity, children: extra protection, often extra legal rules</td>
+</tr>
+</tbody>
+</table>
+<h2>9.8 Explainability and the limits of feature importance</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Explains</th>
+<th>Limits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Coefficients</strong> (linear/logistic)</td>
+<td>direction and size of each feature's effect</td>
+<td>only for linear models; correlated features share credit unpredictably</td>
+</tr>
+<tr>
+<td><strong>Impurity importance</strong> (trees)</td>
+<td>which features the trees used</td>
+<td>biased towards many-valued features (a random column was ranked #2)</td>
+</tr>
+<tr>
+<td><strong>Permutation importance</strong></td>
+<td>how much the score drops if a feature is scrambled</td>
+<td>correlated features hide each other</td>
+</tr>
+<tr>
+<td><strong>SHAP values</strong></td>
+<td>each feature's contribution to <strong>one</strong> prediction</td>
+<td>slower; still associations, not causes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>None of these prove causes.</strong> "Fiber customers leave more" might mean fiber is overpriced, or fiber areas have more competitors. To prove a cause you need an experiment (e.g. give a discount to a random half).</p>
+<h2>9.9 Model cards</h2>
+<p>A <strong>model card</strong> is a short document that travels with the model:</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>Answers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Intended use</strong></td>
+<td>what it's for, who uses it, and what it must <strong>not</strong> be used for</td>
+</tr>
+<tr>
+<td><strong>Data</strong></td>
+<td>where the data came from, how it was cleaned, what period it covers</td>
+</tr>
+<tr>
+<td><strong>Model</strong></td>
+<td>type, key settings, threshold and why</td>
+</tr>
+<tr>
+<td><strong>Evaluation</strong></td>
+<td>metrics on the test set, compared with the baseline</td>
+</tr>
+<tr>
+<td><strong>Fairness</strong></td>
+<td>metrics per group and any gaps</td>
+</tr>
+<tr>
+<td><strong>Limitations</strong></td>
+<td>where it fails or hasn't been tested</td>
+</tr>
+<tr>
+<td><strong>Risks &amp; responsible use</strong></td>
+<td>privacy, misuse, monitoring plan</td>
+</tr>
+<tr>
+<td><strong>Reproducibility</strong></td>
+<td>seed, versions, date, code commit</td>
+</tr>
+</tbody>
+</table>
+<p>Practical 6 writes one automatically from the real numbers.</p>
+<h2>9.10 When a model is NOT the right solution</h2>
+<ul>
+<li>A <strong>simple rule</strong> is nearly as good (Session 1: one rule caught 88% of leavers).</li>
+<li>There are <strong>no reliable labels</strong>, or the past won't repeat.</li>
+<li>Decisions are <strong>high-stakes</strong> and must be fully explained to each person, and no human checks them.</li>
+<li><strong>False positives harm people</strong> (e.g. wrongly accusing someone of fraud) and you can't afford them.</li>
+<li>The cost of building, monitoring and maintaining is bigger than the benefit.</li>
+</ul>
+<p>Then: use a rule, keep a human in the loop, collect better data first, or don't build it.</p>
+<h2>9.11 Streamlit in five lines</h2>
+<pre><code class="language-python">import streamlit as st
+st.title('My model')
+x = st.number_input('tenure')            # input widgets
+if st.button('Predict'):
+    st.metric('Probability', '42%')       # output widgets
+</code></pre>
+<p>Run with <code>streamlit run app.py</code>; a browser page opens. Every time the user changes an input, Streamlit re-runs the script from top to bottom. Practical 6 builds a full app with a form for every feature, validation, and the model card. <strong>FastAPI</strong> (optional) does the same job for other <em>programs</em> instead of people: it serves predictions over an API.</p>
+<h2>Check yourself</h2>
+<details><summary>1. Why save the whole pipeline instead of just the model?</summary>So that new raw rows are imputed, encoded and scaled exactly as in training, with no manual steps and no mismatch.</details>
+<details><summary>2. Data drift vs concept drift?</summary>Data drift: the inputs change. Concept drift: the relationship between inputs and the answer changes.</details>
+<details><summary>3. You remove "gender" from the features. Is the model now guaranteed to be fair?</summary>No. Other features can act as proxies; you must measure performance per group.</details>
+<details><summary>4. A new row has Contract = "Three year". What should happen?</summary>Warn and log it (unseen category); the pipeline can still predict thanks to handle_unknown='ignore', but someone should check.</details>
+<details><summary>5. Name four sections of a model card.</summary>Intended use, data, evaluation, limitations (also: model, fairness, risks, reproducibility).</details>
+
+<hr />
+<h1>Part B · Practical 6: from notebook to product</h1>
+<p><a href="https://colab.research.google.com/github/MusaBangash/Python-Variables/blob/main/ml/handbook/practical6_product.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab"></a> The real notebook with real outputs.</p>
+
+<h5>Practical 6 · From notebook to product (churn)</h5>
+<p><strong>Goal:</strong> turn a trained model into something other people can use safely:</p>
+<ol>
+<li>save the <strong>whole pipeline</strong> + a record of how it was made</li>
+<li>load it in a <strong>fresh session</strong> and predict on <strong>new rows</strong> (batch inference)</li>
+<li><strong>check inputs</strong> before predicting</li>
+<li>check <strong>fairness</strong> across groups</li>
+<li>detect <strong>drift</strong></li>
+<li>write a <strong>model card</strong></li>
+<li>put it behind a <strong>Streamlit app</strong></li>
+</ol>
+<h4>Train the model we will ship (same steps as Practical 2)</h4>
+<pre><code class="language-python">import os
+from urllib.request import urlretrieve
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import warnings; warnings.filterwarnings('ignore')
+sns.set_style('whitegrid'); plt.rcParams['figure.figsize'] = (8, 4.5)
+
+# Step 1 - load
+url = 'https://raw.githubusercontent.com/MusaBangash/Python-Variables/main/ml/data/telco-churn.csv'
+if not os.path.exists('telco-churn.csv'):
+    urlretrieve(url, 'telco-churn.csv')
+df = pd.read_csv('telco-churn.csv')
+
+# Step 4 - clean: blank TotalCharges belong to brand-new customers (tenure 0) -&gt; they have paid 0
+df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], errors='coerce').fillna(0)
+
+# Step 3 - target and features (drop the ID column)
+df['Churn'] = (df['Churn'] == 'Yes').astype(int)
+X = df.drop(columns=['customerID', 'Churn'])
+y = df['Churn']
+
+# Step 6 - stratified split (same split as Practical 2)
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
+
+# Step 7 - feature types
+numeric_cols = ['tenure', 'MonthlyCharges', 'TotalCharges', 'SeniorCitizen']
+categorical_cols = [c for c in X.columns if c not in numeric_cols]
+print('Train', X_train.shape, '| Test', X_test.shape, '| churn rate', round(y_train.mean(), 3))
+</code></pre>
+<pre class="nbtext">Train (5634, 19) | Test (1409, 19) | churn rate 0.265</pre>
+
+<pre><code class="language-python">from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import roc_auc_score, recall_score, precision_score
+
+RANDOM_STATE = 42                     # one seed, written down, used everywhere
+preprocess = ColumnTransformer([
+    ('num', Pipeline([('impute', SimpleImputer(strategy='median')), ('scale', StandardScaler())]), numeric_cols),
+    ('cat', Pipeline([('impute', SimpleImputer(strategy='most_frequent')), ('onehot', OneHotEncoder(handle_unknown='ignore'))]), categorical_cols),
+])
+model = Pipeline([('preprocess', preprocess), ('model', LogisticRegression(max_iter=2000))]).fit(X_train, y_train)
+THRESHOLD = 0.25                      # chosen from business costs in Practical 2
+test_proba = model.predict_proba(X_test)[:, 1]
+print('Test ROC AUC:', round(roc_auc_score(y_test, test_proba), 3))
+</code></pre>
+<pre class="nbtext">Test ROC AUC: 0.842</pre>
+
+<h4>1 · Save the model and an experiment record</h4>
+<p>We save three things:</p>
+<ul>
+<li><strong><code>churn_model.joblib</code></strong>: the whole pipeline (preprocessing + model)</li>
+<li><strong><code>schema.json</code></strong>: which columns the model expects, their types and allowed values/ranges</li>
+<li><strong><code>model_info.json</code></strong>: how it was made (data, seed, threshold, scores, library version), so anyone can reproduce or audit it</li>
+</ul>
+<pre><code class="language-python">import joblib, json, sklearn, datetime
+
+joblib.dump(model, 'churn_model.joblib')
+
+schema = {}
+for c in numeric_cols:
+    schema[c] = {'type': 'numeric', 'min': float(X_train[c].min()), 'max': float(X_train[c].max())}
+for c in categorical_cols:
+    schema[c] = {'type': 'categorical', 'values': sorted(X_train[c].astype(str).unique().tolist())}
+json.dump(schema, open('schema.json', 'w'), indent=2)
+
+info = {'model': 'LogisticRegression in a preprocessing pipeline', 'target': 'Churn (1 = leaves)',
+        'training_rows': len(X_train), 'test_rows': len(X_test), 'random_state': RANDOM_STATE,
+        'threshold': THRESHOLD, 'test_roc_auc': round(roc_auc_score(y_test, test_proba), 4),
+        'test_recall_at_threshold': round(recall_score(y_test, test_proba &gt;= THRESHOLD), 4),
+        'test_precision_at_threshold': round(precision_score(y_test, test_proba &gt;= THRESHOLD), 4),
+        'sklearn_version': sklearn.__version__, 'created': datetime.date.today().isoformat()}
+json.dump(info, open('model_info.json', 'w'), indent=2)
+print(json.dumps(info, indent=2))
+</code></pre>
+<pre class="nbtext">{
+  &quot;model&quot;: &quot;LogisticRegression in a preprocessing pipeline&quot;,
+  &quot;target&quot;: &quot;Churn (1 = leaves)&quot;,
+  &quot;training_rows&quot;: 5634,
+  &quot;test_rows&quot;: 1409,
+  &quot;random_state&quot;: 42,
+  &quot;threshold&quot;: 0.25,
+  &quot;test_roc_auc&quot;: 0.8421,
+  &quot;test_recall_at_threshold&quot;: 0.8102,
+  &quot;test_precision_at_threshold&quot;: 0.4975,
+  &quot;sklearn_version&quot;: &quot;1.9.1&quot;,
+  &quot;created&quot;: &quot;2026-11-13&quot;
+}</pre>
+
+<h4>2 · A fresh session: load and predict on new rows (batch inference)</h4>
+<p>In real life, prediction runs in another program, often days later. Below we <strong>delete</strong> everything from memory and start again with only the saved files. (In Colab you could also use <em>Runtime → Restart session</em> and run only this part.)</p>
+<pre><code class="language-python">del model, preprocess          # forget the trained objects
+import joblib, json
+import pandas as pd
+
+model = joblib.load('churn_model.joblib')
+schema = json.load(open('schema.json'))
+info = json.load(open('model_info.json'))
+
+new_customers = X_test.head(8).copy()                 # pretend this is tomorrow's file
+new_customers.to_csv('new_customers.csv', index=False)
+
+batch = pd.read_csv('new_customers.csv')
+batch['churn_probability'] = model.predict_proba(batch)[:, 1].round(3)
+batch['call'] = batch['churn_probability'] &gt;= info['threshold']
+batch[['tenure', 'Contract', 'MonthlyCharges', 'churn_probability', 'call']]
+</code></pre>
+<div class="nbout"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tenure</th>
+      <th>Contract</th>
+      <th>MonthlyCharges</th>
+      <th>churn_probability</th>
+      <th>call</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>72</td>
+      <td>Two year</td>
+      <td>114.05</td>
+      <td>0.046</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>8</td>
+      <td>Month-to-month</td>
+      <td>100.15</td>
+      <td>0.684</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>41</td>
+      <td>One year</td>
+      <td>78.35</td>
+      <td>0.059</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>18</td>
+      <td>Month-to-month</td>
+      <td>78.20</td>
+      <td>0.402</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>72</td>
+      <td>Two year</td>
+      <td>82.65</td>
+      <td>0.021</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>21</td>
+      <td>Month-to-month</td>
+      <td>99.85</td>
+      <td>0.603</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>21</td>
+      <td>Month-to-month</td>
+      <td>99.15</td>
+      <td>0.448</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>19</td>
+      <td>Month-to-month</td>
+      <td>24.10</td>
+      <td>0.130</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+
+<p>The loaded pipeline does all preprocessing itself: we pass raw rows, exactly like the training file.</p>
+<h4>3 · Check inputs before predicting (input schema validation)</h4>
+<p>Models don't complain about nonsense; they happily predict for a customer with tenure −5 or contract "banana". We must check first:</p>
+<ul>
+<li><strong>errors</strong> (don't predict): missing columns, text in a number column</li>
+<li><strong>warnings</strong> (predict, but a human should look): values outside the training range, unseen categories, missing values</li>
+</ul>
+<pre><code class="language-python">def validate(df, schema):
+    errors, warnings = [], []
+    for col, spec in schema.items():
+        if col not in df.columns:
+            errors.append(f'missing column: {col}'); continue
+        if spec['type'] == 'numeric':
+            values = pd.to_numeric(df[col], errors='coerce')
+            if (values.isna() &amp; df[col].notna()).any():
+                errors.append(f'{col}: contains non-numbers')
+            outside = (values &lt; spec['min']) | (values &gt; spec['max'])
+            if outside.any():
+                warnings.append(f&quot;{col}: {int(outside.sum())} value(s) outside training range {spec['min']}–{spec['max']}&quot;)
+        else:
+            unseen = set(df[col].dropna().astype(str)) - set(spec['values'])
+            if unseen:
+                warnings.append(f'{col}: unseen categories {sorted(unseen)}')
+    return errors, warnings
+
+bad = batch.drop(columns=['churn_probability', 'call']).head(3).copy()
+bad.loc[bad.index[0], 'tenure'] = -5
+bad.loc[bad.index[1], 'Contract'] = 'Three year'
+bad = bad.drop(columns=['PaymentMethod'])
+errors, warnings = validate(bad, schema)
+print('ERRORS  :', errors)
+print('WARNINGS:', warnings)
+</code></pre>
+<pre class="nbtext">ERRORS  : [&#x27;missing column: PaymentMethod&#x27;]
+WARNINGS: [&#x27;tenure: 1 value(s) outside training range 0.0–72.0&#x27;, &quot;Contract: unseen categories [&#x27;Three year&#x27;]&quot;]</pre>
+
+<p>Because of the <strong>error</strong> (a missing column), this file must be rejected, not predicted. The <strong>warnings</strong> would be logged for a person to review. In production this check runs before every prediction.</p>
+<h4>4 · Fairness: does the model work equally well for different groups?</h4>
+<p>The same metric, per group. Big gaps need an explanation in the model card. We check <code>gender</code> and <code>SeniorCitizen</code> on the test set.</p>
+<pre><code class="language-python">test = X_test.assign(actual=y_test.values, flagged=(test_proba &gt;= THRESHOLD).astype(int))
+rows = []
+for col in ['gender', 'SeniorCitizen']:
+    for value, g in test.groupby(col):
+        rows.append({'column': col, 'group': value, 'customers': len(g), 'actual churn rate': g['actual'].mean(),
+                     'flagged rate': g['flagged'].mean(), 'recall': recall_score(g['actual'], g['flagged']),
+                     'precision': precision_score(g['actual'], g['flagged'])})
+fairness = pd.DataFrame(rows).round(3)
+fairness
+</code></pre>
+<div class="nbout"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>column</th>
+      <th>group</th>
+      <th>customers</th>
+      <th>actual churn rate</th>
+      <th>flagged rate</th>
+      <th>recall</th>
+      <th>precision</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>gender</td>
+      <td>Female</td>
+      <td>687</td>
+      <td>0.281</td>
+      <td>0.431</td>
+      <td>0.793</td>
+      <td>0.517</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>gender</td>
+      <td>Male</td>
+      <td>722</td>
+      <td>0.251</td>
+      <td>0.434</td>
+      <td>0.829</td>
+      <td>0.479</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>SeniorCitizen</td>
+      <td>0</td>
+      <td>1187</td>
+      <td>0.233</td>
+      <td>0.382</td>
+      <td>0.764</td>
+      <td>0.465</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>SeniorCitizen</td>
+      <td>1</td>
+      <td>222</td>
+      <td>0.441</td>
+      <td>0.698</td>
+      <td>0.939</td>
+      <td>0.594</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+
+<p><strong>Reading it:</strong></p>
+<ul>
+<li><strong>Gender:</strong> men and women get similar recall (0.83 vs 0.79) and precision. No big gap.</li>
+<li><strong>Senior citizens:</strong> flagged far more often (70% vs 38%), but they also <strong>actually</strong> leave far more often (44% vs 23%). The model catches <strong>94%</strong> of senior leavers but only <strong>76%</strong> of non-senior leavers: non-senior leavers are missed more often.</li>
+</ul>
+<p>This is not automatically "unfair", but it is a real <strong>difference in quality between groups</strong>, and it must be written in the model card. The business should decide: is it acceptable that seniors get far more retention calls (the offer must be helpful, not pushy), and do we need a lower threshold for non-seniors to catch more of them?</p>
+<p><strong>Should we just delete <code>gender</code> from the features?</strong> Removing a sensitive column doesn't guarantee fairness (other columns can act as proxies), but if it adds nothing to accuracy, removing it is a sensible, simple choice. <em>(Exercise 1.)</em></p>
+<h4>5 · Drift: is new data like the training data?</h4>
+<p>Models quietly get worse when the world changes. A standard check is the <strong>Population Stability Index (PSI)</strong> on the model's scores: below 0.1 stable, 0.1–0.25 watch, above 0.25 investigate.</p>
+<pre><code class="language-python">def psi(expected, actual, bins=10):
+    edges = np.quantile(expected, np.linspace(0, 1, bins + 1)); edges[0], edges[-1] = -np.inf, np.inf
+    e = np.histogram(expected, edges)[0] / len(expected) + 1e-6
+    a = np.histogram(actual, edges)[0] / len(actual) + 1e-6
+    return float(np.sum((a - e) * np.log(a / e)))
+
+train_scores = model.predict_proba(X_train)[:, 1]
+print(f'PSI, this month (test set) vs training: {psi(train_scores, test_proba):.3f}')
+
+future = X_test.copy()                                # simulate: a marketing push brings many brand-new customers
+idx = future.sample(frac=0.5, random_state=1).index
+future.loc[idx, 'tenure'] = 1
+future.loc[idx, 'TotalCharges'] = future.loc[idx, 'MonthlyCharges']
+future.loc[idx, 'Contract'] = 'Month-to-month'
+print(f'PSI after a wave of new customers:      {psi(train_scores, model.predict_proba(future)[:, 1]):.3f}')
+</code></pre>
+<pre class="nbtext">PSI, this month (test set) vs training: 0.014
+PSI after a wave of new customers:      0.228</pre>
+
+<p>This month is stable (PSI ≈ 0.01). The simulated wave of new customers raises PSI to about <strong>0.23</strong>: the "watch" zone, close to the 0.25 alarm. A team would start investigating now.</p>
+<ul>
+<li><strong>Data drift:</strong> the inputs change (above).</li>
+<li><strong>Performance drift:</strong> when real outcomes arrive weeks later, compare actual recall/precision with the model card's numbers.
+When either alarm rings: investigate, collect fresh labelled data, retrain with the same pipeline, test, and update the model card.</li>
+</ul>
+<h4>6 · The model card</h4>
+<p>A <strong>model card</strong> is a one-page description that travels with the model: what it's for, how good it is, where it fails, and its risks. We fill it from the numbers above.</p>
+<pre><code class="language-python">fair = fairness.set_index(['column', 'group'])
+card = f'''# Model card: customer churn risk
+
+## Intended use
+Rank current customers by probability of cancelling next month, so the retention team can call the riskiest first.
+**Not for:** pricing, credit or any decision that removes a service from a customer.
+
+## Data
+IBM Telco customer sample: {info['training_rows']} training / {info['test_rows']} test customers, 19 account features.
+Blank TotalCharges (11 brand-new customers) filled with 0. Customer ID removed.
+
+## Model
+{info['model']}. Threshold {info['threshold']} chosen from business costs (call $100, 30% of called leavers stay, customer worth $1,500).
+
+## Performance (test set, opened once)
+ROC AUC {info['test_roc_auc']} · at the threshold: recall {info['test_recall_at_threshold']}, precision {info['test_precision_at_threshold']}.
+
+## Fairness check (test set)
+Recall women {fair.loc[('gender','Female'),'recall']:.2f} vs men {fair.loc[('gender','Male'),'recall']:.2f}.
+Seniors flagged {fair.loc[('SeniorCitizen',1),'flagged rate']:.0%} vs non-seniors {fair.loc[('SeniorCitizen',0),'flagged rate']:.0%};
+their actual churn rate is also higher ({fair.loc[('SeniorCitizen',1),'actual churn rate']:.0%} vs {fair.loc[('SeniorCitizen',0),'actual churn rate']:.0%}).
+
+## Limitations
+- One snapshot of one company; patterns may not transfer to other markets or later years.
+- Associations, not causes: &quot;fiber customers leave more&quot; does not say why.
+- About half of flagged customers will not actually leave (precision ~0.5): the offer must be harmless to them.
+
+## Risks and responsible use
+- Personal data: store only what is needed; restrict access; delete when no longer needed.
+- Monitor PSI on scores weekly; investigate above 0.25. Retrain when real outcomes show recall dropping.
+
+## Reproducibility
+random_state {info['random_state']}, scikit-learn {info['sklearn_version']}, created {info['created']}.
+'''
+open('MODEL_CARD.md', 'w').write(card)
+print(card)
+</code></pre>
+<pre class="nbtext"># Model card: customer churn risk
+
+## Intended use
+Rank current customers by probability of cancelling next month, so the retention team can call the riskiest first.
+**Not for:** pricing, credit or any decision that removes a service from a customer.
+
+## Data
+IBM Telco customer sample: 5634 training / 1409 test customers, 19 account features.
+Blank TotalCharges (11 brand-new customers) filled with 0. Customer ID removed.
+
+## Model
+LogisticRegression in a preprocessing pipeline. Threshold 0.25 chosen from business costs (call $100, 30% of called leavers stay, customer worth $1,500).
+
+## Performance (test set, opened once)
+ROC AUC 0.8421 · at the threshold: recall 0.8102, precision 0.4975.
+
+## Fairness check (test set)
+Recall women 0.79 vs men 0.83.
+Seniors flagged 70% vs non-seniors 38%;
+their actual churn rate is also higher (44% vs 23%).
+
+## Limitations
+- One snapshot of one company; patterns may not transfer to other markets or later years.
+- Associations, not causes: &quot;fiber customers leave more&quot; does not say why.
+- About half of flagged customers will not actually leave (precision ~0.5): the offer must be harmless to them.
+
+## Risks and responsible use
+- Personal data: store only what is needed; restrict access; delete when no longer needed.
+- Monitor PSI on scores weekly; investigate above 0.25. Retrain when real outcomes show recall dropping.
+
+## Reproducibility
+random_state 42, scikit-learn 1.9.1, created 2026-11-13.</pre>
+
+<h4>7 · A Streamlit app</h4>
+<p><strong>Streamlit</strong> turns a Python script into a web page. The app below loads the saved model, shows a form, validates the input, and shows the churn probability and decision. <code>%%writefile</code> saves the cell as a file.</p>
+<pre><code class="language-python">%%writefile app.py
+import json
+import joblib
+import pandas as pd
+import streamlit as st
+
+st.set_page_config(page_title='Churn risk')
+model = joblib.load('churn_model.joblib')
+schema = json.load(open('schema.json'))
+info = json.load(open('model_info.json'))
+
+st.title('Customer churn risk')
+st.caption(f&quot;Logistic regression · test ROC AUC {info['test_roc_auc']} · threshold {info['threshold']}&quot;)
+
+values = {}
+for col, spec in schema.items():
+    if spec['type'] == 'numeric':
+        values[col] = st.number_input(col, min_value=spec['min'], max_value=spec['max'], value=spec['min'])
+    else:
+        values[col] = st.selectbox(col, spec['values'])
+
+if st.button('Predict'):
+    row = pd.DataFrame([values])
+    p = float(model.predict_proba(row)[:, 1][0])
+    st.metric('Probability of leaving', f'{p:.0%}')
+    if p &gt;= info['threshold']:
+        st.error('High risk: add to the call list')
+    else:
+        st.success('Low risk')
+
+with st.expander('Model card'):
+    st.markdown(open('MODEL_CARD.md').read())
+</code></pre>
+<pre class="nbtext">Overwriting app.py</pre>
+
+<pre class="nbtext"></pre>
+
+<h5>Test the app without a browser</h5>
+<p>Streamlit has a testing tool that runs the app in the background. This checks that it loads and predicts.</p>
+<pre><code class="language-python">from streamlit.testing.v1 import AppTest
+import os
+app = AppTest.from_file(os.path.abspath('app.py'), default_timeout=60).run()
+app.button[0].click().run()
+print('Errors:', [e for e in app.exception])
+print('Title:', app.title[0].value)
+print('Result:', [(m.label, m.value) for m in app.metric])
+</code></pre>
+<pre class="nbtext">2026-11-13 19:52:45.033 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread &#x27;MainThread&#x27;: missing ScriptRunContext! This warning can be ignored when running in bare mode.</pre>
+
+<pre class="nbtext">Errors: []
+Title: Customer churn risk
+Result: [(&#x27;Probability of leaving&#x27;, &#x27;47%&#x27;)]</pre>
+
+<p>No errors: the app loads the model, shows the form, predicts and displays the result. (A 'missing ScriptRunContext' warning is normal in this test mode.)</p>
+<h5>Run it for real</h5>
+<ul>
+<li><strong>On your laptop:</strong> <code>pip install streamlit scikit-learn pandas joblib</code>, put <code>app.py</code>, <code>churn_model.joblib</code>, <code>schema.json</code>, <code>model_info.json</code> and <code>MODEL_CARD.md</code> in one folder, then run <code>streamlit run app.py</code>. A browser tab opens.</li>
+<li><strong>In Colab:</strong> run <code>!streamlit run app.py &amp;&gt;/dev/null &amp;</code> and then <code>!npx localtunnel --port 8501</code>, open the link it prints, and enter the password shown by <code>!curl ipv4.icanhazip.com</code>. (Tunnels change often; the laptop route is the most reliable.)</li>
+</ul>
+<h4>When a model is NOT the right solution</h4>
+<p>Before shipping, ask: would a simple rule do almost as well (Session 1: "month-to-month → call" catches 88% of leavers)? Is the decision high-stakes with no human check? Are the labels reliable? Would people be harmed by false positives? If the answers worry you, ship a rule, keep a human in the loop, or don't ship.</p>
+<h4>Exercises</h4>
+<ol>
+<li>Remove <code>gender</code> from the features, retrain, and compare ROC AUC and the fairness table. Would you keep it?</li>
+<li>Add a check to <code>validate</code> that rejects rows where <code>TotalCharges</code> is much larger than <code>tenure × MonthlyCharges</code> (a likely data error).</li>
+<li>Add a "Batch" section to the app: upload a CSV, validate it, and download predictions.</li>
+</ol>
+<div class="pager"><a href="part8_kmeans.html">← Part 8 · K-means clustering</a><a href="part10_project.html">Part 10 · The project →</a></div></main></body></html>
