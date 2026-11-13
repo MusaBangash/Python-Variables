@@ -1,0 +1,344 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Part 2 · The ML project lifecycle · ML Bootcamp Handbook</title><style>
+:root{--bg:#141414;--card:#1e1f22;--fg:#e6e6e6;--dim:#a0a0a0;--g:#4CAF50;--a:#ffc107;--b:#4fc3f7;--r:#ff6b6b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:18px/1.7 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+main{max-width:920px;margin:0 auto;padding:40px 22px 80px}
+h1{font-size:2.1em;line-height:1.2;margin:.2em 0}h2{font-size:1.5em;margin-top:2.2em;padding-top:.6em;border-top:1px solid #333;color:#fff}
+h3{color:var(--b);margin-top:1.6em}a{color:var(--b)}
+.kicker{color:var(--dim);letter-spacing:.12em;text-transform:uppercase;font-size:.8em}
+code{background:#26272b;padding:.1em .35em;border-radius:5px;font-size:.92em}
+pre{background:#1b1c1f;border:1px solid #2c2d31;border-radius:10px;padding:16px;overflow-x:auto;line-height:1.5}pre code{background:none;padding:0}
+table{border-collapse:collapse;width:100%;margin:1em 0;font-size:.93em}th,td{border-bottom:1px solid #333;padding:8px 10px;text-align:left;vertical-align:top}th{color:var(--dim);font-weight:600}
+blockquote{margin:1.2em 0;padding:12px 18px;background:#2a2410;border-left:5px solid var(--a);border-radius:0 8px 8px 0}
+blockquote p{margin:.3em 0}
+.chart{background:#141414;border-radius:10px;padding:8px;margin:1em 0}.chart img{width:100%}
+details{background:var(--card);border-radius:8px;padding:10px 16px;margin:10px 0}summary{cursor:pointer;font-weight:600}
+.toc{background:var(--card);border-radius:10px;padding:14px 22px}.toc ol{margin:.3em 0}
+nav.top{display:flex;gap:16px;flex-wrap:wrap;font-size:.9em;margin-bottom:10px}
+.kid{background:#14263a;border-left:5px solid #4fc3f7;border-radius:0 10px 10px 0;padding:12px 18px;margin:1.2em 0}
+.kid:before{content:"Like I'm 10";display:block;font-size:.75em;letter-spacing:.1em;text-transform:uppercase;color:#4fc3f7;font-weight:700}
+.deep{background:#17271a;border-left:5px solid #4CAF50;border-radius:0 10px 10px 0;padding:12px 18px;margin:1.2em 0}
+.deep:before{content:"Going deeper";display:block;font-size:.75em;letter-spacing:.1em;text-transform:uppercase;color:#4CAF50;font-weight:700}
+.warn{background:#2e1717;border-left:5px solid #ff6b6b;border-radius:0 10px 10px 0;padding:12px 18px;margin:1.2em 0}
+.warn:before{content:"Common mistake";display:block;font-size:.75em;letter-spacing:.1em;text-transform:uppercase;color:#ff6b6b;font-weight:700}
+.try{background:#2a2410;border-left:5px solid #ffc107;border-radius:0 10px 10px 0;padding:12px 18px;margin:1.2em 0}
+.try:before{content:"Try it / think";display:block;font-size:.75em;letter-spacing:.1em;text-transform:uppercase;color:#ffc107;font-weight:700}
+.kid p,.deep p,.warn p,.try p{margin:.4em 0}
+.pager{display:flex;justify-content:space-between;margin-top:3em;padding-top:1em;border-top:1px solid #333}
+@media print{body{font-size:12pt}nav.top,.noprint{display:none}h2{page-break-after:avoid}}
+</style></head><body><main><nav class="top"><a href="index.html">Handbook home</a> · <a href="glossary.html">Glossary</a></nav>
+
+<p class="kicker">Part 2 · Session 1</p>
+
+<h1>The ML project lifecycle: from data collection to deployment</h1>
+<p>A model is a small part of a real ML project. Most of the work happens <strong>before</strong> training (getting and preparing data) and <strong>after</strong> training (deploying, watching and fixing). This part gives you the full map. Part 3 then zooms in on the steps you will code yourself.</p>
+<div class="kid">
+<p>Think of opening a restaurant. Cooking (training the model) is one step. Before it you choose the menu (the problem), buy and wash ingredients (collect and clean data). After it you serve customers (deployment), listen to complaints and fix recipes (monitoring). A great cook with rotten ingredients still serves bad food.</p>
+</div>
+<h2>2.1 The 12 stages at a glance</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Stage</th>
+<th>Key question</th>
+<th>Typical tools</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Define the problem</strong></td>
+<td>What decision will the prediction improve? How do we measure success?</td>
+<td>meetings, a one-page problem statement</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Collect data</strong></td>
+<td>Where does the data come from, and do we have the answers (labels)?</td>
+<td>SQL, CSV/Excel, APIs, logs, surveys, public datasets</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Store and access data</strong></td>
+<td>Where does it live, and can we load it reliably again?</td>
+<td>files, databases, data warehouses</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Explore (EDA)</strong></td>
+<td>What does the data look like? What patterns and problems are there?</td>
+<td>pandas, matplotlib, seaborn</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Clean data</strong></td>
+<td>Missing values, duplicates, wrong types, impossible values?</td>
+<td>pandas</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Split data</strong></td>
+<td>Which rows train the model, which rows test it?</td>
+<td>scikit-learn <code>train_test_split</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>Prepare features</strong></td>
+<td>How do we turn raw columns into numbers a model understands?</td>
+<td>scikit-learn <code>Pipeline</code>, <code>ColumnTransformer</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>Choose and train models</strong></td>
+<td>Which models fit this problem?</td>
+<td>scikit-learn, XGBoost</td>
+</tr>
+<tr>
+<td>9</td>
+<td><strong>Evaluate and improve</strong></td>
+<td>Is it better than the baseline? Where does it fail? Can we tune it?</td>
+<td>metrics, cross-validation, <code>GridSearchCV</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td><strong>Final test</strong></td>
+<td>How will it perform on truly new data?</td>
+<td>the locked test set, used once</td>
+</tr>
+<tr>
+<td>11</td>
+<td><strong>Deploy</strong></td>
+<td>How do people or systems get predictions?</td>
+<td><code>joblib</code>, Streamlit, FastAPI, cloud</td>
+</tr>
+<tr>
+<td>12</td>
+<td><strong>Monitor and maintain</strong></td>
+<td>Is it still working next month? When do we retrain?</td>
+<td>logs, dashboards, drift checks</td>
+</tr>
+</tbody>
+</table>
+<p>It is a <strong>loop</strong>, not a straight line: monitoring often sends you back to collecting more data or adding a feature.</p>
+<div class="deep">
+<p>In real projects, roughly <strong>60–80% of the time</strong> goes into stages 2–7 (data). Beginners expect to spend most time choosing models; professionals spend most time on data.</p>
+</div>
+<h2>2.2 Stage by stage</h2>
+<h3>Stage 1 · Define the problem</h3>
+<p>Write one sentence: <em>We want to predict </em><em>[target]</em><em> for </em><em>[each row]</em><em> using </em><em>[information available at the moment of prediction]</em><em>, so that </em><em>[someone]</em><em> can </em><em>[decide something]</em><em>. Success = </em><em>[metric]</em><em>, and we must beat </em><em>[a simple baseline]</em><em>.</em></p>
+<p>Also decide: is it <strong>regression</strong> (a number) or <strong>classification</strong> (a category)? Is a simple rule good enough? What does a mistake cost?</p>
+<div class="warn">
+<p>Starting with the data or the model instead of the decision. If you can't name who will use the prediction and what they will do differently, stop: there is no project yet.</p>
+</div>
+<h3>Stage 2 · Collect data</h3>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Example</th>
+<th>Watch out for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Company databases</td>
+<td>customer records, sales, transactions (queried with <strong>SQL</strong>)</td>
+<td>access permissions; personal data</td>
+</tr>
+<tr>
+<td>Files</td>
+<td>CSV, Excel exports</td>
+<td>different versions; manual edits</td>
+</tr>
+<tr>
+<td>APIs</td>
+<td>weather, exchange rates, social media</td>
+<td>rate limits; changes in format</td>
+</tr>
+<tr>
+<td>Logs and sensors</td>
+<td>website clicks, machine temperatures</td>
+<td>huge volume; gaps when a sensor fails</td>
+</tr>
+<tr>
+<td>Surveys and forms</td>
+<td>customer feedback</td>
+<td>biased answers (only some people reply)</td>
+</tr>
+<tr>
+<td>Public datasets</td>
+<td>Kaggle, UCI, government data</td>
+<td>may not match your real situation</td>
+</tr>
+<tr>
+<td>Labelling</td>
+<td>people tag examples (spam / not spam)</td>
+<td>expensive, slow, labellers disagree</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Two questions decide everything:</strong>
+1. <strong>Do we have labels (the answers)?</strong> If yes → supervised learning is possible. If no → unsupervised, or collect labels first.
+2. <strong>Is the data representative?</strong> Does it look like the situations where the model will be used? (Part 1: non-representative data and sampling bias.)</p>
+<div class="warn">
+<p>Collecting personal data without permission, or keeping it insecurely. Collect only what you need, protect it, and follow the law (Part 9).</p>
+</div>
+<h3>Stage 3 · Store and access data</h3>
+<p>For learning, a CSV file is enough. In companies, data lives in <strong>databases</strong> (tables queried with SQL) or <strong>data warehouses</strong> (large, organised stores for analysis). What matters for ML: you must be able to <strong>load exactly the same data again</strong> later (reproducibility), and know <strong>when</strong> each value was recorded (to avoid using future information).</p>
+<h3>Stage 4 · Explore the data (EDA = exploratory data analysis)</h3>
+<p>Look before you model: sizes, types, distributions, relationships, surprises. Charts are your main tool (Part 3, step 5). The goal is to <strong>understand</strong> and to <strong>spot problems</strong>, not to make pretty pictures.</p>
+<h3>Stage 5 · Clean the data</h3>
+<p>Fix or remove: missing values, duplicates, wrong data types (numbers stored as text), impossible values (age 250), inconsistent categories ("Male", "male", "M"). Always ask <strong>why</strong> something is wrong before fixing it.</p>
+<h3>Stage 6 · Split the data</h3>
+<p>Separate a <strong>test set</strong> before any modelling, and lock it away. This is how we get an honest estimate of performance on new data (Part 1, 1.9).</p>
+<h3>Stage 7 · Prepare features (preprocessing and feature engineering)</h3>
+<p>Models need numbers with no blanks. We fill missing values, encode categories as numbers, scale numeric columns, and create useful new columns. We put all of this in a <strong>pipeline</strong> so it is applied identically to training data, test data and future data.</p>
+<h3>Stage 8 · Choose and train models</h3>
+<p>Start with a <strong>baseline</strong> (the simplest possible guess), then a simple model (linear or logistic regression), then stronger ones (trees, forests, boosting). Training = the model learns its parameters from the training data.</p>
+<h3>Stage 9 · Evaluate and improve</h3>
+<p>Measure with the right metric, compare models fairly with <strong>cross-validation</strong>, study the mistakes, add features, tune settings. Repeat.</p>
+<h3>Stage 10 · Final test</h3>
+<p>Open the test set <strong>once</strong>, for the chosen model only. This number is what you report.</p>
+<h3>Stage 11 · Deploy</h3>
+<table>
+<thead>
+<tr>
+<th>Way</th>
+<th>How it works</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Batch</strong></td>
+<td>run the model on a file of rows every night/week</td>
+<td>a call list of risky customers every Monday</td>
+</tr>
+<tr>
+<td><strong>Real-time API</strong></td>
+<td>another program sends one row, gets a prediction in milliseconds</td>
+<td>a loan app checking risk while the customer waits</td>
+</tr>
+<tr>
+<td><strong>App / dashboard</strong></td>
+<td>a person types inputs into a form</td>
+<td>a Streamlit page for the sales team</td>
+</tr>
+<tr>
+<td><strong>Embedded</strong></td>
+<td>the model runs inside a phone or device</td>
+<td>keyboard word suggestions</td>
+</tr>
+</tbody>
+</table>
+<p>To deploy, we <strong>save</strong> the whole pipeline (preprocessing + model) to a file with <code>joblib</code>, and <strong>load</strong> it wherever predictions are needed.</p>
+<h3>Stage 12 · Monitor and maintain</h3>
+<p>The world changes; models silently get worse. Watch:
+- <strong>Data drift:</strong> new inputs look different from training data (e.g. many more new customers).
+- <strong>Performance drift:</strong> accuracy drops when real outcomes arrive.
+- <strong>Errors and complaints:</strong> wrong inputs, crashes, unfair results.</p>
+<p>Then <strong>retrain</strong> with fresh data, with the same pipeline and the same tests.</p>
+<h2>2.3 Who does what in a company</h2>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Main work</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Business owner / product manager</td>
+<td>defines the problem, decision and success</td>
+</tr>
+<tr>
+<td>Data engineer</td>
+<td>collects, stores and delivers reliable data</td>
+</tr>
+<tr>
+<td>Data scientist</td>
+<td>explores data, builds and evaluates models</td>
+</tr>
+<tr>
+<td>ML engineer</td>
+<td>deploys, scales and monitors models</td>
+</tr>
+<tr>
+<td>Domain expert</td>
+<td>explains what the data means (doctors, sales staff)</td>
+</tr>
+</tbody>
+</table>
+<p>In a small team, <strong>you</strong> are all of them. That's what the project on Day 2 practises.</p>
+<h2>2.4 The tools in this bootcamp</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it does</th>
+<th>Used for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Python</strong></td>
+<td>the programming language</td>
+<td>everything</td>
+</tr>
+<tr>
+<td><strong>Google Colab / Jupyter</strong></td>
+<td>notebooks: code + text + charts in one page</td>
+<td>practicals</td>
+</tr>
+<tr>
+<td><strong>pandas</strong></td>
+<td>tables (DataFrames): load, clean, filter, group</td>
+<td>stages 2–5</td>
+</tr>
+<tr>
+<td><strong>NumPy</strong></td>
+<td>fast maths on arrays</td>
+<td>under the hood, calculations</td>
+</tr>
+<tr>
+<td><strong>matplotlib / seaborn</strong></td>
+<td>charts</td>
+<td>EDA, evaluation</td>
+</tr>
+<tr>
+<td><strong>scikit-learn</strong></td>
+<td>models, preprocessing, splitting, metrics, pipelines</td>
+<td>stages 6–10</td>
+</tr>
+<tr>
+<td><strong>joblib</strong></td>
+<td>save and load trained models</td>
+<td>stage 11</td>
+</tr>
+<tr>
+<td><strong>Streamlit</strong></td>
+<td>turn a Python script into a web app</td>
+<td>stage 11 (Day 2)</td>
+</tr>
+<tr>
+<td><strong>Git / GitHub</strong></td>
+<td>version control: track and share code</td>
+<td>the project</td>
+</tr>
+<tr>
+<td>FastAPI (optional)</td>
+<td>serve a model as a web API</td>
+<td>stage 11</td>
+</tr>
+</tbody>
+</table>
+<h2>Check yourself</h2>
+<details><summary>1. Which stage usually takes the most time?</summary>The data stages (collecting, exploring, cleaning, preparing): often 60–80% of the work.</details>
+<details><summary>2. Why must we split the data before preparing features?</summary>So that nothing learned from the test rows (means, categories, choices) leaks into training. The test set must stay "new".</details>
+<details><summary>3. Name two ways to deploy a model.</summary>Batch (score a file regularly), real-time API, an app such as Streamlit, or embedded in a device.</details>
+<details><summary>4. What is data drift?</summary>When new input data starts to look different from the training data, so the model's performance may drop.</details>
+<details><summary>5. You have customer data but no record of who left. What can you do?</summary>Unsupervised learning (e.g. segments), or start collecting labels (record who leaves) so supervised learning becomes possible later.</details>
+
+<p class="kicker" style="margin-top:3em">Background reading (optional): Géron, <i>Hands-On Machine Learning</i>, Chapter 2 "End-to-End Machine Learning Project".</p>
+
+<div class="pager"><a href="part1_what_is_ml.html">← Part 1 · What is machine learning?</a><a href="part3_recipe.html">Part 3 · The common recipe →</a></div></main></body></html>
