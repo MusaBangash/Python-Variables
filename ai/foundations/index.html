@@ -1,0 +1,76 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Start here · AI Engineering Foundations</title><style>
+:root{--bg:#141414;--card:#1e1f22;--fg:#e6e6e6;--dim:#a0a0a0;--g:#4CAF50;--a:#ffc107;--b:#4fc3f7;--r:#ff6b6b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:18px/1.7 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+main{max-width:920px;margin:0 auto;padding:40px 22px 80px}
+h1{font-size:2.1em;line-height:1.2;margin:.2em 0}h2{font-size:1.5em;margin-top:2.2em;padding-top:.6em;border-top:1px solid #333;color:#fff}
+h3{color:var(--b);margin-top:1.6em}a{color:var(--b)}
+.kicker{color:var(--dim);letter-spacing:.12em;text-transform:uppercase;font-size:.8em}
+code{background:#26272b;padding:.1em .35em;border-radius:5px;font-size:.92em}
+pre{background:#1b1c1f;border:1px solid #2c2d31;border-radius:10px;padding:16px;overflow-x:auto;line-height:1.5}pre code{background:none;padding:0}
+table{border-collapse:collapse;width:100%;margin:1em 0;font-size:.93em}th,td{border-bottom:1px solid #333;padding:8px 10px;text-align:left;vertical-align:top}th{color:var(--dim);font-weight:600}
+blockquote{margin:1.2em 0;padding:12px 18px;background:#2a2410;border-left:5px solid var(--a);border-radius:0 8px 8px 0}
+blockquote p{margin:.3em 0}
+.chart{background:#141414;border-radius:10px;padding:8px;margin:1em 0}.chart img{width:100%}
+details{background:var(--card);border-radius:8px;padding:10px 16px;margin:10px 0}summary{cursor:pointer;font-weight:600}
+.toc{background:var(--card);border-radius:10px;padding:14px 22px}.toc ol{margin:.3em 0}
+nav.top{display:flex;gap:16px;flex-wrap:wrap;font-size:.9em;margin-bottom:10px}
+.kid{background:#14263a;border-left:5px solid #4fc3f7;border-radius:0 10px 10px 0;padding:12px 18px;margin:1.2em 0}
+.kid:before{content:"Like I'm 10";display:block;font-size:.75em;letter-spacing:.1em;text-transform:uppercase;color:#4fc3f7;font-weight:700}
+.deep{background:#17271a;border-left:5px solid #4CAF50;border-radius:0 10px 10px 0;padding:12px 18px;margin:1.2em 0}
+.deep:before{content:"Going deeper";display:block;font-size:.75em;letter-spacing:.1em;text-transform:uppercase;color:#4CAF50;font-weight:700}
+.warn{background:#2e1717;border-left:5px solid #ff6b6b;border-radius:0 10px 10px 0;padding:12px 18px;margin:1.2em 0}
+.warn:before{content:"Common mistake";display:block;font-size:.75em;letter-spacing:.1em;text-transform:uppercase;color:#ff6b6b;font-weight:700}
+.try{background:#2a2410;border-left:5px solid #ffc107;border-radius:0 10px 10px 0;padding:12px 18px;margin:1.2em 0}
+.try:before{content:"Try it / think";display:block;font-size:.75em;letter-spacing:.1em;text-transform:uppercase;color:#ffc107;font-weight:700}
+.kid p,.deep p,.warn p,.try p{margin:.4em 0}
+.nbimg{background:#fff;border-radius:8px;padding:6px;margin:.6em 0 1.2em}.nbimg img{width:100%}
+.nbout{overflow-x:auto;margin:.4em 0 1.2em;font-size:.85em}.nbout table{width:auto}
+pre.nbtext{background:#101112;border-left:3px solid #555;font-size:.85em;color:#cfcfcf}
+.pager{display:flex;justify-content:space-between;margin-top:3em;padding-top:1em;border-top:1px solid #333}
+@media print{body{font-size:12pt}nav.top,.noprint{display:none}h2{page-break-after:avoid}}
+</style></head><body><main><nav class="top"><a href="index.html">Foundations home</a></nav>
+
+<p class="kicker">AI Engineering · Foundations</p>
+
+<h1>How LLMs really work, built step by step</h1>
+<p>Before building with large language models (RAG, tools, MCP, agents), you will understand <strong>what an LLM actually is</strong>, by building every piece yourself, from a single neuron to a small GPT that writes text.</p>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Topic</th>
+<th>You will build</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><a href="part1_neural_networks.html">Neural networks</a></td>
+<td>a neuron by hand, a network trained from scratch (NumPy), then PyTorch and a handwritten-digit reader</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Text as numbers: tokens, embeddings, next-token prediction</td>
+<td>a tokenizer and a small language model that writes text</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Attention and the Transformer</td>
+<td>self-attention by hand, then a tiny GPT trained on text</td>
+</tr>
+<tr>
+<td>4</td>
+<td>From tiny GPT to real LLMs</td>
+<td>inspect a real pretrained model: tokens, probabilities, temperature</td>
+</tr>
+<tr>
+<td>5</td>
+<td>LLMs for builders</td>
+<td>API calls, cost, a chatbot with memory</td>
+</tr>
+</tbody>
+</table>
+<p>After the foundations: <strong>RAG → tool use → MCP → agents → evaluation → deployment.</strong></p>
+<p>Each part has the same layout: a simple explanation ("Like I'm 10"), the real explanation ("Going deeper"), common mistakes, questions to think about, and a <strong>step-by-step practical</strong> that runs in Google Colab, shown here with its real outputs.</p>
+<p><strong>You need:</strong> basic Python, a Google account for Colab. No GPU needed for the foundations.</p>
+<div class="pager"><span></span><a href="part1_neural_networks.html">Part 1 · Neural networks →</a></div></main></body></html>
